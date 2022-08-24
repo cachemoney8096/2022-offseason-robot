@@ -1,7 +1,7 @@
-package net.teamrush27.frc2022.subsystems;
+package net.cachemoney8096.frc2022o.subsystems;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import net.teamrush27.frc2022.RobotContainer;
+import net.cachemoney8096.frc2022o.RobotContainer;
 import edu.wpi.first.wpilibj.DriverStation;
 
 public class CargoManager implements Subsystem {

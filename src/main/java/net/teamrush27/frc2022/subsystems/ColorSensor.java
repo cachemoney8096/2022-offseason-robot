@@ -1,10 +1,10 @@
-package net.teamrush27.frc2022.subsystems;
+package net.cachemoney8096.frc2022o.subsystems;
 
 import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import net.teamrush27.frc2022.FeatureEnables;
-import net.teamrush27.frc2022.sensors.PicoColorSensor;
+import net.cachemoney8096.frc2022o.FeatureEnables;
+import net.cachemoney8096.frc2022o.sensors.PicoColorSensor;
 
 public class ColorSensor implements Subsystem{
 

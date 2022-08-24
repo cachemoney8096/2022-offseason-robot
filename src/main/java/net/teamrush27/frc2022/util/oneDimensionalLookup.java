@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package net.teamrush27.frc2022.util;
+package net.cachemoney8096.frc2022o.util;
 import java.util.Arrays;
 
 /** Code snippet from http://www.java2s.com/Code/Java/Collections-Data-Structure/LinearInterpolation.htm */

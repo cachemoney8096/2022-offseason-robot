@@ -1,4 +1,4 @@
-package net.teamrush27.frc2022.util;
+package net.cachemoney8096.frc2022o.util;
 
 /**
  * Runnable class with reports all uncaught throws to CrashTracker

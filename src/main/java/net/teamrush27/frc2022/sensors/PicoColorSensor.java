@@ -1,4 +1,4 @@
-package net.teamrush27.frc2022.sensors;
+package net.cachemoney8096.frc2022o.sensors;
 
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.atomic.AtomicBoolean;

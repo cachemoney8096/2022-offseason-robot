@@ -1,7 +1,7 @@
-package net.teamrush27.frc2022.commands;
+package net.cachemoney8096.frc2022o.commands;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import net.teamrush27.frc2022.subsystems.CargoManager;
+import net.cachemoney8096.frc2022o.subsystems.CargoManager;
 
 public class CargoManagerWantedStateCommand extends InstantCommand {
 

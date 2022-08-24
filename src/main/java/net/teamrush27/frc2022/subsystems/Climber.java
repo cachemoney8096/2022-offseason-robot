@@ -1,4 +1,4 @@
-package net.teamrush27.frc2022.subsystems;
+package net.cachemoney8096.frc2022o.subsystems;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
@@ -11,9 +11,9 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 
-import static net.teamrush27.frc2022.Constants.*;
-import static net.teamrush27.frc2022.calibrations.ClimberCals.*;
-import static net.teamrush27.frc2022.calibrations.ClimberCals.climberTicksToDegrees;
+import static net.cachemoney8096.frc2022o.Constants.*;
+import static net.cachemoney8096.frc2022o.calibrations.ClimberCals.*;
+import static net.cachemoney8096.frc2022o.calibrations.ClimberCals.climberTicksToDegrees;
 
 public class Climber implements Subsystem{
 

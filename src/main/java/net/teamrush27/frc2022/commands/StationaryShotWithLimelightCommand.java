@@ -1,10 +1,10 @@
-package net.teamrush27.frc2022.commands;
+package net.cachemoney8096.frc2022o.commands;
 
 import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import net.teamrush27.frc2022.subsystems.*;
+import net.cachemoney8096.frc2022o.subsystems.*;
 
 
 public class StationaryShotWithLimelightCommand extends CommandBase {

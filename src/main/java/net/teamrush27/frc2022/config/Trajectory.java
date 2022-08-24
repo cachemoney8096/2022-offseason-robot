@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package net.teamrush27.frc2022.config;
+package net.cachemoney8096.frc2022o.config;
 
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
@@ -13,11 +13,11 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import net.teamrush27.frc2022.commands.*;
-import net.teamrush27.frc2022.subsystems.CargoManager;
-import net.teamrush27.frc2022.subsystems.Drivetrain;
-import net.teamrush27.frc2022.subsystems.Hopper;
-import net.teamrush27.frc2022.subsystems.Launcher;
+import net.cachemoney8096.frc2022o.commands.*;
+import net.cachemoney8096.frc2022o.subsystems.CargoManager;
+import net.cachemoney8096.frc2022o.subsystems.Drivetrain;
+import net.cachemoney8096.frc2022o.subsystems.Hopper;
+import net.cachemoney8096.frc2022o.subsystems.Launcher;
 
 import java.nio.file.Path;
 

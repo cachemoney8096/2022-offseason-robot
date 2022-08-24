@@ -1,4 +1,4 @@
-package net.teamrush27.frc2022.loops;
+package net.cachemoney8096.frc2022o.loops;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Notifier;
@@ -9,8 +9,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.TimeUnit;
-import net.teamrush27.frc2022.subsystems.Subsystem;
-import net.teamrush27.frc2022.util.CrashTrackingRunnable;
+import net.cachemoney8096.frc2022o.subsystems.Subsystem;
+import net.cachemoney8096.frc2022o.util.CrashTrackingRunnable;
 
 public class SubsystemManager {
 

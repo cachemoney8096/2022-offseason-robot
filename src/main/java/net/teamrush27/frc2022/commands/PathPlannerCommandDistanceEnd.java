@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package net.teamrush27.frc2022.commands;
+package net.cachemoney8096.frc2022o.commands;
 
 import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.commands.PPSwerveControllerCommand;
@@ -11,7 +11,7 @@ import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import net.teamrush27.frc2022.subsystems.Drivetrain;
+import net.cachemoney8096.frc2022o.subsystems.Drivetrain;
 
 //Borrowing code from Team 2337's 2020 code: TrajectoryCommand.java
 

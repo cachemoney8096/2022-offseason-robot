@@ -8,7 +8,7 @@ plugins {
 sourceCompatibility = JavaVersion.VERSION_11
 targetCompatibility = JavaVersion.VERSION_11
 
-def ROBOT_MAIN_CLASS = "net.teamrush27.frc2022.Main"
+def ROBOT_MAIN_CLASS = "net.cachemoney8096.frc2022o.Main"
 
 // Define my targets (RoboRIO) and artifacts (deployable files)
 // This is added by GradleRIO's backing project DeployUtils.

@@ -1,4 +1,4 @@
-package net.teamrush27.frc2022.subsystems;
+package net.cachemoney8096.frc2022o.subsystems;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
@@ -9,9 +9,9 @@ import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import net.teamrush27.frc2022.Constants;
-import net.teamrush27.frc2022.util.CtreConversions;
-import static net.teamrush27.frc2022.calibrations.IntakeCals.*;
+import net.cachemoney8096.frc2022o.Constants;
+import net.cachemoney8096.frc2022o.util.CtreConversions;
+import static net.cachemoney8096.frc2022o.calibrations.IntakeCals.*;
 
 
 

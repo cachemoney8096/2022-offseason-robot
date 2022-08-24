@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package net.teamrush27.frc2022;
+package net.cachemoney8096.frc2022o;
 
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
@@ -12,12 +12,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.*;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import net.teamrush27.frc2022.commands.CargoManagerWantedStateCommand;
-import net.teamrush27.frc2022.commands.PathPlannerCommand;
-import net.teamrush27.frc2022.config.Trajectory;
-import net.teamrush27.frc2022.loops.SubsystemManager;
-import net.teamrush27.frc2022.subsystems.*;
-import net.teamrush27.frc2022.util.XboxController;
+import net.cachemoney8096.frc2022o.commands.CargoManagerWantedStateCommand;
+import net.cachemoney8096.frc2022o.commands.PathPlannerCommand;
+import net.cachemoney8096.frc2022o.config.Trajectory;
+import net.cachemoney8096.frc2022o.loops.SubsystemManager;
+import net.cachemoney8096.frc2022o.subsystems.*;
+import net.cachemoney8096.frc2022o.util.XboxController;
 
 import java.nio.file.Path;
 

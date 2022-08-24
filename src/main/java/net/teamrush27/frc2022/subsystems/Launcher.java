@@ -1,4 +1,4 @@
-package net.teamrush27.frc2022.subsystems;
+package net.cachemoney8096.frc2022o.subsystems;
 
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -13,16 +13,16 @@ import com.revrobotics.RelativeEncoder;
 import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.math.filter.LinearFilter;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import static net.teamrush27.frc2022.Constants.*;
-import static net.teamrush27.frc2022.calibrations.GlobalCals.*;
-import static net.teamrush27.frc2022.calibrations.LauncherCals.*;
+import static net.cachemoney8096.frc2022o.Constants.*;
+import static net.cachemoney8096.frc2022o.calibrations.GlobalCals.*;
+import static net.cachemoney8096.frc2022o.calibrations.LauncherCals.*;
 
-import net.teamrush27.frc2022.FeatureEnables;
-import net.teamrush27.frc2022.calibrations.DrivetrainCals;
-import net.teamrush27.frc2022.calibrations.LauncherCals;
-import net.teamrush27.frc2022.util.ModuleToChassisSpeeds;
-import net.teamrush27.frc2022.util.XboxController;
-import net.teamrush27.frc2022.util.oneDimensionalLookup;
+import net.cachemoney8096.frc2022o.FeatureEnables;
+import net.cachemoney8096.frc2022o.calibrations.DrivetrainCals;
+import net.cachemoney8096.frc2022o.calibrations.LauncherCals;
+import net.cachemoney8096.frc2022o.util.ModuleToChassisSpeeds;
+import net.cachemoney8096.frc2022o.util.XboxController;
+import net.cachemoney8096.frc2022o.util.oneDimensionalLookup;
 
 public class Launcher implements Subsystem {
 
