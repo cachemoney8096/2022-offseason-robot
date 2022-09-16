@@ -4,12 +4,9 @@
 
 package net.cachemoney8096.frc2022o;
 
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import net.cachemoney8096.frc2022o.subsystems.LED;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -32,7 +29,6 @@ public class Robot extends TimedRobot {
 		// Instantiate our RobotContainer.  This will perform all our button bindings, and put our
 		// autonomous chooser on the dashboard.
 		robotContainer = new RobotContainer();
-		robotContainer.startSubsystemThreads();
 	}
 
 	/**
@@ -56,9 +52,6 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void disabledInit() {
-		robotContainer.stopSubsystems();
-		robotContainer.enableState = RobotContainer.EnableState.DISABLED;
-		robotContainer.led.setWantedState(LED.WantedState.IDLE);
 	}
 
 	@Override
@@ -70,8 +63,6 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		robotContainer.enableState = RobotContainer.EnableState.AUTON;
-
 		autonomousCommand = robotContainer.getAutonChooser().getSelected();
 
 		// schedule the autonomous command (example)
@@ -90,8 +81,6 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void teleopInit() {
-		robotContainer.enableState = RobotContainer.EnableState.TELEOP;
-		robotContainer.launcher.zeroHood();
 		// This makes sure that the autonomous stops running when
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
@@ -112,8 +101,6 @@ public class Robot extends TimedRobot {
 	public void testInit() {
 		// Cancels all running commands at the start of test mode.
 		CommandScheduler.getInstance().cancelAll();
-		robotContainer.stopSubsystemThreads();
-		robotContainer.checkSubsystems();
 	}
 
 	/**
@@ -125,7 +112,5 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void testExit(){
-		robotContainer.stopSubsystems();
-		robotContainer.startSubsystemThreads();
 	}
 }
