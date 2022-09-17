@@ -4,6 +4,7 @@
 
 package net.cachemoney8096.frc2022o;
 
+import net.cachemoney8096.frc2022o.subsystems.Indexer;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.*;
@@ -19,7 +20,8 @@ public class RobotContainer {
 
 	private static RobotContainer INSTANCE;
 
-	public final PowerDistribution powerDistribution;
+	private final PowerDistribution powerDistribution;
+	private final Indexer indexer;
 
 	private SendableChooser<Command> autonChooser;
 
@@ -32,6 +34,9 @@ public class RobotContainer {
 
 		powerDistribution = new PowerDistribution(1, PowerDistribution.ModuleType.kRev);
 		powerDistribution.clearStickyFaults();
+
+		
+		indexer = new Indexer();
 		
 		configureButtonBindings();
 		configureAuton();
