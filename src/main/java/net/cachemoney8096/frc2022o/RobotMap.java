@@ -17,6 +17,11 @@ public class RobotMap {
   public static final int HOOD_MOTOR_ID = 14;
 
   // Sensor DIO
-  public static final int INDEXER_DIO = 1;
-  public static final int INTAKE_DIO = 2;
+  public static final int SWERVE_FRONT_LEFT_DIO = 0;
+  public static final int SWERVE_FRONT_RIGHT_DIO = 1;
+  public static final int SWERVE_BACK_LEFT_DIO = 2;
+  public static final int SWERVE_BACK_RIGHT_DIO = 3;
+  public static final int INDEXER_CARGO_DIO = 4;
+  public static final int INTAKE_CARGO_DIO = 5;
+  public static final int HOOD_ENCODER_DIO = 6;
 }
