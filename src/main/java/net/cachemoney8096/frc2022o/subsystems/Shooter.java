@@ -3,7 +3,6 @@ package net.cachemoney8096.frc2022o.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.RelativeEncoder;
 import net.cachemoney8096.frc2022o.RobotMap;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
