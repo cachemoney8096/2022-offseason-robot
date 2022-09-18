@@ -41,7 +41,7 @@ public class Intake implements Subsystem {
     intakeMotorThree.setIdleMode(CANSparkMax.IdleMode.kCoast);
     intakeMotorThree.follow(intakeMotorTwo);
 
-    cargoSensor = new DigitalInput(RobotMap.INTAKE_DIO);
+    cargoSensor = new DigitalInput(RobotMap.INTAKE_CARGO_DIO);
     colorSensor = new PicoColorSensor();
   }
 
@@ -55,6 +55,8 @@ public class Intake implements Subsystem {
     // check if the color is valid?
     // lastColorSeen = color;
     // }
+
+    // check for a ball
 
   }
 

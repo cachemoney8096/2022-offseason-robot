@@ -4,7 +4,9 @@
 
 package net.cachemoney8096.frc2022o;
 
+import net.cachemoney8096.frc2022o.subsystems.Intake;
 import net.cachemoney8096.frc2022o.subsystems.Indexer;
+import net.cachemoney8096.frc2022o.subsystems.Shooter;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.*;
@@ -20,7 +22,9 @@ public class RobotContainer {
   private static RobotContainer INSTANCE;
 
   private final PowerDistribution powerDistribution;
+  private final Intake intake;
   private final Indexer indexer;
+  private final Shooter shooter;
 
   private SendableChooser<Command> autonChooser;
 
@@ -32,6 +36,8 @@ public class RobotContainer {
     powerDistribution.clearStickyFaults();
 
     indexer = new Indexer();
+    intake = new Intake();
+    shooter = new Shooter();
 
     configureButtonBindings();
     configureAuton();

@@ -6,6 +6,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.RelativeEncoder;
 import net.cachemoney8096.frc2022o.RobotMap;
+import edu.wpi.first.wpilibj.DutyCycleEncoder;
 
 import edu.wpi.first.wpilibj2.command.Subsystem;
 
@@ -16,11 +17,10 @@ public class Shooter implements Subsystem {
   private final SparkMaxPIDController shooterPID;
   private final CANSparkMax shooterMotorTwo;
   private final CANSparkMax hoodMotor;
-  private final SparkMaxPIDController hoodPID;
 
   // Sensors
   private final RelativeEncoder shooterEncoder;
-  private final RelativeEncoder hoodEncoder;
+  private final DutyCycleEncoder hoodAbsoluteEncoder;
 
   public Shooter() {
     shooterMotorOne = new CANSparkMax(RobotMap.SHOOTER_MOTOR_ONE_ID, MotorType.kBrushless);
@@ -42,17 +42,13 @@ public class Shooter implements Subsystem {
     hoodMotor.restoreFactoryDefaults();
     final int HOOD_MOTOR_CURRENT_LIMIT = 40;
     hoodMotor.setSmartCurrentLimit(HOOD_MOTOR_CURRENT_LIMIT);
-    hoodEncoder = hoodMotor.getEncoder();
-    // hoodEncoder.setPositionConversionFactor(???);
-    hoodPID = hoodMotor.getPIDController();
-    // hoodPID.setP();
-    // hoodPID.setI();
-    // hoodPID.setD();
-    // hoodPID.setFF();
+    hoodAbsoluteEncoder = new DutyCycleEncoder(RobotMap.HOOD_ENCODER_DIO);
+    // hoodAbsoluteEncoder.setDistancePerRotation(???);
+    // TODO use wpilib PID to do position control on the roboRIO
   }
 
   public double getHoodPosition() {
-    return hoodEncoder.getPosition();
+    return hoodAbsoluteEncoder.getDistance();
   }
 
   public double getShooterVelocity() {
@@ -60,7 +56,7 @@ public class Shooter implements Subsystem {
   }
 
   public void setHoodPosition(double position_deg) {
-    hoodPID.setReference(position_deg, ControlType.kPosition);
+    // hoodPID.setReference(position_deg, ControlType.kPosition);
   }
 
   public void setShooterVelocity() {}

@@ -34,12 +34,12 @@ public class Indexer implements Subsystem {
     indexerMotorThree.restoreFactoryDefaults();
     indexerMotorThree.setIdleMode(CANSparkMax.IdleMode.kCoast);
 
-    cargoSensor = new DigitalInput(RobotMap.INDEXER_DIO);
+    cargoSensor = new DigitalInput(RobotMap.INDEXER_CARGO_DIO);
   }
 
   @Override
   public void periodic() {
-    // do nothing periodically
+    // check for a ball
   }
 
   public boolean hasCargo() {
@@ -48,7 +48,7 @@ public class Indexer implements Subsystem {
 
   public void indexBall() {
     // run one/two forward
-    // don't run three
+    // don't run three, unless there's a wrong-colored ball in which case run backwards for a second
   }
 
   public void ejectBall() {
