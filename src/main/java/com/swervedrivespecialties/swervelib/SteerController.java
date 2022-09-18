@@ -1,13 +1,13 @@
 package com.swervedrivespecialties.swervelib;
 
 public interface SteerController {
-    Object getSteerMotor();
+  Object getSteerMotor();
 
-    AbsoluteEncoder getSteerEncoder();
+  AbsoluteEncoder getSteerEncoder();
 
-    double getReferenceAngle();
+  double getReferenceAngle();
 
-    void setReferenceAngle(double referenceAngleRadians);
+  void setReferenceAngle(double referenceAngleRadians);
 
-    double getStateAngle();
+  double getStateAngle();
 }

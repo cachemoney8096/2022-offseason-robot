@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.*;
 
-
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -18,59 +17,53 @@ import edu.wpi.first.wpilibj2.command.*;
  */
 public class RobotContainer {
 
-	private static RobotContainer INSTANCE;
+  private static RobotContainer INSTANCE;
 
-	private final PowerDistribution powerDistribution;
-	private final Indexer indexer;
+  private final PowerDistribution powerDistribution;
+  private final Indexer indexer;
 
-	private SendableChooser<Command> autonChooser;
+  private SendableChooser<Command> autonChooser;
 
-	/**
-	 * The container for the robot. Contains subsystems, OI devices, and commands.
-	 */
-	public RobotContainer() {
-		INSTANCE = this;
+  /** The container for the robot. Contains subsystems, OI devices, and commands. */
+  public RobotContainer() {
+    INSTANCE = this;
 
+    powerDistribution = new PowerDistribution(1, PowerDistribution.ModuleType.kRev);
+    powerDistribution.clearStickyFaults();
 
-		powerDistribution = new PowerDistribution(1, PowerDistribution.ModuleType.kRev);
-		powerDistribution.clearStickyFaults();
+    indexer = new Indexer();
 
-		
-		indexer = new Indexer();
-		
-		configureButtonBindings();
-		configureAuton();
+    configureButtonBindings();
+    configureAuton();
+  }
 
+  /**
+   * Use this method to define your button->command mappings. Buttons can be created by
+   * instantiating a {@link GenericHID} or one of its subclasses ({@link
+   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
+   * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
+   */
+  private void configureButtonBindings() {}
 
-	}
+  private void configureAuton() {
+    autonChooser = new SendableChooser<>();
+    // autonChooser.setDefaultOption("Do Nothing", new InstantCommand(() ->
+    // System.out.println("Doing nothing...")));
+    // autonChooser.addOption("3 Ball 1678", Trajectory.threeBall1678(launcher, hopper,
+    // cargoManager, drivetrain));
+    // autonChooser.setDefaultOption("5 Ball 1678", Trajectory.fiveBall1678(launcher, hopper,
+    // cargoManager, drivetrain));
 
-	/**
-	 * Use this method to define your button->command mappings. Buttons can be created by
-	 * instantiating a {@link GenericHID} or one of its subclasses ({@link
-	 * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
-	 * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
-	 */
-	private void configureButtonBindings() {
+  }
 
-	}
+  public static synchronized RobotContainer getInstance() {
+    if (INSTANCE == null) {
+      INSTANCE = new RobotContainer();
+    }
+    return INSTANCE;
+  }
 
-	private void configureAuton() {
-		autonChooser = new SendableChooser<>();
-		//autonChooser.setDefaultOption("Do Nothing", new InstantCommand(() -> System.out.println("Doing nothing...")));
-		// autonChooser.addOption("3 Ball 1678", Trajectory.threeBall1678(launcher, hopper, cargoManager, drivetrain));
-		// autonChooser.setDefaultOption("5 Ball 1678", Trajectory.fiveBall1678(launcher, hopper, cargoManager, drivetrain));
-
-	}
-
-	public static synchronized RobotContainer getInstance() {
-		if (INSTANCE == null) {
-			INSTANCE = new RobotContainer();
-		}
-		return INSTANCE;
-	}
-
-	public SendableChooser<Command> getAutonChooser() {
-		return autonChooser;
-	}
-
+  public SendableChooser<Command> getAutonChooser() {
+    return autonChooser;
+  }
 }

@@ -18,8 +18,7 @@ public class PicoColorSensor implements AutoCloseable {
       ir = _ir;
     }
 
-    public RawColor() {
-    }
+    public RawColor() {}
 
     public int red;
     public int green;
@@ -37,14 +36,13 @@ public class PicoColorSensor implements AutoCloseable {
 
     @Override
     public char charAt(int index) {
-      return (char)data[index];
+      return (char) data[index];
     }
 
     @Override
     public CharSequence subSequence(int start, int end) {
       return new String(data, start, end, StandardCharsets.UTF_8);
     }
-
   }
 
   private static class IntRef {
@@ -65,7 +63,7 @@ public class PicoColorSensor implements AutoCloseable {
 
   private int findNextComma(byte[] data, int readLen, int lastComma) {
     while (true) {
-      if (readLen <= lastComma + 1 ) {
+      if (readLen <= lastComma + 1) {
         return readLen;
       }
       lastComma++;
@@ -90,11 +88,11 @@ public class PicoColorSensor implements AutoCloseable {
 
   private void threadMain() {
     // Using JNI for a non allocating read
-    int port = SerialPortJNI.serialInitializePort((byte)1);
+    int port = SerialPortJNI.serialInitializePort((byte) 1);
     SerialPortJNI.serialSetBaudRate(port, 115200);
-    SerialPortJNI.serialSetDataBits(port, (byte)8);
-    SerialPortJNI.serialSetParity(port, (byte)0);
-    SerialPortJNI.serialSetStopBits(port, (byte)10);
+    SerialPortJNI.serialSetDataBits(port, (byte) 8);
+    SerialPortJNI.serialSetParity(port, (byte) 0);
+    SerialPortJNI.serialSetStopBits(port, (byte) 10);
 
     SerialPortJNI.serialSetTimeout(port, 1);
     SerialPortJNI.serialEnableTermination(port, '\n');

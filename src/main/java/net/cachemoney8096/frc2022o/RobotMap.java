@@ -1,6 +1,4 @@
-
 package net.cachemoney8096.frc2022o;
-
 
 public class RobotMap {
   // Intake CAN IDs

@@ -1,9 +1,9 @@
 package com.swervedrivespecialties.swervelib;
 
 public interface DriveController {
-    Object getDriveMotor();
+  Object getDriveMotor();
 
-    void setReferenceVoltage(double voltage);
+  void setReferenceVoltage(double voltage);
 
-    double getStateVelocity();
+  double getStateVelocity();
 }
