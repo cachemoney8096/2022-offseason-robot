@@ -8,24 +8,30 @@ import net.cachemoney8096.frc2022o.RobotMap;
 
 public class Indexer implements Subsystem {
 
+	// Actuators
 	private final CANSparkMax indexerMotorOne;
 	private final CANSparkMax indexerMotorTwo;
 	private final CANSparkMax indexerMotorThree;
 
+	// Sensors
 	private final DigitalInput cargoSensor;
 
 	public Indexer(){
 		indexerMotorOne = new CANSparkMax(RobotMap.INDEXER_MOTOR_ONE_ID, MotorType.kBrushless);
+		indexerMotorOne.restoreFactoryDefaults();
 		indexerMotorOne.setIdleMode(CANSparkMax.IdleMode.kCoast);
 		indexerMotorOne.setInverted(false);
 		// indexerMotorOne.setSmartCurrentLimit(25);
+		// following line used to reduce CAN utilization?
 		// indexerMotorOne.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus1, 100);
 		
-		indexerMotorTwo = new CANSparkMax(RobotMap.INDEXER_MOTOR_ONE_ID, MotorType.kBrushless);
+		indexerMotorTwo = new CANSparkMax(RobotMap.INDEXER_MOTOR_TWO_ID, MotorType.kBrushless);
+		indexerMotorTwo.restoreFactoryDefaults();
 		indexerMotorTwo.setIdleMode(CANSparkMax.IdleMode.kCoast);
 		indexerMotorTwo.follow(indexerMotorOne);
 		
-		indexerMotorThree = new CANSparkMax(RobotMap.INDEXER_MOTOR_ONE_ID, MotorType.kBrushless);
+		indexerMotorThree = new CANSparkMax(RobotMap.INDEXER_MOTOR_THREE_ID, MotorType.kBrushless);
+		indexerMotorThree.restoreFactoryDefaults();
 		indexerMotorThree.setIdleMode(CANSparkMax.IdleMode.kCoast);
 
 		cargoSensor = new DigitalInput(RobotMap.INDEXER_DIO);
@@ -37,8 +43,7 @@ public class Indexer implements Subsystem {
 	}
 
 	public boolean hasCargo() {
-		// check cargoSensor
-		return false;
+		return cargoSensor.get();
 	}
 
 	public void indexBall() {
