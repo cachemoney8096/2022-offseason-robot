@@ -12,19 +12,19 @@ import edu.wpi.first.wpilibj2.command.Subsystem;
 public class Shooter  implements Subsystem{
 
     // Actuators
-	private final CANSparkMax shooterMotorOne;
+    private final CANSparkMax shooterMotorOne;
     private final SparkMaxPIDController shooterPID;
-	private final CANSparkMax shooterMotorTwo;
-	private final CANSparkMax hoodMotor;
+    private final CANSparkMax shooterMotorTwo;
+    private final CANSparkMax hoodMotor;
     private final SparkMaxPIDController hoodPID;
 
     // Sensors
     private final RelativeEncoder shooterEncoder;
     private final RelativeEncoder hoodEncoder;
 
-	public Shooter(){
+    public Shooter(){
         shooterMotorOne = new CANSparkMax(RobotMap.SHOOTER_MOTOR_ONE_ID, MotorType.kBrushless);
-		shooterMotorOne.restoreFactoryDefaults();
+        shooterMotorOne.restoreFactoryDefaults();
         shooterEncoder = shooterMotorOne.getEncoder();
         // shooterEncoder.setVelocityConversionFactor(???);
         shooterPID = shooterMotorOne.getPIDController();
@@ -34,12 +34,12 @@ public class Shooter  implements Subsystem{
         // shooterPID.setFF();
         
         shooterMotorTwo = new CANSparkMax(RobotMap.SHOOTER_MOTOR_TWO_ID, MotorType.kBrushless);
-		shooterMotorTwo.restoreFactoryDefaults();
+        shooterMotorTwo.restoreFactoryDefaults();
         final boolean INVERT_FOLLOW = true;
         shooterMotorTwo.follow(shooterMotorOne, INVERT_FOLLOW);
         
         hoodMotor = new CANSparkMax(RobotMap.HOOD_MOTOR_ID, MotorType.kBrushless);
-		hoodMotor.restoreFactoryDefaults();
+        hoodMotor.restoreFactoryDefaults();
         final int HOOD_MOTOR_CURRENT_LIMIT = 40;
         hoodMotor.setSmartCurrentLimit(HOOD_MOTOR_CURRENT_LIMIT);
         hoodEncoder = hoodMotor.getEncoder();
