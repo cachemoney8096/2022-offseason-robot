@@ -4,6 +4,7 @@
 
 package net.cachemoney8096.frc2022o;
 
+import net.cachemoney8096.frc2022o.subsystems.Drivetrain;
 import net.cachemoney8096.frc2022o.subsystems.Intake;
 import net.cachemoney8096.frc2022o.subsystems.Indexer;
 import net.cachemoney8096.frc2022o.subsystems.Shooter;
@@ -25,6 +26,7 @@ public class RobotContainer {
   private final Intake intake;
   private final Indexer indexer;
   private final Shooter shooter;
+  private final Drivetrain drivetrain;
 
   private SendableChooser<Command> autonChooser;
 
@@ -38,6 +40,7 @@ public class RobotContainer {
     indexer = new Indexer();
     intake = new Intake();
     shooter = new Shooter();
+    drivetrain = new Drivetrain();
 
     configureButtonBindings();
     configureAuton();
