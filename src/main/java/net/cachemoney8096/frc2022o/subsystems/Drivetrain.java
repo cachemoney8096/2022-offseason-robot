@@ -15,105 +15,107 @@ import net.cachemoney8096.frc2022o.libs.AbsoluteEncoderFromDioConfiguration;
 import net.cachemoney8096.frc2022o.libs.AbsoluteEncoderFromDioFactoryBuilder;
 
 public class Drivetrain implements Subsystem {
-    
-    private final ModuleConfiguration moduleConfiguration;
-    private final CoussensModuleConfiguration coussensModuleConfiguration;
 
-    private final SwerveModule frontLeftModule;
-    private final SwerveModule frontRightModule;
-    private final SwerveModule backLeftModule;
-    private final SwerveModule backRightModule;
+  private final ModuleConfiguration moduleConfiguration;
+  private final CoussensModuleConfiguration coussensModuleConfiguration;
 
-    private final double wheelDiametersInches = 3.0;
-    private final double wheelDiameterMeters = Units.inchesToMeters(wheelDiametersInches);
-    private final double driveReduction = 4.8;
-    private final boolean driveInverted = false;
-    private final double steerReduction = 11.25;
-    private final boolean steerInverted = false;
+  private final SwerveModule frontLeftModule;
+  private final SwerveModule frontRightModule;
+  private final SwerveModule backLeftModule;
+  private final SwerveModule backRightModule;
 
-    public Drivetrain() {
-        moduleConfiguration = new ModuleConfiguration(
-            wheelDiameterMeters,
-            driveReduction,
-            driveInverted,
-            steerReduction,
-            steerInverted
-        );
+  private final double wheelDiametersInches = 3.0;
+  private final double wheelDiameterMeters = Units.inchesToMeters(wheelDiametersInches);
+  private final double driveReduction = 4.8;
+  private final boolean driveInverted = false;
+  private final double steerReduction = 11.25;
+  private final boolean steerInverted = false;
 
-        coussensModuleConfiguration = new CoussensModuleConfiguration();
+  public Drivetrain() {
+    moduleConfiguration =
+        new ModuleConfiguration(
+            wheelDiameterMeters, driveReduction, driveInverted, steerReduction, steerInverted);
 
-        frontLeftModule = new SwerveModuleFactory<>(
-            moduleConfiguration,
-            new NeoDriveControllerFactoryBuilder()
-            .withVoltageCompensation(coussensModuleConfiguration.getNominalVoltage())
-            .withCurrentLimit(coussensModuleConfiguration.getDriveCurrentLimit())
-            .build(),
-            new NeoSteerControllerFactoryBuilder()
-            .withVoltageCompensation(coussensModuleConfiguration.getNominalVoltage())
-            .withPidConstants(1.0, 0.0, 0.1)
-            .withCurrentLimit(coussensModuleConfiguration.getSteerCurrentLimit())
-            .build(new AbsoluteEncoderFromDioFactoryBuilder().build()))
-        .create(
-            // container, maybe want to add shuffleboard here
-            RobotMap.DRIVE_FRONT_LEFT_ID,
-            new NeoSteerConfiguration<AbsoluteEncoderFromDioConfiguration>(
-                RobotMap.STEER_FRONT_LEFT_ID, new AbsoluteEncoderFromDioConfiguration(
-                    RobotMap.SWERVE_FRONT_LEFT_DIO, Constants.FRONT_LEFT_STEER_OFFSET_RAD)));
+    coussensModuleConfiguration = new CoussensModuleConfiguration();
 
-        frontRightModule = new SwerveModuleFactory<>(
-            moduleConfiguration,
-            new NeoDriveControllerFactoryBuilder()
-            .withVoltageCompensation(coussensModuleConfiguration.getNominalVoltage())
-            .withCurrentLimit(coussensModuleConfiguration.getDriveCurrentLimit())
-            .build(),
-            new NeoSteerControllerFactoryBuilder()
-            .withVoltageCompensation(coussensModuleConfiguration.getNominalVoltage())
-            .withPidConstants(1.0, 0.0, 0.1)
-            .withCurrentLimit(coussensModuleConfiguration.getSteerCurrentLimit())
-            .build(new AbsoluteEncoderFromDioFactoryBuilder().build()))
-        .create(
-            // container, maybe want to add shuffleboard here
-            RobotMap.DRIVE_FRONT_RIGHT_ID,
-            new NeoSteerConfiguration<AbsoluteEncoderFromDioConfiguration>(
-                RobotMap.STEER_FRONT_RIGHT_ID, new AbsoluteEncoderFromDioConfiguration(
-                    RobotMap.SWERVE_FRONT_RIGHT_DIO, Constants.FRONT_RIGHT_STEER_OFFSET_RAD)));
+    frontLeftModule =
+        new SwerveModuleFactory<>(
+                moduleConfiguration,
+                new NeoDriveControllerFactoryBuilder()
+                    .withVoltageCompensation(coussensModuleConfiguration.getNominalVoltage())
+                    .withCurrentLimit(coussensModuleConfiguration.getDriveCurrentLimit())
+                    .build(),
+                new NeoSteerControllerFactoryBuilder()
+                    .withVoltageCompensation(coussensModuleConfiguration.getNominalVoltage())
+                    .withPidConstants(1.0, 0.0, 0.1)
+                    .withCurrentLimit(coussensModuleConfiguration.getSteerCurrentLimit())
+                    .build(new AbsoluteEncoderFromDioFactoryBuilder().build()))
+            .create(
+                // container, maybe want to add shuffleboard here
+                RobotMap.DRIVE_FRONT_LEFT_ID,
+                new NeoSteerConfiguration<AbsoluteEncoderFromDioConfiguration>(
+                    RobotMap.STEER_FRONT_LEFT_ID,
+                    new AbsoluteEncoderFromDioConfiguration(
+                        RobotMap.SWERVE_FRONT_LEFT_DIO, Constants.FRONT_LEFT_STEER_OFFSET_RAD)));
 
-        backLeftModule = new SwerveModuleFactory<>(
-            moduleConfiguration,
-            new NeoDriveControllerFactoryBuilder()
-            .withVoltageCompensation(coussensModuleConfiguration.getNominalVoltage())
-            .withCurrentLimit(coussensModuleConfiguration.getDriveCurrentLimit())
-            .build(),
-            new NeoSteerControllerFactoryBuilder()
-            .withVoltageCompensation(coussensModuleConfiguration.getNominalVoltage())
-            .withPidConstants(1.0, 0.0, 0.1)
-            .withCurrentLimit(coussensModuleConfiguration.getSteerCurrentLimit())
-            .build(new AbsoluteEncoderFromDioFactoryBuilder().build()))
-        .create(
-            // container, maybe want to add shuffleboard here
-            RobotMap.DRIVE_BACK_LEFT_ID,
-            new NeoSteerConfiguration<AbsoluteEncoderFromDioConfiguration>(
-                RobotMap.STEER_BACK_LEFT_ID, new AbsoluteEncoderFromDioConfiguration(
-                    RobotMap.SWERVE_BACK_LEFT_DIO, Constants.BACK_LEFT_STEER_OFFSET_RAD)));
+    frontRightModule =
+        new SwerveModuleFactory<>(
+                moduleConfiguration,
+                new NeoDriveControllerFactoryBuilder()
+                    .withVoltageCompensation(coussensModuleConfiguration.getNominalVoltage())
+                    .withCurrentLimit(coussensModuleConfiguration.getDriveCurrentLimit())
+                    .build(),
+                new NeoSteerControllerFactoryBuilder()
+                    .withVoltageCompensation(coussensModuleConfiguration.getNominalVoltage())
+                    .withPidConstants(1.0, 0.0, 0.1)
+                    .withCurrentLimit(coussensModuleConfiguration.getSteerCurrentLimit())
+                    .build(new AbsoluteEncoderFromDioFactoryBuilder().build()))
+            .create(
+                // container, maybe want to add shuffleboard here
+                RobotMap.DRIVE_FRONT_RIGHT_ID,
+                new NeoSteerConfiguration<AbsoluteEncoderFromDioConfiguration>(
+                    RobotMap.STEER_FRONT_RIGHT_ID,
+                    new AbsoluteEncoderFromDioConfiguration(
+                        RobotMap.SWERVE_FRONT_RIGHT_DIO, Constants.FRONT_RIGHT_STEER_OFFSET_RAD)));
 
-    backRightModule = new SwerveModuleFactory<>(
-        moduleConfiguration,
-        new NeoDriveControllerFactoryBuilder()
-        .withVoltageCompensation(coussensModuleConfiguration.getNominalVoltage())
-        .withCurrentLimit(coussensModuleConfiguration.getDriveCurrentLimit())
-        .build(),
-        new NeoSteerControllerFactoryBuilder()
-        .withVoltageCompensation(coussensModuleConfiguration.getNominalVoltage())
-        .withPidConstants(1.0, 0.0, 0.1)
-        .withCurrentLimit(coussensModuleConfiguration.getSteerCurrentLimit())
-        .build(new AbsoluteEncoderFromDioFactoryBuilder().build()))
-    .create(
-        // container, maybe want to add shuffleboard here
-        RobotMap.DRIVE_BACK_RIGHT_ID,
-        new NeoSteerConfiguration<AbsoluteEncoderFromDioConfiguration>(
-            RobotMap.STEER_BACK_RIGHT_ID, new AbsoluteEncoderFromDioConfiguration(
-                RobotMap.SWERVE_BACK_RIGHT_DIO, Constants.BACK_RIGHT_STEER_OFFSET_RAD)));
-  
-    }
+    backLeftModule =
+        new SwerveModuleFactory<>(
+                moduleConfiguration,
+                new NeoDriveControllerFactoryBuilder()
+                    .withVoltageCompensation(coussensModuleConfiguration.getNominalVoltage())
+                    .withCurrentLimit(coussensModuleConfiguration.getDriveCurrentLimit())
+                    .build(),
+                new NeoSteerControllerFactoryBuilder()
+                    .withVoltageCompensation(coussensModuleConfiguration.getNominalVoltage())
+                    .withPidConstants(1.0, 0.0, 0.1)
+                    .withCurrentLimit(coussensModuleConfiguration.getSteerCurrentLimit())
+                    .build(new AbsoluteEncoderFromDioFactoryBuilder().build()))
+            .create(
+                // container, maybe want to add shuffleboard here
+                RobotMap.DRIVE_BACK_LEFT_ID,
+                new NeoSteerConfiguration<AbsoluteEncoderFromDioConfiguration>(
+                    RobotMap.STEER_BACK_LEFT_ID,
+                    new AbsoluteEncoderFromDioConfiguration(
+                        RobotMap.SWERVE_BACK_LEFT_DIO, Constants.BACK_LEFT_STEER_OFFSET_RAD)));
 
+    backRightModule =
+        new SwerveModuleFactory<>(
+                moduleConfiguration,
+                new NeoDriveControllerFactoryBuilder()
+                    .withVoltageCompensation(coussensModuleConfiguration.getNominalVoltage())
+                    .withCurrentLimit(coussensModuleConfiguration.getDriveCurrentLimit())
+                    .build(),
+                new NeoSteerControllerFactoryBuilder()
+                    .withVoltageCompensation(coussensModuleConfiguration.getNominalVoltage())
+                    .withPidConstants(1.0, 0.0, 0.1)
+                    .withCurrentLimit(coussensModuleConfiguration.getSteerCurrentLimit())
+                    .build(new AbsoluteEncoderFromDioFactoryBuilder().build()))
+            .create(
+                // container, maybe want to add shuffleboard here
+                RobotMap.DRIVE_BACK_RIGHT_ID,
+                new NeoSteerConfiguration<AbsoluteEncoderFromDioConfiguration>(
+                    RobotMap.STEER_BACK_RIGHT_ID,
+                    new AbsoluteEncoderFromDioConfiguration(
+                        RobotMap.SWERVE_BACK_RIGHT_DIO, Constants.BACK_RIGHT_STEER_OFFSET_RAD)));
+  }
 }

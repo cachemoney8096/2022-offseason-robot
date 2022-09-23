@@ -5,9 +5,9 @@ import java.util.Objects;
 /**
  * Additional swerve module configuration parameters.
  *
- * <p>Almost exactly like the Mk3ModuleConfiguration.
- * The configuration parameters here are used to customize the behavior of the swerve module.
- * Each setting is initialized to a default that should be adequate for most use cases.
+ * <p>Almost exactly like the Mk3ModuleConfiguration. The configuration parameters here are used to
+ * customize the behavior of the swerve module. Each setting is initialized to a default that should
+ * be adequate for most use cases.
  */
 public class CoussensModuleConfiguration {
   private double nominalVoltage = 12.0;
