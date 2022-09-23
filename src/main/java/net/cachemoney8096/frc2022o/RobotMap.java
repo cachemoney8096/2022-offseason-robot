@@ -1,20 +1,31 @@
 package net.cachemoney8096.frc2022o;
 
+// Store CAN and port IDs here
 public class RobotMap {
+  // Drivetrain CAN IDs
+  public static final int DRIVE_FRONT_LEFT_ID = 1;
+  public static final int STEER_FRONT_LEFT_ID = 2;
+  public static final int DRIVE_FRONT_RIGHT_ID = 3;
+  public static final int STEER_FRONT_RIGHT_ID = 4;
+  public static final int DRIVE_BACK_LEFT_ID = 5;
+  public static final int STEER_BACK_LEFT_ID = 6;
+  public static final int DRIVE_BACK_RIGHT_ID = 7;
+  public static final int STEER_BACK_RIGHT_ID = 8;
+
   // Intake CAN IDs
-  public static final int INTAKE_MOTOR_ONE_ID = 6;
-  public static final int INTAKE_MOTOR_TWO_ID = 7;
-  public static final int INTAKE_MOTOR_THREE_ID = 8;
+  public static final int INTAKE_MOTOR_ONE_ID = 9;
+  public static final int INTAKE_MOTOR_TWO_ID = 10;
+  public static final int INTAKE_MOTOR_THREE_ID = 11;
 
   // Indexer CAN IDs
-  public static final int INDEXER_MOTOR_ONE_ID = 9;
-  public static final int INDEXER_MOTOR_TWO_ID = 10;
-  public static final int INDEXER_MOTOR_THREE_ID = 11;
+  public static final int INDEXER_MOTOR_ONE_ID = 12;
+  public static final int INDEXER_MOTOR_TWO_ID = 13;
+  public static final int INDEXER_MOTOR_THREE_ID = 14;
 
   // Shooter CAN IDs
-  public static final int SHOOTER_MOTOR_ONE_ID = 12;
-  public static final int SHOOTER_MOTOR_TWO_ID = 13;
-  public static final int HOOD_MOTOR_ID = 14;
+  public static final int SHOOTER_MOTOR_ONE_ID = 15;
+  public static final int SHOOTER_MOTOR_TWO_ID = 16;
+  public static final int HOOD_MOTOR_ID = 17;
 
   // Sensor DIO
   public static final int SWERVE_FRONT_LEFT_DIO = 0;
