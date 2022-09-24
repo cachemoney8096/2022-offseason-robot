@@ -27,6 +27,9 @@ public class RobotMap {
   public static final int SHOOTER_MOTOR_TWO_ID = 16;
   public static final int HOOD_MOTOR_ID = 17;
 
+  // CAN IDs for things other than motor controllers
+  public static final int PIGEON_IMU_ID = 18;
+
   // Sensor DIO
   public static final int SWERVE_FRONT_LEFT_DIO = 0;
   public static final int SWERVE_FRONT_RIGHT_DIO = 1;
