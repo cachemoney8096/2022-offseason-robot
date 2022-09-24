@@ -23,7 +23,7 @@ public class RobotContainer {
   private static RobotContainer INSTANCE;
 
   private final PowerDistribution powerDistribution;
-  private final Intake intake;
+  public final Intake intake;
   private final Indexer indexer;
   private final Shooter shooter;
   private final Drivetrain drivetrain;
