@@ -32,17 +32,16 @@ public class CargoColorDifferentiator {
     }
 
     // Adjust colors to alliances
-    int ourColor = ourAllianceColor.get() == Color.BLUE ? inputColor.blue + COLOR_OFFSET
-        : inputColor.red + COLOR_OFFSET;
+    int ourColor =
+        ourAllianceColor.get() == Color.BLUE
+            ? inputColor.blue + COLOR_OFFSET
+            : inputColor.red + COLOR_OFFSET;
     int theirColor = ourAllianceColor.get() == Color.BLUE ? inputColor.red : inputColor.blue;
 
     // Apply ratio threshold
-    if (ourColor / theirColor > COLOR_RATIO_THRESHOLD)
-      return CargoColor.OURS;
-    else if (theirColor / ourColor > COLOR_RATIO_THRESHOLD)
-      return CargoColor.THEIRS;
-    else
-      return CargoColor.UNKNOWN;
+    if (ourColor / theirColor > COLOR_RATIO_THRESHOLD) return CargoColor.OURS;
+    else if (theirColor / ourColor > COLOR_RATIO_THRESHOLD) return CargoColor.THEIRS;
+    else return CargoColor.UNKNOWN;
   }
 
   // Gets the alliance color if available.

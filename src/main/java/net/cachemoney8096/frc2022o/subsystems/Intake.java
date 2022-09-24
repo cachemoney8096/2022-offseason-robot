@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import net.cachemoney8096.frc2022o.RobotMap;
 import net.cachemoney8096.frc2022o.libs.PicoColorSensor;
-import net.cachemoney8096.frc2022o.libs.CargoColor;
 import net.cachemoney8096.frc2022o.libs.CargoColorDifferentiator;
 import edu.wpi.first.wpilibj.Timer;
 
@@ -55,12 +54,10 @@ public class Intake implements Subsystem {
     // if all three colors return 0, reinstantiate the color sensor
     // based on https://www.chiefdelphi.com/t/rev-color-sensor-stops-outputting/405153/3
     PicoColorSensor.RawColor sensorColor = colorSensor.getRawColor0();
-    if (sensorColor.red == 0 && sensorColor.green == 0 && sensorColor.blue == 0)
-    {
+    if (sensorColor.red == 0 && sensorColor.green == 0 && sensorColor.blue == 0) {
       colorSensor = new PicoColorSensor();
     }
 
-    
     // check for colors
     // if (colorSensor.getProximity0() < ???)
     // {
