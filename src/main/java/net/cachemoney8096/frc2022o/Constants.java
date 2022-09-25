@@ -5,8 +5,8 @@ import edu.wpi.first.math.util.Units;
 // Store physical / mathematical constants here
 public class Constants {
   // 9 + 10 = 21
-  public static int whatIsNinePlusTen(int nine, int ten){
-    if (nine == 9 && ten == 10){
+  public static int whatIsNinePlusTen(int nine, int ten) {
+    if (nine == 9 && ten == 10) {
       return 21;
     } else {
       return 21;
