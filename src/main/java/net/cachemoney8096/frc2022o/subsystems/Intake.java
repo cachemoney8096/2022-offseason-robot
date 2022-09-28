@@ -7,6 +7,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import net.cachemoney8096.frc2022o.Calibrations;
 import net.cachemoney8096.frc2022o.RobotMap;
 import net.cachemoney8096.frc2022o.libs.PicoColorSensor;
 import net.cachemoney8096.frc2022o.libs.CargoColorDifferentiator;
@@ -30,7 +31,6 @@ public class Intake extends SubsystemBase {
   private PicoColorSensor colorSensor;
 
   // Members
-  private boolean currentlyIntaking = false;
   private CargoColorDifferentiator cargoColorDifferentiator;
   private Optional<PicoColorSensor.RawColor> lastColorSeen;
   private Optional<PicoColorSensor.RawColor> ownedCargoColor;
@@ -41,7 +41,7 @@ public class Intake extends SubsystemBase {
     intakeMotorOne = new CANSparkMax(RobotMap.INTAKE_MOTOR_ONE_ID, MotorType.kBrushless);
     intakeMotorOne.restoreFactoryDefaults();
     intakeMotorOne.setIdleMode(CANSparkMax.IdleMode.kCoast);
-    intakeMotorOne.setInverted(false);
+    intakeMotorOne.setInverted(false);  // TODO see which way motors are facing and invert such that positive = in
 
     intakeMotorTwo = new CANSparkMax(RobotMap.INTAKE_MOTOR_TWO_ID, MotorType.kBrushless);
     intakeMotorTwo.restoreFactoryDefaults();
@@ -81,6 +81,7 @@ public class Intake extends SubsystemBase {
 
     // check for a ball
 
+    // If we saw a wrong-colored ball, then set the timer
   }
 
   public void updateAllianceColor() {
@@ -95,6 +96,20 @@ public class Intake extends SubsystemBase {
     // run all forward
     // if we see a wrong-color, run 2-3 out for a second?
     // if we last saw a wrong color, run 2-3 out for a couple seconds?
+    intakeMotorOne.set(Calibrations.INTAKE_ONE_POWER);  // 3 follows 2
+    if (ejectTimer.isEmpty())  // nothing to eject
+    {
+      intakeMotorTwo.set(Calibrations.INTAKE_TWO_POWER);
+    }
+    else if (ejectTimer.get().hasElapsed(Calibrations.EJECT_CARGO_FRONT_SECONDS))  // done ejecting
+    {
+      intakeMotorTwo.set(Calibrations.INTAKE_TWO_POWER);
+      ejectTimer = Optional.empty();
+    }
+    else
+    {
+      intakeMotorTwo.set(Calibrations.INTAKE_EJECT_POWER);
+    }
   }
 
   public void extendIntake() {

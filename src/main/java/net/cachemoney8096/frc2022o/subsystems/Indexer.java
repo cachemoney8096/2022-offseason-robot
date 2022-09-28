@@ -20,7 +20,7 @@ public class Indexer extends SubsystemBase {
     indexerMotorOne = new CANSparkMax(RobotMap.INDEXER_MOTOR_ONE_ID, MotorType.kBrushless);
     indexerMotorOne.restoreFactoryDefaults();
     indexerMotorOne.setIdleMode(CANSparkMax.IdleMode.kCoast);
-    indexerMotorOne.setInverted(false);
+    indexerMotorOne.setInverted(false);  // TODO see which way motors are facing and invert such that positive = in
     // indexerMotorOne.setSmartCurrentLimit(25);
     // following line used to reduce CAN utilization?
     // indexerMotorOne.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus1, 100);

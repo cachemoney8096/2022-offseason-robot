@@ -6,4 +6,12 @@ public class Calibrations {
   public static final double HEADING_LOCK_TRANSLATION_COMMAND_THRESHOLD = 0.1;
   // For rotation commands below this threshold (in [0,1]), heading lock may apply
   public static final double HEADING_LOCK_ROTATION_COMMAND_THRESHOLD = 0.5;
+
+  // How long (in seconds) to eject cargo to the front before returning to intaking
+  public static final double EJECT_CARGO_FRONT_SECONDS = 1.0;
+
+  // Power for intake/indexer motors in [-1.0, 1.0]
+  public static final double INTAKE_ONE_POWER = 1.0;
+  public static final double INTAKE_TWO_POWER = 0.5;
+  public static final double INTAKE_EJECT_POWER = -1.0;
 }
