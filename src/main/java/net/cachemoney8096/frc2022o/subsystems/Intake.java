@@ -41,7 +41,8 @@ public class Intake extends SubsystemBase {
     intakeMotorOne = new CANSparkMax(RobotMap.INTAKE_MOTOR_ONE_ID, MotorType.kBrushless);
     intakeMotorOne.restoreFactoryDefaults();
     intakeMotorOne.setIdleMode(CANSparkMax.IdleMode.kCoast);
-    intakeMotorOne.setInverted(false);  // TODO see which way motors are facing and invert such that positive = in
+    intakeMotorOne.setInverted(
+        false); // TODO see which way motors are facing and invert such that positive = in
 
     intakeMotorTwo = new CANSparkMax(RobotMap.INTAKE_MOTOR_TWO_ID, MotorType.kBrushless);
     intakeMotorTwo.restoreFactoryDefaults();
@@ -53,8 +54,10 @@ public class Intake extends SubsystemBase {
     intakeMotorThree.follow(intakeMotorTwo);
 
     compressor = new Compressor(RobotMap.COMPRESSOR_MODULE_ID, PneumaticsModuleType.CTREPCM);
-    intakeSolenoidLeft = new Solenoid(PneumaticsModuleType.CTREPCM, RobotMap.LEFT_INTAKE_SOLENOID_CHANNEL);
-    intakeSolenoidRight = new Solenoid(PneumaticsModuleType.CTREPCM, RobotMap.RIGHT_INTAKE_SOLENOID_CHANNEL);
+    intakeSolenoidLeft =
+        new Solenoid(PneumaticsModuleType.CTREPCM, RobotMap.LEFT_INTAKE_SOLENOID_CHANNEL);
+    intakeSolenoidRight =
+        new Solenoid(PneumaticsModuleType.CTREPCM, RobotMap.RIGHT_INTAKE_SOLENOID_CHANNEL);
 
     cargoSensor = new DigitalInput(RobotMap.INTAKE_CARGO_DIO);
     colorSensor = new PicoColorSensor();
@@ -96,18 +99,15 @@ public class Intake extends SubsystemBase {
     // run all forward
     // if we see a wrong-color, run 2-3 out for a second?
     // if we last saw a wrong color, run 2-3 out for a couple seconds?
-    intakeMotorOne.set(Calibrations.INTAKE_ONE_POWER);  // 3 follows 2
-    if (ejectTimer.isEmpty())  // nothing to eject
+    intakeMotorOne.set(Calibrations.INTAKE_ONE_POWER); // 3 follows 2
+    if (ejectTimer.isEmpty()) // nothing to eject
     {
       intakeMotorTwo.set(Calibrations.INTAKE_TWO_POWER);
-    }
-    else if (ejectTimer.get().hasElapsed(Calibrations.EJECT_CARGO_FRONT_SECONDS))  // done ejecting
+    } else if (ejectTimer.get().hasElapsed(Calibrations.EJECT_CARGO_FRONT_SECONDS)) // done ejecting
     {
       intakeMotorTwo.set(Calibrations.INTAKE_TWO_POWER);
       ejectTimer = Optional.empty();
-    }
-    else
-    {
+    } else {
       intakeMotorTwo.set(Calibrations.INTAKE_EJECT_POWER);
     }
   }
@@ -120,6 +120,5 @@ public class Intake extends SubsystemBase {
   public void retractIntake() {
     intakeSolenoidLeft.set(false);
     intakeSolenoidRight.set(false);
-
   }
 }
