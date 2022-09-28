@@ -6,13 +6,13 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj2.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import net.cachemoney8096.frc2022o.RobotMap;
 import net.cachemoney8096.frc2022o.libs.PicoColorSensor;
 import net.cachemoney8096.frc2022o.libs.CargoColorDifferentiator;
 import edu.wpi.first.wpilibj.Timer;
 
-public class Intake implements Subsystem {
+public class Intake extends SubsystemBase {
 
   // Actuators
   private final CANSparkMax intakeMotorOne;

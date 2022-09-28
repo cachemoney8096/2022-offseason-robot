@@ -6,10 +6,9 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 import net.cachemoney8096.frc2022o.RobotMap;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-import edu.wpi.first.wpilibj2.command.Subsystem;
-
-public class Shooter implements Subsystem {
+public class Shooter extends SubsystemBase {
 
   // Actuators
   private final CANSparkMax shooterMotorOne;
