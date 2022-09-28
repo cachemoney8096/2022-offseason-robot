@@ -11,6 +11,9 @@ import net.cachemoney8096.frc2022o.RobotMap;
 import net.cachemoney8096.frc2022o.libs.PicoColorSensor;
 import net.cachemoney8096.frc2022o.libs.CargoColorDifferentiator;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.Solenoid;
 
 public class Intake extends SubsystemBase {
 
@@ -18,12 +21,16 @@ public class Intake extends SubsystemBase {
   private final CANSparkMax intakeMotorOne;
   private final CANSparkMax intakeMotorTwo;
   private final CANSparkMax intakeMotorThree;
+  private final Compressor compressor;
+  private final Solenoid intakeSolenoidLeft;
+  private final Solenoid intakeSolenoidRight;
 
   // Sensors
   private final DigitalInput cargoSensor;
   private PicoColorSensor colorSensor;
 
   // Members
+  private boolean currentlyIntaking = false;
   private CargoColorDifferentiator cargoColorDifferentiator;
   private Optional<PicoColorSensor.RawColor> lastColorSeen;
   private Optional<PicoColorSensor.RawColor> ownedCargoColor;
@@ -44,6 +51,10 @@ public class Intake extends SubsystemBase {
     intakeMotorThree.restoreFactoryDefaults();
     intakeMotorThree.setIdleMode(CANSparkMax.IdleMode.kCoast);
     intakeMotorThree.follow(intakeMotorTwo);
+
+    compressor = new Compressor(RobotMap.COMPRESSOR_MODULE_ID, PneumaticsModuleType.CTREPCM);
+    intakeSolenoidLeft = new Solenoid(PneumaticsModuleType.CTREPCM, RobotMap.LEFT_INTAKE_SOLENOID_CHANNEL);
+    intakeSolenoidRight = new Solenoid(PneumaticsModuleType.CTREPCM, RobotMap.RIGHT_INTAKE_SOLENOID_CHANNEL);
 
     cargoSensor = new DigitalInput(RobotMap.INTAKE_CARGO_DIO);
     colorSensor = new PicoColorSensor();
@@ -80,9 +91,20 @@ public class Intake extends SubsystemBase {
     return cargoSensor.get();
   }
 
-  public void intakeBall() {
+  public void intakeCargo() {
     // run all forward
     // if we see a wrong-color, run 2-3 out for a second?
     // if we last saw a wrong color, run 2-3 out for a couple seconds?
+  }
+
+  public void extendIntake() {
+    intakeSolenoidLeft.set(true);
+    intakeSolenoidRight.set(true);
+  }
+
+  public void retractIntake() {
+    intakeSolenoidLeft.set(false);
+    intakeSolenoidRight.set(false);
+
   }
 }

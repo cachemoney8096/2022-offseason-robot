@@ -38,4 +38,9 @@ public class RobotMap {
   public static final int INDEXER_CARGO_DIO = 4;
   public static final int INTAKE_CARGO_DIO = 5;
   public static final int HOOD_ENCODER_DIO = 6;
+
+  // Pneumatics Control Module (PCM) ports
+  public static final int COMPRESSOR_MODULE_ID = 0;
+  public static final int LEFT_INTAKE_SOLENOID_CHANNEL = 0;
+  public static final int RIGHT_INTAKE_SOLENOID_CHANNEL = 1;
 }
