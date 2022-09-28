@@ -3,10 +3,10 @@ package net.cachemoney8096.frc2022o.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj2.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import net.cachemoney8096.frc2022o.RobotMap;
 
-public class Indexer implements Subsystem {
+public class Indexer extends SubsystemBase {
 
   // Actuators
   private final CANSparkMax indexerMotorOne;
@@ -20,7 +20,7 @@ public class Indexer implements Subsystem {
     indexerMotorOne = new CANSparkMax(RobotMap.INDEXER_MOTOR_ONE_ID, MotorType.kBrushless);
     indexerMotorOne.restoreFactoryDefaults();
     indexerMotorOne.setIdleMode(CANSparkMax.IdleMode.kCoast);
-    indexerMotorOne.setInverted(false);
+    indexerMotorOne.setInverted(false);  // TODO see which way motors are facing and invert such that positive = in
     // indexerMotorOne.setSmartCurrentLimit(25);
     // following line used to reduce CAN utilization?
     // indexerMotorOne.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus1, 100);

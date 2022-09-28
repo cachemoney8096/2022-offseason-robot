@@ -10,7 +10,7 @@ import com.swervedrivespecialties.swervelib.SwerveModuleFactory;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
 import com.ctre.phoenix.sensors.PigeonIMU;
-import edu.wpi.first.wpilibj2.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import net.cachemoney8096.frc2022o.libs.CoussensModuleConfiguration;
 import net.cachemoney8096.frc2022o.RobotMap;
 import net.cachemoney8096.frc2022o.Calibrations;
@@ -23,7 +23,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 
-public class Drivetrain implements Subsystem {
+public class Drivetrain extends SubsystemBase {
 
   private class SwerveModuleStates {
     public SwerveModuleState frontLeftSwerveModuleState;
