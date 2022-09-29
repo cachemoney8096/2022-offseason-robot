@@ -14,4 +14,16 @@ public class Calibrations {
   public static final double INTAKE_ONE_POWER = 1.0;
   public static final double INTAKE_TWO_POWER = 0.5;
   public static final double INTAKE_EJECT_POWER = -1.0;
+
+  // Shooter PID
+  public static final double SHOOTER_kP = 0;
+  public static final double SHOOTER_kI = 0;
+  public static final double SHOOTER_kD = 0;
+  public static final double SHOOTER_kF = 0;
+
+  // Hood PID
+  public static final double HOOD_kP = 0;
+  public static final double HOOD_kI = 0;
+  public static final double HOOD_kD = 0;
+  public static final double HOOD_kF = 0;
 }
