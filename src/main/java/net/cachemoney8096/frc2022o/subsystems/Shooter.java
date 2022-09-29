@@ -69,8 +69,10 @@ public class Shooter extends SubsystemBase {
     shooterPID.setReference(velocity, ControlType.kVelocity);
   }
 
-  public boolean checkShootReady(double hood_min, double hood_max, double shoot_min, double shoot_max){
-    if ((hood_min <= this.getHoodPosition() && this.getHoodPosition() <= hood_max) && (shoot_min <= this.getShooterVelocity() && this.getShooterVelocity() <= shoot_max)){
+  public boolean checkShootReady(
+      double hood_min, double hood_max, double shoot_min, double shoot_max) {
+    if ((hood_min <= this.getHoodPosition() && this.getHoodPosition() <= hood_max)
+        && (shoot_min <= this.getShooterVelocity() && this.getShooterVelocity() <= shoot_max)) {
       return true;
     } else {
       return false;
