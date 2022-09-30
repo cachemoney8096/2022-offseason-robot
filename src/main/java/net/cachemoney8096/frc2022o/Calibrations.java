@@ -16,14 +16,16 @@ public class Calibrations {
   public static final double INTAKE_EJECT_POWER = -1.0;
 
   // Shooter PID
-  public static final double SHOOTER_kP = 0;
-  public static final double SHOOTER_kI = 0;
-  public static final double SHOOTER_kD = 0;
-  public static final double SHOOTER_kF = 0;
+  public static final double SHOOTER_kP = Constants.PLACEHOLDER_DOUBLE;
+  public static final double SHOOTER_kI = Constants.PLACEHOLDER_DOUBLE;
+  public static final double SHOOTER_kD = Constants.PLACEHOLDER_DOUBLE;
+  public static final double SHOOTER_kF = Constants.PLACEHOLDER_DOUBLE;
+  public static final double SHOOTER_RANGE = Constants.PLACEHOLDER_DOUBLE;
 
   // Hood PID
-  public static final double HOOD_kP = 0;
-  public static final double HOOD_kI = 0;
-  public static final double HOOD_kD = 0;
-  public static final double HOOD_kF = 0;
+  public static final double HOOD_kP = Constants.PLACEHOLDER_DOUBLE;
+  public static final double HOOD_kI = Constants.PLACEHOLDER_DOUBLE;
+  public static final double HOOD_kD = Constants.PLACEHOLDER_DOUBLE;
+  public static final double HOOD_kF = Constants.PLACEHOLDER_DOUBLE;
+  public static final double HOOD_RANGE = Constants.PLACEHOLDER_DOUBLE;
 }

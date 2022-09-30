@@ -9,6 +9,9 @@ import net.cachemoney8096.frc2022o.RobotMap;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import net.cachemoney8096.frc2022o.Calibrations;
+import net.cachemoney8096.frc2022o.Constants;
+
+import java.lang.Math;
 
 public class Shooter extends SubsystemBase {
 
@@ -23,11 +26,15 @@ public class Shooter extends SubsystemBase {
   private final RelativeEncoder shooterEncoder;
   private final DutyCycleEncoder hoodAbsoluteEncoder;
 
+  private double ShooterSetpointRPM = 0;
+  private double HoodSetpointDeg = 0;
+
   public Shooter() {
     shooterMotorOne = new CANSparkMax(RobotMap.SHOOTER_MOTOR_ONE_ID, MotorType.kBrushless);
     shooterMotorOne.restoreFactoryDefaults();
     shooterEncoder = shooterMotorOne.getEncoder();
-    // shooterEncoder.setVelocityConversionFactor(???);
+    shooterEncoder.setVelocityConversionFactor(Constants.SHOOTER_ENCODER_RATIO);
+
     shooterPID = shooterMotorOne.getPIDController();
     shooterPID.setP(Calibrations.SHOOTER_kP);
     shooterPID.setI(Calibrations.SHOOTER_kI);
@@ -44,8 +51,8 @@ public class Shooter extends SubsystemBase {
     final int HOOD_MOTOR_CURRENT_LIMIT = 40;
     hoodMotor.setSmartCurrentLimit(HOOD_MOTOR_CURRENT_LIMIT);
     hoodAbsoluteEncoder = new DutyCycleEncoder(RobotMap.HOOD_ENCODER_DIO);
-    // hoodAbsoluteEncoder.setDistancePerRotation(???);
-    // TODO use wpilib PID to do position control on the roboRIO
+    hoodAbsoluteEncoder.setDistancePerRotation(360 * Constants.HOOD_ENCODER_RATIO);
+
     hoodPID = hoodMotor.getPIDController();
     hoodPID.setP(Calibrations.HOOD_kP);
     hoodPID.setI(Calibrations.HOOD_kI);
@@ -63,16 +70,17 @@ public class Shooter extends SubsystemBase {
 
   public void setHoodPosition(double position_deg) {
     hoodPID.setReference(position_deg, ControlType.kPosition);
+    HoodSetpointDeg = position_deg;
   }
 
-  public void setShooterVelocity(double velocity) {
-    shooterPID.setReference(velocity, ControlType.kVelocity);
+  public void setShooterVelocity(double velocity_rpm) {
+    shooterPID.setReference(velocity_rpm, ControlType.kVelocity);
+    ShooterSetpointRPM = velocity_rpm;
   }
 
-  public boolean checkShootReady(
-      double hood_min, double hood_max, double shoot_min, double shoot_max) {
-    if ((hood_min <= this.getHoodPosition() && this.getHoodPosition() <= hood_max)
-        && (shoot_min <= this.getShooterVelocity() && this.getShooterVelocity() <= shoot_max)) {
+  public boolean checkShootReady(){
+
+    if (Math.abs(getHoodPosition() - HoodSetpointDeg) > Calibrations.HOOD_RANGE && Math.abs(getShooterVelocity() - ShooterSetpointRPM) > Calibrations.SHOOTER_RANGE){
       return true;
     } else {
       return false;
