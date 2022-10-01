@@ -31,7 +31,7 @@ public class Intake extends SubsystemBase {
   private PicoColorSensor colorSensor;
 
   // Members
-  private CargoColorDifferentiator cargoColorDifferentiator;
+  private CargoColorDifferentiator cargoColorDifferentiator = new CargoColorDifferentiator();
   private Optional<PicoColorSensor.RawColor> lastColorSeen;
   private Optional<PicoColorSensor.RawColor> ownedCargoColor;
   private Optional<PicoColorSensor.RawColor> colorPassedToindexer;
