@@ -20,12 +20,12 @@ public class Calibrations {
   public static final double SHOOTER_kI = Constants.PLACEHOLDER_DOUBLE;
   public static final double SHOOTER_kD = Constants.PLACEHOLDER_DOUBLE;
   public static final double SHOOTER_kF = Constants.PLACEHOLDER_DOUBLE;
-  public static final double SHOOTER_RANGE = Constants.PLACEHOLDER_DOUBLE;
+  public static final double SHOOTER_RANGE_RPM = Constants.PLACEHOLDER_DOUBLE;
 
   // Hood PID
   public static final double HOOD_kP = Constants.PLACEHOLDER_DOUBLE;
   public static final double HOOD_kI = Constants.PLACEHOLDER_DOUBLE;
   public static final double HOOD_kD = Constants.PLACEHOLDER_DOUBLE;
   public static final double HOOD_kF = Constants.PLACEHOLDER_DOUBLE;
-  public static final double HOOD_RANGE = Constants.PLACEHOLDER_DOUBLE;
+  public static final double HOOD_RANGE_DEG = Constants.PLACEHOLDER_DOUBLE;
 }

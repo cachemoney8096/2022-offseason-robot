@@ -51,7 +51,7 @@ public class Shooter extends SubsystemBase {
     final int HOOD_MOTOR_CURRENT_LIMIT = 40;
     hoodMotor.setSmartCurrentLimit(HOOD_MOTOR_CURRENT_LIMIT);
     hoodAbsoluteEncoder = new DutyCycleEncoder(RobotMap.HOOD_ENCODER_DIO);
-    hoodAbsoluteEncoder.setDistancePerRotation(360 * Constants.HOOD_ENCODER_RATIO);
+    hoodAbsoluteEncoder.setDistancePerRotation(360 / Constants.HOOD_ENCODER_RATIO);
 
     hoodPID = hoodMotor.getPIDController();
     hoodPID.setP(Calibrations.HOOD_kP);
@@ -68,22 +68,22 @@ public class Shooter extends SubsystemBase {
     return shooterEncoder.getVelocity();
   }
 
-  public void setHoodPosition(double position_deg) {
-    hoodPID.setReference(position_deg, ControlType.kPosition);
-    HoodSetpointDeg = position_deg;
+  public void setHoodPosition(double positionDeg) {
+    hoodPID.setReference(positionDeg, ControlType.kPosition);
+    HoodSetpointDeg = positionDeg;
   }
 
-  public void setShooterVelocity(double velocity_rpm) {
-    shooterPID.setReference(velocity_rpm, ControlType.kVelocity);
-    ShooterSetpointRPM = velocity_rpm;
+  public void setShooterVelocity(double velocityRpm) {
+    shooterPID.setReference(velocityRpm, ControlType.kVelocity);
+    ShooterSetpointRPM = velocityRpm;
   }
 
   public boolean checkShootReady(){
 
-    if (Math.abs(getHoodPosition() - HoodSetpointDeg) > Calibrations.HOOD_RANGE && Math.abs(getShooterVelocity() - ShooterSetpointRPM) > Calibrations.SHOOTER_RANGE){
-      return true;
+    if (Math.abs(getHoodPosition() - HoodSetpointDeg) < Calibrations.HOOD_RANGE_DEG && Math.abs(getShooterVelocity() - ShooterSetpointRPM) < Calibrations.SHOOTER_RANGE_RPM){
+      return true; // ready
     } else {
-      return false;
+      return false; // not ready
     }
   }
 }
