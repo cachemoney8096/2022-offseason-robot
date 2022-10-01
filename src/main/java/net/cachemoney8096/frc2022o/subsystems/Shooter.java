@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import net.cachemoney8096.frc2022o.Calibrations;
 import net.cachemoney8096.frc2022o.Constants;
 
-import java.lang.Math;
 
 public class Shooter extends SubsystemBase {
 
@@ -78,9 +77,10 @@ public class Shooter extends SubsystemBase {
     ShooterSetpointRPM = velocityRpm;
   }
 
-  public boolean checkShootReady(){
+  public boolean checkShootReady() {
 
-    if (Math.abs(getHoodPosition() - HoodSetpointDeg) < Calibrations.HOOD_RANGE_DEG && Math.abs(getShooterVelocity() - ShooterSetpointRPM) < Calibrations.SHOOTER_RANGE_RPM){
+    if (Math.abs(getHoodPosition() - HoodSetpointDeg) < Calibrations.HOOD_RANGE_DEG
+        && Math.abs(getShooterVelocity() - ShooterSetpointRPM) < Calibrations.SHOOTER_RANGE_RPM) {
       return true; // ready
     } else {
       return false; // not ready

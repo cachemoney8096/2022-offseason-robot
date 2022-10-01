@@ -1,6 +1,5 @@
 package net.cachemoney8096.frc2022o;
 
-import edu.wpi.first.math.util.Units;
 
 // Store physical / mathematical constants here
 public class Constants {
