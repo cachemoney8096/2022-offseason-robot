@@ -170,10 +170,11 @@ public class Drivetrain extends SubsystemBase {
     gyroOffsetRad = 0;
   }
 
-  // Sets the commands to the swerve modules.
+  /* Sets the commands to the swerve modules.
   // xCommand, yCommand, and rotationCommand are expected to be in [-1, 1].
   // If fieldRelative is false, then the command is considered to be
   // robot-relative (x is forward).
+  */
   public void drive(
       double xCommand, double yCommand, double rotationCommand, boolean fieldRelative) {
     // Check whether to keep current heading (translation-only)
