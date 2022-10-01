@@ -1,6 +1,5 @@
 package net.cachemoney8096.frc2022o;
 
-
 // Store physical / mathematical constants here
 public class Constants {
   public static final double PLACEHOLDER_DOUBLE = 21.0;
