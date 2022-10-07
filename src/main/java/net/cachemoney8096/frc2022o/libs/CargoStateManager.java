@@ -2,7 +2,6 @@ package net.cachemoney8096.frc2022o.libs;
 
 import java.util.Optional;
 
-
 /**
  * This class takes info from the intake and indexer to determine all the cargo states of the robot
  */

@@ -12,17 +12,17 @@ public class CargoColorDifferentiator {
 
   private Optional<Color> ourAllianceColor = Optional.empty();
 
-  /** Added to whichever is our color, which is in 0-255.
-   * This results in a bias towards thinking cargo are ours, 
-   * depending on the difference between this and THEIR_COLOR_OFFSET.
-   * Also avoids divide-by-zero if the observed color is zero.
+  /**
+   * Added to whichever is our color, which is in 0-255. This results in a bias towards thinking
+   * cargo are ours, depending on the difference between this and THEIR_COLOR_OFFSET. Also avoids
+   * divide-by-zero if the observed color is zero.
    */
   private final int OUR_COLOR_OFFSET = 30;
 
-  /** Added to whichever is their color, which is in 0-255.
-   * This results in a bias towards thinking cargo are ours,
-   * depending on the difference between this and OUR_COLOR_OFFSET.
-   * Also avoids divide-by-zero if the observed color is zero.
+  /**
+   * Added to whichever is their color, which is in 0-255. This results in a bias towards thinking
+   * cargo are ours, depending on the difference between this and OUR_COLOR_OFFSET. Also avoids
+   * divide-by-zero if the observed color is zero.
    */
   private final int THEIR_COLOR_OFFSET = 1;
 
