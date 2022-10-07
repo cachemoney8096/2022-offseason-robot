@@ -57,6 +57,8 @@ public class CargoStateManager {
     /** The color of cargo currently held by the indexer */
     public Optional<CargoColor> indexerCurrentCargo = Optional.empty();
 
+    public RobotCargoState() {}
+
     public RobotCargoState(
         Optional<CargoColor> intakeLastColorSeenIn,
         Optional<CargoColor> intakeCurrentCargoIn,
@@ -69,7 +71,7 @@ public class CargoStateManager {
     }
   }
 
-  private RobotCargoState robotCargoState;
+  private RobotCargoState robotCargoState = new RobotCargoState();
 
   /** Override for robot cargo state, mostly for initialization purposes */
   public void overrideCargoState(CargoColor intakeCargoColorIn, CargoColor indexerCargoColorIn) {

@@ -12,9 +12,19 @@ public class CargoColorDifferentiator {
 
   private Optional<Color> ourAllianceColor = Optional.empty();
 
-  // Added to whichever is our color, which is in 0-255.
-  // This results in a bias towards thinking cargo are ours.
-  private final int COLOR_OFFSET = 0;
+  /** Added to whichever is our color, which is in 0-255.
+   * This results in a bias towards thinking cargo are ours, 
+   * depending on the difference between this and THEIR_COLOR_OFFSET.
+   * Also avoids divide-by-zero if the observed color is zero.
+   */
+  private final int OUR_COLOR_OFFSET = 30;
+
+  /** Added to whichever is their color, which is in 0-255.
+   * This results in a bias towards thinking cargo are ours,
+   * depending on the difference between this and OUR_COLOR_OFFSET.
+   * Also avoids divide-by-zero if the observed color is zero.
+   */
+  private final int THEIR_COLOR_OFFSET = 1;
 
   // If ratio is above this, consider the ball known
   private final double COLOR_RATIO_THRESHOLD = 1.5;
@@ -34,9 +44,12 @@ public class CargoColorDifferentiator {
     // Adjust colors to alliances
     int ourColor =
         ourAllianceColor.get() == Color.BLUE
-            ? inputColor.blue + COLOR_OFFSET
-            : inputColor.red + COLOR_OFFSET;
-    int theirColor = ourAllianceColor.get() == Color.BLUE ? inputColor.red : inputColor.blue;
+            ? inputColor.blue + OUR_COLOR_OFFSET
+            : inputColor.red + OUR_COLOR_OFFSET;
+    int theirColor =
+        ourAllianceColor.get() == Color.BLUE
+            ? inputColor.red + THEIR_COLOR_OFFSET
+            : inputColor.blue + THEIR_COLOR_OFFSET;
 
     // Apply ratio threshold
     if (ourColor / theirColor > COLOR_RATIO_THRESHOLD) return CargoColor.OURS;
