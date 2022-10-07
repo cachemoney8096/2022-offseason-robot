@@ -10,10 +10,21 @@ public class Calibrations {
   // How long (in seconds) to eject cargo to the front before returning to intaking
   public static final double EJECT_CARGO_FRONT_SECONDS = 1.0;
 
+  // How long (in seconds) to eject cargo to the front before returning to intaking
+  public static final double EJECT_CARGO_BACK_SECONDS = 1.0;
+
+  /** Threshold for proximity from color sensor to consider there to be something there */
+  public static final int COLOR_SENSOR_PROXIMITY_THRESHOLD = Constants.PLACEHOLDER_INT;
+
   // Power for intake/indexer motors in [-1.0, 1.0]
   public static final double INTAKE_ONE_POWER = 1.0;
   public static final double INTAKE_TWO_POWER = 0.5;
   public static final double INTAKE_EJECT_POWER = -1.0;
+
+  // Power for intake/indexer motors in [-1.0, 1.0]
+  public static final double INDEXER_ONE_POWER = 0.5;
+  public static final double INDEXER_THREE_POWER = 0.5;
+  public static final double INDEXER_EJECT_POWER = -1.0;
 
   // Shooter PID
   public static final double SHOOTER_kP = Constants.PLACEHOLDER_DOUBLE;

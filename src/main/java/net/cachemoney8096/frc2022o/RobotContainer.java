@@ -38,7 +38,7 @@ public class RobotContainer {
     powerDistribution.clearStickyFaults();
 
     indexer = new Indexer();
-    intake = new Intake();
+    intake = new Intake(indexer);
     shooter = new Shooter();
     drivetrain = new Drivetrain();
 
