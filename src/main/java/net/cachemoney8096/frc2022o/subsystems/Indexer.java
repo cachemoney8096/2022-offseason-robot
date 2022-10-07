@@ -82,22 +82,24 @@ public class Indexer extends SubsystemBase {
       }
     }
 
-    if (instructionFromIntake == IndexerInstruction.HOLD) {
-      // Hold => all motors do nothing
-      indexerMotorOne.set(0); // 2 follows 1
-      indexerMotorThree.set(0);
-    }
-    else if (instructionFromIntake == IndexerInstruction.EJECT) {
-      // Should eject => set new ejection timer and start ejecting!
-      ejectTimer = Optional.of(new Timer());
-      indexerMotorOne.set(Calibrations.INDEXER_ONE_POWER); // 2 follows 1
-      indexerMotorThree.set(Calibrations.INDEXER_EJECT_POWER);
-    }
-    else {
-      // Index => Only run 1/2, 3 stays steady to not let the ball go into
-      // the shooter or get ejected
-      indexerMotorOne.set(Calibrations.INDEXER_ONE_POWER); // 2 follows 1
-      indexerMotorThree.set(0);
+    switch (instructionFromIntake) {
+      case HOLD:
+        // Hold => all motors do nothing
+        indexerMotorOne.set(0); // 2 follows 1
+        indexerMotorThree.set(0);
+        break;
+      case EJECT:
+        // Should eject => set new ejection timer and start ejecting!
+        ejectTimer = Optional.of(new Timer());
+        indexerMotorOne.set(Calibrations.INDEXER_ONE_POWER); // 2 follows 1
+        indexerMotorThree.set(Calibrations.INDEXER_EJECT_POWER);
+        break;
+      case INDEX:
+        // Index => Only run 1/2, 3 stays steady to not let the ball go into
+        // the shooter or get ejected
+        indexerMotorOne.set(Calibrations.INDEXER_ONE_POWER); // 2 follows 1
+        indexerMotorThree.set(0);
+        break;
     }
   }
 
@@ -116,17 +118,19 @@ public class Indexer extends SubsystemBase {
       }
     }
 
-    if (instructionFromIntake == IndexerInstruction.HOLD ||
-        instructionFromIntake == IndexerInstruction.INDEX) {
-      // "Hold" or "index" while shooting means send everything in
-      indexerMotorOne.set(Calibrations.INDEXER_ONE_POWER); // 2 follows 1
-      indexerMotorThree.set(Calibrations.INDEXER_THREE_POWER);
-    }
-    else {
-      // Should eject => set new ejection timer and start ejecting!
-      ejectTimer = Optional.of(new Timer());
-      indexerMotorOne.set(Calibrations.INDEXER_ONE_POWER); // 2 follows 1
-      indexerMotorThree.set(Calibrations.INDEXER_EJECT_POWER);
+    switch (instructionFromIntake) {
+      case HOLD:
+      case INDEX:
+        // "Hold" or "index" while shooting means send everything in
+        indexerMotorOne.set(Calibrations.INDEXER_ONE_POWER); // 2 follows 1
+        indexerMotorThree.set(Calibrations.INDEXER_THREE_POWER);
+        break;
+      case EJECT:
+        // Should eject => set new ejection timer and start ejecting!
+        ejectTimer = Optional.of(new Timer());
+        indexerMotorOne.set(Calibrations.INDEXER_ONE_POWER); // 2 follows 1
+        indexerMotorThree.set(Calibrations.INDEXER_EJECT_POWER);
+        break;
     }
   }
 }
