@@ -16,7 +16,6 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
-import net.cachemoney8096.frc2022o.subsystems.Indexer;
 import net.cachemoney8096.frc2022o.libs.CargoStateManager;
 
 public class Intake extends SubsystemBase {
@@ -38,8 +37,10 @@ public class Intake extends SubsystemBase {
   private Optional<Timer> ejectTimer;
   /** Indexer stored just to see sensor state */
   private Indexer indexer;
+
   private CargoStateManager cargoStateManager = new CargoStateManager();
-  private CargoStateManager.IntakeState prevIntakeState = CargoStateManager.IntakeState.NOT_ACTUATING;
+  private CargoStateManager.IntakeState prevIntakeState =
+      CargoStateManager.IntakeState.NOT_ACTUATING;
 
   public Intake(Indexer indexerIn) {
     super();
@@ -81,64 +82,60 @@ public class Intake extends SubsystemBase {
 
     // Check color sensor
     CargoColor lastColorSeen = CargoColor.UNKNOWN;
-    if (colorSensor.getProximity0() < Calibrations.COLOR_SENSOR_PROXIMITY_THRESHOLD)
-    {
+    if (colorSensor.getProximity0() < Calibrations.COLOR_SENSOR_PROXIMITY_THRESHOLD) {
       sensorColor = new PicoColorSensor.RawColor();
       colorSensor.getRawColor0(sensorColor);
       lastColorSeen = cargoColorDifferentiator.whatColor(sensorColor);
     }
-  
+
     // Check cargo sensors
     boolean indexerSeeCargo = indexer.seeCargo();
     boolean intakeSeeCargo = seeCargo();
 
     // Update cargo states
-    CargoStateManager.InputState inputState = new CargoStateManager.InputState(
-      lastColorSeen,
-      intakeSeeCargo,
-      indexerSeeCargo,
-      prevIntakeState);
-    CargoStateManager.RobotCargoState robotCargoState = cargoStateManager.updateCargoState(inputState);
+    CargoStateManager.InputState inputState =
+        new CargoStateManager.InputState(
+            lastColorSeen, intakeSeeCargo, indexerSeeCargo, prevIntakeState);
+    CargoStateManager.RobotCargoState robotCargoState =
+        cargoStateManager.updateCargoState(inputState);
 
     // Decide what the intake should try to do
     // We default to intaking so let's just see if we need to eject
-    if (lastColorSeen == CargoColor.THEIRS ||
-        (robotCargoState.intakeCurrentCargo.isPresent() &&
-         robotCargoState.intakeCurrentCargo.get() == CargoColor.THEIRS))
-    {
-      // If we saw a wrong-colored cargo or if we're holding a wrong-colored cargo, we should eject it
-      if ((robotCargoState.indexerCurrentCargo.isPresent() && robotCargoState.indexerCurrentCargo.get() != CargoColor.THEIRS) ||
-          (robotCargoState.intakeCargoPassedToIndexer.isPresent() && robotCargoState.intakeCargoPassedToIndexer.get() != CargoColor.THEIRS) ||
-          (robotCargoState.intakeCurrentCargo.isPresent() && robotCargoState.intakeCurrentCargo.get() != CargoColor.THEIRS)
-          )
-      {
-        // There's a cargo we want to keep past the wrong-colored cargo, so we need to eject to the front
+    if (lastColorSeen == CargoColor.THEIRS
+        || (robotCargoState.intakeCurrentCargo.isPresent()
+            && robotCargoState.intakeCurrentCargo.get() == CargoColor.THEIRS)) {
+      // If we saw a wrong-colored cargo or if we're holding a wrong-colored cargo, we should eject
+      // it
+      if ((robotCargoState.indexerCurrentCargo.isPresent()
+              && robotCargoState.indexerCurrentCargo.get() != CargoColor.THEIRS)
+          || (robotCargoState.intakeCargoPassedToIndexer.isPresent()
+              && robotCargoState.intakeCargoPassedToIndexer.get() != CargoColor.THEIRS)
+          || (robotCargoState.intakeCurrentCargo.isPresent()
+              && robotCargoState.intakeCurrentCargo.get() != CargoColor.THEIRS)) {
+        // There's a cargo we want to keep past the wrong-colored cargo, so we need to eject to the
+        // front
         ejectTimer = Optional.of(new Timer());
       }
     }
 
     // Update Indexer on what to do
-    if (robotCargoState.indexerCurrentCargo.isPresent())
-    {
+    if (robotCargoState.indexerCurrentCargo.isPresent()) {
       // Indexer already has a cargo
       if (robotCargoState.indexerCurrentCargo.get() == CargoColor.THEIRS) {
         // Their cargo, get rid of it
         indexer.setInstruction(Indexer.IndexerInstruction.EJECT);
-      }
-      else {
+      } else {
         // Our cargo or an unknown cargo, keep it
         indexer.setInstruction(Indexer.IndexerInstruction.HOLD);
       }
-    }
-    else {
+    } else {
       // Indexer does not already have a cargo
       if (robotCargoState.intakeCargoPassedToIndexer.isPresent()) {
         // There is a cargo potentially coming
         if (robotCargoState.intakeCargoPassedToIndexer.get() == CargoColor.THEIRS) {
           // Their cargo, get rid of it
           indexer.setInstruction(Indexer.IndexerInstruction.EJECT);
-        }
-        else {
+        } else {
           // Our cargo or an unknown cargo, bring it in
           indexer.setInstruction(Indexer.IndexerInstruction.INDEX);
         }
@@ -156,7 +153,10 @@ public class Intake extends SubsystemBase {
     cargoColorDifferentiator.updateAllianceColor();
   }
 
-  /** Function to call in the event of not trying to intake. Either this or intakeCargo must be called! */
+  /**
+   * Function to call in the event of not trying to intake. Either this or intakeCargo must be
+   * called!
+   */
   public void DontIntakeCargo() {
     // Stop running and bring the intake in
     // Ignore the ejection timer, the intake must be brought in ASAP
@@ -164,14 +164,16 @@ public class Intake extends SubsystemBase {
     intakeMotorTwo.set(0);
     prevIntakeState = CargoStateManager.IntakeState.NOT_ACTUATING;
     retractIntake(); // 3 follows 2
-    }
+  }
 
-  /** Function to call in the event of trying to intake. Either this or DontIntakeCargo must be called! */
+  /**
+   * Function to call in the event of trying to intake. Either this or DontIntakeCargo must be
+   * called!
+   */
   public void intakeCargo() {
     extendIntake();
     intakeMotorOne.set(Calibrations.INTAKE_ONE_POWER);
-    if (ejectTimer.isEmpty())
-    {
+    if (ejectTimer.isEmpty()) {
       // Nothing to eject
       intakeMotorTwo.set(Calibrations.INTAKE_TWO_POWER); // 3 follows 2
       prevIntakeState = CargoStateManager.IntakeState.INTAKING;

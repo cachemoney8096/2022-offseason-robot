@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.Timer;
 
 public class Indexer extends SubsystemBase {
   /** For instructions on what to do from the intake with current or next cargo */
-  static public enum IndexerInstruction {
+  public static enum IndexerInstruction {
     HOLD,
     INDEX,
     EJECT,
@@ -47,16 +47,18 @@ public class Indexer extends SubsystemBase {
 
     indexerMotorThree = new CANSparkMax(RobotMap.INDEXER_MOTOR_THREE_ID, MotorType.kBrushless);
     indexerMotorThree.restoreFactoryDefaults();
-    indexerMotorThree.setIdleMode(CANSparkMax.IdleMode.kBrake); // to keep balls from leaving 
+    indexerMotorThree.setIdleMode(CANSparkMax.IdleMode.kBrake); // to keep balls from leaving
 
     cargoSensor = new DigitalInput(RobotMap.INDEXER_CARGO_DIO);
   }
 
   @Override
-  public void periodic() {
-  }
+  public void periodic() {}
 
-  /** Instructions coming from the intake and the overall cargo state manager. Must be set each cycle! */
+  /**
+   * Instructions coming from the intake and the overall cargo state manager. Must be set each
+   * cycle!
+   */
   public void setInstruction(IndexerInstruction instructionFromIntakeIn) {
     instructionFromIntake = instructionFromIntakeIn;
   }
@@ -73,8 +75,7 @@ public class Indexer extends SubsystemBase {
       if (ejectTimer.get().hasElapsed(Calibrations.EJECT_CARGO_BACK_SECONDS)) {
         // Ejection done! Continue.
         ejectTimer = Optional.empty();
-      }
-      else {
+      } else {
         // Still ejecting
         indexerMotorOne.set(Calibrations.INDEXER_ONE_POWER); // 2 follows 1
         indexerMotorThree.set(Calibrations.INDEXER_EJECT_POWER);
@@ -109,8 +110,7 @@ public class Indexer extends SubsystemBase {
       if (ejectTimer.get().hasElapsed(Calibrations.EJECT_CARGO_BACK_SECONDS)) {
         // Ejection done! Continue.
         ejectTimer = Optional.empty();
-      }
-      else {
+      } else {
         // Still ejecting
         indexerMotorOne.set(Calibrations.INDEXER_ONE_POWER); // 2 follows 1
         indexerMotorThree.set(Calibrations.INDEXER_EJECT_POWER);

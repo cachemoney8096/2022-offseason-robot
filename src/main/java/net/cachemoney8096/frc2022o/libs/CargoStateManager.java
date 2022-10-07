@@ -2,9 +2,10 @@ package net.cachemoney8096.frc2022o.libs;
 
 import java.util.Optional;
 
-import net.cachemoney8096.frc2022o.libs.CargoColor;
 
-/** This class takes info from the intake and indexer to determine all the cargo states of the robot */
+/**
+ * This class takes info from the intake and indexer to determine all the cargo states of the robot
+ */
 public class CargoStateManager {
   /** Whether the intake is bringing cargo in, out, or neither */
   public enum IntakeState {
@@ -14,7 +15,7 @@ public class CargoStateManager {
   }
 
   /** Sensor readings */
-  static public class InputState {
+  public static class InputState {
     /** Whether the intake color sensor sees a color (unknown for no color) */
     public CargoColor intakeLastColorSeen;
 
@@ -27,11 +28,11 @@ public class CargoStateManager {
     /** In the previous cycle, which way the intake was going */
     public IntakeState intakeState;
 
-    public InputState(CargoColor intakeLastColorSeenIn,
-    boolean intakeSeeCargoIn,
-    boolean indexerSeeCargoIn,
-                      IntakeState intakeStateIn)
-    {
+    public InputState(
+        CargoColor intakeLastColorSeenIn,
+        boolean intakeSeeCargoIn,
+        boolean indexerSeeCargoIn,
+        IntakeState intakeStateIn) {
       intakeLastColorSeen = intakeLastColorSeenIn;
       intakeSeeCargo = intakeSeeCargoIn;
       indexerSeeCargo = indexerSeeCargoIn;
@@ -47,19 +48,20 @@ public class CargoStateManager {
     /** The color of cargo currently held by the intake */
     public Optional<CargoColor> intakeCurrentCargo = Optional.empty();
 
-    /** The color of a cargo sent along by the intake, indicating what the indexer might see.
-     * This may be a cargo still seen by the intake!
+    /**
+     * The color of a cargo sent along by the intake, indicating what the indexer might see. This
+     * may be a cargo still seen by the intake!
      */
     public Optional<CargoColor> intakeCargoPassedToIndexer = Optional.empty();
 
     /** The color of cargo currently held by the indexer */
     public Optional<CargoColor> indexerCurrentCargo = Optional.empty();
 
-    public RobotCargoState(Optional<CargoColor> intakeLastColorSeenIn,
-    Optional<CargoColor> intakeCurrentCargoIn,
-    Optional<CargoColor> intakeCargoPassedToIndexerIn,
-    Optional<CargoColor> indexerCurrentCargoIn)
-    {
+    public RobotCargoState(
+        Optional<CargoColor> intakeLastColorSeenIn,
+        Optional<CargoColor> intakeCurrentCargoIn,
+        Optional<CargoColor> intakeCargoPassedToIndexerIn,
+        Optional<CargoColor> indexerCurrentCargoIn) {
       intakeLastColorSeen = intakeLastColorSeenIn;
       intakeCurrentCargo = intakeCurrentCargoIn;
       intakeCargoPassedToIndexer = intakeCargoPassedToIndexerIn;
@@ -70,18 +72,19 @@ public class CargoStateManager {
   private RobotCargoState robotCargoState;
 
   /** Override for robot cargo state, mostly for initialization purposes */
-  public void overrideCargoState(CargoColor intakeCargoColorIn, CargoColor indexerCargoColorIn)
-  {
+  public void overrideCargoState(CargoColor intakeCargoColorIn, CargoColor indexerCargoColorIn) {
     robotCargoState.intakeLastColorSeen = Optional.empty();
     robotCargoState.intakeCurrentCargo = Optional.of(intakeCargoColorIn);
     robotCargoState.intakeCargoPassedToIndexer = Optional.empty();
     robotCargoState.indexerCurrentCargo = Optional.of(indexerCargoColorIn);
   }
 
-  /** Figure out the new state of the robot's cargo, working back-to-front starting with the indexer */
+  /**
+   * Figure out the new state of the robot's cargo, working back-to-front starting with the indexer
+   */
   public RobotCargoState updateCargoState(InputState inputState) {
     // First, update the indexer
-    // Only change anything if the new observation does not match the old state 
+    // Only change anything if the new observation does not match the old state
     if (inputState.indexerSeeCargo ^ robotCargoState.indexerCurrentCargo.isPresent()) {
       if (inputState.indexerSeeCargo) {
         // We see a cargo we didn't see before.
@@ -89,13 +92,11 @@ public class CargoStateManager {
           // A cargo was passed from the intake, that's probably the indexer's cargo
           robotCargoState.indexerCurrentCargo = robotCargoState.intakeCargoPassedToIndexer;
           robotCargoState.intakeCargoPassedToIndexer = Optional.empty();
-        }
-        else {
+        } else {
           // No cargo was passed from the intake, weird..
           robotCargoState.indexerCurrentCargo = Optional.of(CargoColor.UNKNOWN);
         }
-      }
-      else {
+      } else {
         // A cargo we previously saw has disappeared
         robotCargoState.indexerCurrentCargo = Optional.empty();
       }
@@ -105,11 +106,11 @@ public class CargoStateManager {
     // We only update if:
     // (a) we are trying to pass a cargo to the indexer and
     // (b) we have a cargo to pass and
-    // (c) we have not already passed a cargo (don't update until the forward cargo has reached the indexer)
-    if (inputState.intakeState == IntakeState.INTAKING &&
-        robotCargoState.intakeCurrentCargo.isPresent() &&
-        robotCargoState.intakeCargoPassedToIndexer.isEmpty())
-    {
+    // (c) we have not already passed a cargo (don't update until the forward cargo has reached the
+    // indexer)
+    if (inputState.intakeState == IntakeState.INTAKING
+        && robotCargoState.intakeCurrentCargo.isPresent()
+        && robotCargoState.intakeCargoPassedToIndexer.isEmpty()) {
       robotCargoState.intakeCargoPassedToIndexer = robotCargoState.intakeCurrentCargo;
     }
 
@@ -121,17 +122,15 @@ public class CargoStateManager {
         if (robotCargoState.intakeLastColorSeen.isPresent())
           // We saw this cargo, that's probably what's here now
           robotCargoState.intakeCurrentCargo = robotCargoState.intakeLastColorSeen;
-          robotCargoState.intakeLastColorSeen = Optional.empty();
-        }
-        else {
-          // We didn't see the cargo that was passed in, weird..
-          robotCargoState.intakeCurrentCargo = Optional.of(CargoColor.UNKNOWN);
-        }
+        robotCargoState.intakeLastColorSeen = Optional.empty();
+      } else {
+        // We didn't see the cargo that was passed in, weird..
+        robotCargoState.intakeCurrentCargo = Optional.of(CargoColor.UNKNOWN);
       }
-      else {
-        // A cargo we previously saw has disappeared
-        robotCargoState.intakeCurrentCargo = Optional.empty();
-      }
+    } else {
+      // A cargo we previously saw has disappeared
+      robotCargoState.intakeCurrentCargo = Optional.empty();
+    }
 
     // Finally, we update the "last color seen" from the color sensor
     if (inputState.intakeLastColorSeen != CargoColor.UNKNOWN) {
@@ -140,5 +139,5 @@ public class CargoStateManager {
     }
 
     return robotCargoState;
-    }
   }
+}
