@@ -53,6 +53,9 @@ dependencies {
     implementation wpi.java.deps.wpilib()
     implementation wpi.java.vendor.java()
 
+    // Include libs such as tinylog
+    implementation fileTree(dir: 'lib', include: ['**/*.jar'])
+
     implementation group: 'com.google.guava', name: 'guava', version: '31.1-jre'
     implementation group: 'com.google.code.gson', name: 'gson', version: '2.9.0'
 
