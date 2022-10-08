@@ -9,10 +9,8 @@ import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.RobotBase;
-import edu.wpi.first.wpilibj.RobotController;
 import net.cachemoney8096.frc2022o.Calibrations;
 import net.cachemoney8096.frc2022o.Constants;
 import net.cachemoney8096.frc2022o.libs_3005.controller.Controller;
@@ -124,10 +122,10 @@ public class NickSwerveModule implements SwerveModule {
 
     m_turningController =
         new ProfiledPIDController(
-          Calibrations.Drivetrain.STEER_PID_GAINS.P,
-          Calibrations.Drivetrain.STEER_PID_GAINS.I,
-          Calibrations.Drivetrain.STEER_PID_GAINS.D,
-          Calibrations.Drivetrain.STEER_TRAPEZOID_CONSTRAINTS);
+            Calibrations.Drivetrain.STEER_PID_GAINS.P,
+            Calibrations.Drivetrain.STEER_PID_GAINS.I,
+            Calibrations.Drivetrain.STEER_PID_GAINS.D,
+            Calibrations.Drivetrain.STEER_TRAPEZOID_CONSTRAINTS);
 
     m_turningController.enableContinuousInput(-Math.PI, Math.PI);
 

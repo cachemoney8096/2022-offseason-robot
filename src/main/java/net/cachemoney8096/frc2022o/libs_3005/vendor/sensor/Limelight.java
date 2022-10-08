@@ -132,7 +132,9 @@ public class Limelight implements Sendable {
     SmartDashboard.putString("Cam Mode", camMode.name());
   }
 
-  /** @return validObject - Whether the limelight has any valid targets (0 or 1) */
+  /**
+   * @return validObject - Whether the limelight has any valid targets (0 or 1)
+   */
   public double getValidTarget() {
     if (m_simDevice != null) {
       return m_valid.get() ? 1 : 0;
@@ -162,7 +164,9 @@ public class Limelight implements Sendable {
     return table.getEntry("ty").getDouble(0.0);
   }
 
-  /** @return targetArea - Target Area (0% of image to 100% of image) */
+  /**
+   * @return targetArea - Target Area (0% of image to 100% of image)
+   */
   public double getTargetArea() {
     if (m_simDevice != null) {
       return m_targetArea.get();
@@ -170,7 +174,9 @@ public class Limelight implements Sendable {
     return table.getEntry("ta").getDouble(0.0);
   }
 
-  /** @return skew - Skew or rotation (-90 degrees to 0 degrees) */
+  /**
+   * @return skew - Skew or rotation (-90 degrees to 0 degrees)
+   */
   public double getSkew() {
     if (m_simDevice != null) {
       return m_skew.get();
@@ -202,7 +208,9 @@ public class Limelight implements Sendable {
     return table.getEntry("tl").getLastChange() / 1e6;
   }
 
-  /** @return true is limelight has made a target else false */
+  /**
+   * @return true is limelight has made a target else false
+   */
   public boolean isValidTarget() {
     if (getValidTarget() > 0) {
       return true;
@@ -211,7 +219,9 @@ public class Limelight implements Sendable {
     }
   }
 
-  /** @return true as long as limelight does not have value of -1 */
+  /**
+   * @return true as long as limelight does not have value of -1
+   */
   public boolean CheckConnection() { // ??? this depends on return of null, -1?
     if (getValidTarget() == -1.0) {
       return false;

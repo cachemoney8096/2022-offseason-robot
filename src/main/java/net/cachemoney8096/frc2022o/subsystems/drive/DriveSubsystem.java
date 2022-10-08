@@ -5,7 +5,6 @@ import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj2.command.Command;
 import net.cachemoney8096.frc2022o.libs_3005.swerve.SwerveDrive;
 import net.cachemoney8096.frc2022o.libs_3005.swerve.SwerveModule;
-import net.cachemoney8096.frc2022o.libs_3005.vendor.sensor.SendableGyro;
 import net.cachemoney8096.frc2022o.libs_3005.vendor.sensor.ThroughBoreEncoder;
 import net.cachemoney8096.frc2022o.Constants;
 import net.cachemoney8096.frc2022o.Calibrations;
@@ -34,30 +33,30 @@ public class DriveSubsystem extends SwerveDrive {
 
   static final SwerveModule frontRight =
       new NickSwerveModule(
-        RobotMap.DRIVE_FRONT_RIGHT_ID,
-        RobotMap.STEER_FRONT_RIGHT_ID,
+          RobotMap.DRIVE_FRONT_RIGHT_ID,
+          RobotMap.STEER_FRONT_RIGHT_ID,
           new ThroughBoreEncoder(
-            RobotMap.SWERVE_FRONT_RIGHT_DIO,
+              RobotMap.SWERVE_FRONT_RIGHT_DIO,
               Constants.FRONT_RIGHT_STEER_OFFSET_RAD,
               2 * Math.PI,
               true));
 
   static final SwerveModule rearLeft =
       new NickSwerveModule(
-        RobotMap.DRIVE_BACK_LEFT_ID,
-        RobotMap.STEER_BACK_LEFT_ID,
+          RobotMap.DRIVE_BACK_LEFT_ID,
+          RobotMap.STEER_BACK_LEFT_ID,
           new ThroughBoreEncoder(
-            RobotMap.SWERVE_BACK_LEFT_DIO,
+              RobotMap.SWERVE_BACK_LEFT_DIO,
               Constants.BACK_LEFT_STEER_OFFSET_RAD,
               2 * Math.PI,
               true));
 
   static final SwerveModule rearRight =
       new NickSwerveModule(
-        RobotMap.DRIVE_BACK_RIGHT_ID,
-        RobotMap.STEER_BACK_RIGHT_ID,
+          RobotMap.DRIVE_BACK_RIGHT_ID,
+          RobotMap.STEER_BACK_RIGHT_ID,
           new ThroughBoreEncoder(
-            RobotMap.SWERVE_BACK_RIGHT_DIO,
+              RobotMap.SWERVE_BACK_RIGHT_DIO,
               Constants.BACK_RIGHT_STEER_OFFSET_RAD,
               2 * Math.PI,
               true));

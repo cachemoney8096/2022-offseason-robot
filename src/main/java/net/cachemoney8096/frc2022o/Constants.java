@@ -18,7 +18,6 @@ public class Constants {
       BACK_LEFT_STEER_OFFSET_RAD = PLACEHOLDER_DOUBLE,
       BACK_RIGHT_STEER_OFFSET_RAD = PLACEHOLDER_DOUBLE;
 
-
   // Constants for swerve
   public static final class Drivetrain {
 
@@ -46,8 +45,7 @@ public class Constants {
     public static final double DRIVE_ENCODER_VELOCITY_FACTOR =
         ((WHEEL_DIAMETER_METERS * Math.PI) / (double) DRIVE_REDUCTION) / 60.0;
 
-    public static final double STEERING_ENCODER_POSITION_FACTOR =
-        (2 * Math.PI) / STEER_REDUCTION;
+    public static final double STEERING_ENCODER_POSITION_FACTOR = (2 * Math.PI) / STEER_REDUCTION;
     public static final double STEERING_ENCODER_VELOCITY_FACTOR =
         ((2 * Math.PI) / STEER_REDUCTION) / 60.0;
 
@@ -58,12 +56,9 @@ public class Constants {
     public static final int DRIVE_CURRENT_LIMIT_AMPS = 50;
   }
 
-
   /** Gear ratio from the hood encoder (external) to actual hood positon */
   public static final double HOOD_ENCODER_RATIO = PLACEHOLDER_DOUBLE;
 
   /** Gear ratio from the shooter encoder (internal) to the shooter wheel position */
   public static final double SHOOTER_ENCODER_RATIO = 1.0;
-
-
 }

@@ -8,15 +8,14 @@ import edu.wpi.first.util.sendable.SendableBuilder;
 
 public class SendablePigeon extends Pigeon2 implements Sendable {
 
-	/**
-	 * Create a Pigeon object that communicates with Pigeon on CAN Bus.
-	 *
-	 * @param deviceNumber
-	 *            CAN Device Id of Pigeon [0,62]
-	 */
-	public SendablePigeon(int deviceNumber) {
-		super(deviceNumber, "");
-	}
+  /**
+   * Create a Pigeon object that communicates with Pigeon on CAN Bus.
+   *
+   * @param deviceNumber CAN Device Id of Pigeon [0,62]
+   */
+  public SendablePigeon(int deviceNumber) {
+    super(deviceNumber, "");
+  }
 
   @Override
   public void initSendable(SendableBuilder builder) {

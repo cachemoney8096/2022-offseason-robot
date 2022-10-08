@@ -379,7 +379,8 @@ public class SparkMax extends CANSparkMax {
       if (m_burnFlashCnt > 0) {
         Logger.tag("SparkMax Controller")
             .warn(
-                "Creating a SparkMax Controller after burning flash, settings will not be burned. CanID {}, FlashCnt {}",
+                "Creating a SparkMax Controller after burning flash, settings will not be burned."
+                    + " CanID {}, FlashCnt {}",
                 sparkMax.getDeviceId(),
                 m_burnFlashCnt);
       }

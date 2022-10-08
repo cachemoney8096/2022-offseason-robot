@@ -348,7 +348,8 @@ public class ADIS16470 implements SendableGyro {
       skipCal = true;
       Logger.tag("ADIS16470")
           .warn(
-              "Calibration time too short! Code is run for {}s calibration is set to {}. Using previous calibration of 1s",
+              "Calibration time too short! Code is run for {}s calibration is set to {}. Using"
+                  + " previous calibration of 1s",
               startDelay,
               m_calibration_time.toSeconds());
     }

@@ -13,14 +13,8 @@ import java.util.List;
  * <p>This is for small numbers of points. Inserts are expensive and are only done on init, and
  * lookups use linear search. If you need it to be better, this is the wrong structure.
  *
- * <p>spotless:off
- * Example:
- *     LinearInterpolatedTable2d table = new LinearInterpolatedTable2d()
- *    .withPair(0.0, 1.0)
- *    .withPair(1.0, 3.0)
- *    .withPair(0.5, 2.0)
- *    .withPair(2.0, 5.0);
- * spotless:on
+ * <p>spotless:off Example: LinearInterpolatedTable2d table = new LinearInterpolatedTable2d()
+ * .withPair(0.0, 1.0) .withPair(1.0, 3.0) .withPair(0.5, 2.0) .withPair(2.0, 5.0); spotless:on
  */
 public class LinearInterpolatedTable2d {
   private final List<Pair<Double, Double>> m_table = new ArrayList<>();

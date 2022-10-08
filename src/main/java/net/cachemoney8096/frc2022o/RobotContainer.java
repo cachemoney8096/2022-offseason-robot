@@ -13,7 +13,6 @@ import net.cachemoney8096.frc2022o.libs.SendablePigeon;
 import net.cachemoney8096.frc2022o.libs.XboxController;
 import net.cachemoney8096.frc2022o.libs_3005.util.JoystickUtil;
 
-import com.swervedrivespecialties.swervelib.DriveController;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.*;
@@ -74,18 +73,29 @@ public class RobotContainer {
     drivetrain.setDefaultCommand(
         new RunCommand(
                 () ->
-                drivetrain.drive(
+                    drivetrain.drive(
                         MathUtil.applyDeadband(-driverController.getLeftY(), 0.1),
                         MathUtil.applyDeadband(-driverController.getLeftX(), 0.1),
-                        JoystickUtil.squareAxis(MathUtil.applyDeadband(-driverController.getRightX(), 0.1)),
-                        driverController.getLeftTriggerAxis() > 0.1),  // default to field 
-                        drivetrain)
+                        JoystickUtil.squareAxis(
+                            MathUtil.applyDeadband(-driverController.getRightX(), 0.1)),
+                        driverController.getLeftTriggerAxis() > 0.1), // default to field
+                drivetrain)
             .withName("Manual Drive"));
 
-    operatorController.B().whileHeld(new InstantCommand(climber::rightMotorDown, climber).withName("Right Climber Down"));
-    operatorController.Y().whileHeld(new InstantCommand(climber::rightMotorUp, climber).withName("Right Climber Up"));
-    operatorController.A().whileHeld(new InstantCommand(climber::leftMotorDown, climber).withName("Left Climber Down"));
-    operatorController.X().whileHeld(new InstantCommand(climber::leftMotorUp, climber).withName("Left Climber Up"));
+    operatorController
+        .B()
+        .whileHeld(
+            new InstantCommand(climber::rightMotorDown, climber).withName("Right Climber Down"));
+    operatorController
+        .Y()
+        .whileHeld(new InstantCommand(climber::rightMotorUp, climber).withName("Right Climber Up"));
+    operatorController
+        .A()
+        .whileHeld(
+            new InstantCommand(climber::leftMotorDown, climber).withName("Left Climber Down"));
+    operatorController
+        .X()
+        .whileHeld(new InstantCommand(climber::leftMotorUp, climber).withName("Left Climber Up"));
   }
 
   private void configureAuton() {
