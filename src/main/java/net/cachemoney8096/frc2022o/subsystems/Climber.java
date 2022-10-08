@@ -8,7 +8,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 public class Climber extends SubsystemBase{
     private final CANSparkMax climbMotorRight;
     private final CANSparkMax climbMotorLeft;
-    private final boolean inversionPlaceholder = false;
+    private final boolean INVERSION_PLACEHOLDER = false;
 
     public Climber(){
         climbMotorRight = new CANSparkMax(RobotMap.CLIMBER_MOTOR_RIGHT_ID, MotorType.kBrushless);
@@ -24,15 +24,15 @@ public class Climber extends SubsystemBase{
     }
 
     public void rightMotorDown(){
-        climbMotorRight.set(-1);
+        climbMotorRight.set(-1.0);
     }
     public void rightMotorUp(){
-        climbMotorRight.set(1);
+        climbMotorRight.set(1.0);
     }
     public void leftMotorDown(){
-        climbMotorLeft.set(-1);
+        climbMotorLeft.set(-1.0);
     }
     public void leftMotorUp(){
-        climbMotorLeft.set(1);
+        climbMotorLeft.set(1.0);
     }
 }
