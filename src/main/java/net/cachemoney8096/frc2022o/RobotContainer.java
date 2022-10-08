@@ -8,6 +8,7 @@ import net.cachemoney8096.frc2022o.subsystems.Drivetrain;
 import net.cachemoney8096.frc2022o.subsystems.Intake;
 import net.cachemoney8096.frc2022o.subsystems.Indexer;
 import net.cachemoney8096.frc2022o.subsystems.Shooter;
+import net.cachemoney8096.frc2022o.libs.XboxController;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.*;
@@ -21,6 +22,9 @@ import edu.wpi.first.wpilibj2.command.*;
 public class RobotContainer {
 
   private static RobotContainer INSTANCE;
+
+	public final XboxController driverController;
+	public final XboxController operatorController;
 
   private final PowerDistribution powerDistribution;
   public final Intake intake;
@@ -37,6 +41,9 @@ public class RobotContainer {
     powerDistribution = new PowerDistribution(1, PowerDistribution.ModuleType.kRev);
     powerDistribution.clearStickyFaults();
 
+    driverController = new XboxController(RobotMap.DRIVER_CONTROLLER_INDEX);
+    operatorController = new XboxController(RobotMap.OPERATOR_CONTROLLER_INDEX);
+
     indexer = new Indexer();
     intake = new Intake(indexer);
     shooter = new Shooter();
@@ -52,7 +59,8 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-  private void configureButtonBindings() {}
+  private void configureButtonBindings() {
+  }
 
   private void configureAuton() {
     autonChooser = new SendableChooser<>();

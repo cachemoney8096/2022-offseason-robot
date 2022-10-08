@@ -2,6 +2,10 @@ package net.cachemoney8096.frc2022o;
 
 // Store CAN and port IDs here
 public class RobotMap {
+  // Driver/Operator controller indices
+  public static final int DRIVER_CONTROLLER_INDEX = 0;
+  public static final int OPERATOR_CONTROLLER_INDEX = 1;
+
   // Drivetrain CAN IDs
   public static final int DRIVE_FRONT_LEFT_ID = 1;
   public static final int STEER_FRONT_LEFT_ID = 2;
