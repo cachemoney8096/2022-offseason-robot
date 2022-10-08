@@ -5,11 +5,17 @@
 package net.cachemoney8096.frc2022o;
 
 import net.cachemoney8096.frc2022o.subsystems.Climber;
-import net.cachemoney8096.frc2022o.subsystems.Drivetrain;
 import net.cachemoney8096.frc2022o.subsystems.Intake;
 import net.cachemoney8096.frc2022o.subsystems.Indexer;
 import net.cachemoney8096.frc2022o.subsystems.Shooter;
+import net.cachemoney8096.frc2022o.subsystems.drive.DriveSubsystem;
+import net.cachemoney8096.frc2022o.libs.SendablePigeon;
 import net.cachemoney8096.frc2022o.libs.XboxController;
+import net.cachemoney8096.frc2022o.libs_3005.util.JoystickUtil;
+
+import com.swervedrivespecialties.swervelib.DriveController;
+
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.*;
@@ -27,11 +33,12 @@ public class RobotContainer {
   public final XboxController driverController;
   public final XboxController operatorController;
 
+  private final SendablePigeon pigeon;
   private final PowerDistribution powerDistribution;
   public final Intake intake;
   private final Indexer indexer;
   private final Shooter shooter;
-  private final Drivetrain drivetrain;
+  private final DriveSubsystem drivetrain;
   private final Climber climber;
 
   private SendableChooser<Command> autonChooser;
@@ -46,10 +53,11 @@ public class RobotContainer {
     driverController = new XboxController(RobotMap.DRIVER_CONTROLLER_INDEX);
     operatorController = new XboxController(RobotMap.OPERATOR_CONTROLLER_INDEX);
 
+    pigeon = new SendablePigeon(RobotMap.PIGEON_IMU_ID);
     indexer = new Indexer();
     intake = new Intake(indexer);
     shooter = new Shooter();
-    drivetrain = new Drivetrain();
+    drivetrain = new DriveSubsystem(pigeon);
     climber = new Climber();
 
     configureButtonBindings();
@@ -63,10 +71,21 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    operatorController.B().whileHeld(new InstantCommand(climber::rightMotorDown, climber));
-    operatorController.Y().whileHeld(new InstantCommand(climber::rightMotorUp, climber));
-    operatorController.A().whileHeld(new InstantCommand(climber::leftMotorDown, climber));
-    operatorController.X().whileHeld(new InstantCommand(climber::leftMotorUp, climber));
+    drivetrain.setDefaultCommand(
+        new RunCommand(
+                () ->
+                drivetrain.drive(
+                        MathUtil.applyDeadband(-driverController.getLeftY(), 0.1),
+                        MathUtil.applyDeadband(-driverController.getLeftX(), 0.1),
+                        JoystickUtil.squareAxis(MathUtil.applyDeadband(-driverController.getRightX(), 0.1)),
+                        driverController.getLeftTriggerAxis() > 0.1),  // default to field 
+                        drivetrain)
+            .withName("Manual Drive"));
+
+    operatorController.B().whileHeld(new InstantCommand(climber::rightMotorDown, climber).withName("Right Climber Down"));
+    operatorController.Y().whileHeld(new InstantCommand(climber::rightMotorUp, climber).withName("Right Climber Up"));
+    operatorController.A().whileHeld(new InstantCommand(climber::leftMotorDown, climber).withName("Left Climber Down"));
+    operatorController.X().whileHeld(new InstantCommand(climber::leftMotorUp, climber).withName("Left Climber Up"));
   }
 
   private void configureAuton() {
