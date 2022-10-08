@@ -23,8 +23,8 @@ public class RobotContainer {
 
   private static RobotContainer INSTANCE;
 
-	public final XboxController driverController;
-	public final XboxController operatorController;
+  public final XboxController driverController;
+  public final XboxController operatorController;
 
   private final PowerDistribution powerDistribution;
   public final Intake intake;
@@ -59,8 +59,7 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-  private void configureButtonBindings() {
-  }
+  private void configureButtonBindings() {}
 
   private void configureAuton() {
     autonChooser = new SendableChooser<>();

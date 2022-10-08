@@ -66,11 +66,11 @@ public class XboxController extends edu.wpi.first.wpilibj.XboxController {
     return new POVButton(this, 270);
   }
 
-  public Trigger TriggerRight(){
+  public Trigger TriggerRight() {
     return new Trigger(() -> this.getRightTriggerAxis() > 0.1);
   }
 
-  public Trigger TriggerLeft(){
+  public Trigger TriggerLeft() {
     return new Trigger(() -> this.getLeftTriggerAxis() > 0.1);
   }
 }
