@@ -2,16 +2,10 @@ package net.cachemoney8096.frc2022o;
 
 /** Store physical / mathematical constants here */
 public class Constants {
-  /**
-   * Placeholder, if this value is used it's because we haven't figured out the
-   * right value yet
-   */
+  /** Placeholder, if this value is used it's because we haven't figured out the right value yet */
   public static final double PLACEHOLDER_DOUBLE = 21.0;
 
-  /**
-   * Placeholder, if this value is used it's because we haven't figured out the
-   * right value yet
-   */
+  /** Placeholder, if this value is used it's because we haven't figured out the right value yet */
   public static final int PLACEHOLDER_INT = 21;
 
   /** Swerve module encoder offsets (in radians!!) */
@@ -27,8 +21,6 @@ public class Constants {
   /** Gear ratio from the hood encoder (external) to actual hood positon */
   public static final double HOOD_ENCODER_RATIO = PLACEHOLDER_DOUBLE;
 
-  /**
-   * Gear ratio from the shooter encoder (internal) to the shooter wheel position
-   */
+  /** Gear ratio from the shooter encoder (internal) to the shooter wheel position */
   public static final double SHOOTER_ENCODER_RATIO = 1.0;
 }
