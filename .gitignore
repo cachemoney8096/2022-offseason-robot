@@ -49,7 +49,7 @@
 .mtj.tmp/
 
 # Package Files #
-*.jar
+# *.jar  # Allow jar files
 *.war
 *.nar
 *.ear
