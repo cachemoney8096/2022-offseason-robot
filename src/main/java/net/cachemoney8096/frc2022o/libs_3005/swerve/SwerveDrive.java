@@ -23,7 +23,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import net.cachemoney8096.frc2022o.libs_3005.vendor.sensor.SendableGyro;
+import net.cachemoney8096.frc2022o.libs.SendablePigeon;
 
 public abstract class SwerveDrive extends SubsystemBase {
   public enum ModuleLocation {
@@ -50,8 +50,8 @@ public abstract class SwerveDrive extends SubsystemBase {
   private final SwerveModule m_rearLeft;
   private final SwerveModule m_rearRight;
 
-  // The gyro sensor
-  private final SendableGyro m_gyro;
+  /** The gyro sensor */
+  private final SendablePigeon pigeon;
 
   private final SwerveDriveKinematics m_kinematics;
   // Odometry class for tracking robot pose
@@ -73,7 +73,7 @@ public abstract class SwerveDrive extends SubsystemBase {
    * @param rearLeft Swerve Module
    * @param rearRight Swerve Module
    * @param kinematics Swerve drive kinematics
-   * @param gyro used for odometry and field centric driving
+   * @param pigeonIn used for odometry and field centric driving
    * @param maxSpeed of the wheels used to normalize wheel speeds
    */
   public SwerveDrive(
@@ -82,16 +82,16 @@ public abstract class SwerveDrive extends SubsystemBase {
       SwerveModule rearLeft,
       SwerveModule rearRight,
       SwerveDriveKinematics kinematics,
-      SendableGyro gyro,
+      SendablePigeon pigeonIn,
       double maxSpeed) {
     m_frontLeft = frontLeft;
     m_frontRight = frontRight;
     m_rearLeft = rearLeft;
     m_rearRight = rearRight;
-    m_gyro = gyro;
+    pigeon = pigeonIn;
     m_kinematics = kinematics;
     m_maxSpeed = maxSpeed;
-    m_odometry = new SwerveDriveOdometry(kinematics, m_gyro.getRotation2d());
+    m_odometry = new SwerveDriveOdometry(kinematics, pigeon.getRotation2d());
 
     m_loopTimer = new Timer();
     m_loopTimer.reset();
@@ -114,7 +114,7 @@ public abstract class SwerveDrive extends SubsystemBase {
     builder.addDoubleProperty("Velocity vx", () -> m_chassisSpeed.vxMetersPerSecond, null);
     builder.addDoubleProperty("Velocity vy", () -> m_chassisSpeed.vyMetersPerSecond, null);
     builder.addDoubleProperty("Velocity omega", () -> m_chassisSpeed.omegaRadiansPerSecond, null);
-    addChild("Gyro", m_gyro);
+    addChild("Pigeon", pigeon);
     addChild("frontLeft", m_frontLeft);
     addChild("frontRight", m_frontRight);
     addChild("rearLeft", m_rearLeft);
@@ -151,7 +151,7 @@ public abstract class SwerveDrive extends SubsystemBase {
     // Update the odometry in the periodic block
     m_odometry.updateWithTime(
         time,
-        m_gyro.getRotation2d(),
+        pigeon.getRotation2d(),
         new SwerveModuleState(
             (distances[0] - m_lastDistances[0]) / dt, m_frontLeft.getState().angle),
         new SwerveModuleState(
@@ -210,7 +210,7 @@ public abstract class SwerveDrive extends SubsystemBase {
    * @param pose The pose to which to set the odometry.
    */
   public void resetOdometry(Pose2d pose) {
-    m_odometry.resetPosition(pose, m_gyro.getRotation2d());
+    m_odometry.resetPosition(pose, pigeon.getRotation2d());
   }
 
   /**
@@ -236,7 +236,7 @@ public abstract class SwerveDrive extends SubsystemBase {
     var swerveModuleStates =
         m_kinematics.toSwerveModuleStates(
             fieldRelative
-                ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, rot, m_gyro.getRotation2d())
+                ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, rot, pigeon.getRotation2d())
                 : new ChassisSpeeds(xSpeed, ySpeed, rot));
 
     SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, m_maxSpeed);
@@ -312,17 +312,18 @@ public abstract class SwerveDrive extends SubsystemBase {
 
   /** Zeroes the heading of the robot. */
   public void zeroHeading() {
-    m_gyro.reset();
+    pigeon.setYaw(0.0);
   }
 
   /** Calibrate the gyro. Requirements for the device being still depend on the gyro being used. */
   public void calibrateGyro() {
-    m_gyro.calibrate();
+    // Pigeon does not require calibration, auto-calibrates on boot
+    // pigeon.calibrate();
   }
 
   public void setHeading(double degreesCCWPositive) {
     Logger.tag("Swerve Drive").trace("Setting heading to {} degrees", degreesCCWPositive);
-    m_gyro.setAngle(degreesCCWPositive);
+    pigeon.setYaw(degreesCCWPositive);
   }
 
   /**
@@ -331,16 +332,7 @@ public abstract class SwerveDrive extends SubsystemBase {
    * @return the robot's heading in degrees, from -180 to 180
    */
   public double getHeading() {
-    return m_gyro.getRotation2d().getDegrees();
-  }
-
-  /**
-   * Returns the turn rate of the robot.
-   *
-   * @return The turn rate of the robot, in degrees per second
-   */
-  public double getTurnRate() {
-    return m_gyro.getRate();
+    return pigeon.getRotation2d().getDegrees();
   }
 
   public void stop() {

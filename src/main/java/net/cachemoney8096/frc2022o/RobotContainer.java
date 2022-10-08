@@ -5,10 +5,11 @@
 package net.cachemoney8096.frc2022o;
 
 import net.cachemoney8096.frc2022o.subsystems.Climber;
-import net.cachemoney8096.frc2022o.subsystems.Drivetrain;
 import net.cachemoney8096.frc2022o.subsystems.Intake;
 import net.cachemoney8096.frc2022o.subsystems.Indexer;
 import net.cachemoney8096.frc2022o.subsystems.Shooter;
+import net.cachemoney8096.frc2022o.subsystems.drive.DriveSubsystem;
+import net.cachemoney8096.frc2022o.libs.SendablePigeon;
 import net.cachemoney8096.frc2022o.libs.XboxController;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -27,11 +28,12 @@ public class RobotContainer {
   public final XboxController driverController;
   public final XboxController operatorController;
 
+  private final SendablePigeon pigeon;
   private final PowerDistribution powerDistribution;
   public final Intake intake;
   private final Indexer indexer;
   private final Shooter shooter;
-  private final Drivetrain drivetrain;
+  private final DriveSubsystem drivetrain;
   private final Climber climber;
 
   private SendableChooser<Command> autonChooser;
@@ -46,10 +48,11 @@ public class RobotContainer {
     driverController = new XboxController(RobotMap.DRIVER_CONTROLLER_INDEX);
     operatorController = new XboxController(RobotMap.OPERATOR_CONTROLLER_INDEX);
 
+    pigeon = new SendablePigeon(RobotMap.PIGEON_IMU_ID);
     indexer = new Indexer();
     intake = new Intake(indexer);
     shooter = new Shooter();
-    drivetrain = new Drivetrain();
+    drivetrain = new DriveSubsystem(pigeon);
     climber = new Climber();
 
     configureButtonBindings();

@@ -1,5 +1,9 @@
 package net.cachemoney8096.frc2022o;
 
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.util.Units;
+
 /** Store physical / mathematical constants here */
 public class Constants {
   /** Placeholder, if this value is used it's because we haven't figured out the right value yet */
@@ -14,13 +18,52 @@ public class Constants {
       BACK_LEFT_STEER_OFFSET_RAD = PLACEHOLDER_DOUBLE,
       BACK_RIGHT_STEER_OFFSET_RAD = PLACEHOLDER_DOUBLE;
 
-  /** Drivetrain size */
-  public static final double TRACK_WIDTH_METERS = PLACEHOLDER_DOUBLE,
-      WHEEL_BASE_METERS = PLACEHOLDER_DOUBLE;
+
+  // Constants for swerve
+  public static final class Drivetrain {
+
+    /** Drivetrain size */
+    public static final double TRACK_WIDTH_METERS = PLACEHOLDER_DOUBLE,
+        WHEEL_BASE_METERS = PLACEHOLDER_DOUBLE;
+
+    public static final SwerveDriveKinematics SWERVE_KINEMATICS =
+        new SwerveDriveKinematics(
+            new Translation2d(WHEEL_BASE_METERS / 2, TRACK_WIDTH_METERS / 2),
+            new Translation2d(WHEEL_BASE_METERS / 2, -TRACK_WIDTH_METERS / 2),
+            new Translation2d(-WHEEL_BASE_METERS / 2, TRACK_WIDTH_METERS / 2),
+            new Translation2d(-WHEEL_BASE_METERS / 2, -TRACK_WIDTH_METERS / 2));
+
+    public static final double WHEEL_DIAMETER_INCHES = 3.0;
+    public static final double WHEEL_DIAMETER_METERS = Units.inchesToMeters(WHEEL_DIAMETER_INCHES);
+    public static final double DRIVE_REDUCTION = 4.8;
+    public static final boolean DRIVE_INVERTED = false;
+    public static final double STEER_REDUCTION = 11.25;
+    public static final boolean STEER_INVERTED = true;
+
+    public static final double DRIVE_ENCODER_POSITION_FACTOR =
+        (WHEEL_DIAMETER_METERS * Math.PI) / (double) DRIVE_REDUCTION;
+
+    public static final double DRIVE_ENCODER_VELOCITY_FACTOR =
+        ((WHEEL_DIAMETER_METERS * Math.PI) / (double) DRIVE_REDUCTION) / 60.0;
+
+    public static final double STEERING_ENCODER_POSITION_FACTOR =
+        (2 * Math.PI) / STEER_REDUCTION;
+    public static final double STEERING_ENCODER_VELOCITY_FACTOR =
+        ((2 * Math.PI) / STEER_REDUCTION) / 60.0;
+
+    public static final double MAX_VELOCITY_METERS_PER_SECOND =
+        6380.0 / 60.0 * DRIVE_REDUCTION * WHEEL_DIAMETER_METERS * Math.PI;
+    public static final double MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND = 3 * Math.PI;
+
+    public static final int DRIVE_CURRENT_LIMIT_AMPS = 50;
+  }
+
 
   /** Gear ratio from the hood encoder (external) to actual hood positon */
   public static final double HOOD_ENCODER_RATIO = PLACEHOLDER_DOUBLE;
 
   /** Gear ratio from the shooter encoder (internal) to the shooter wheel position */
   public static final double SHOOTER_ENCODER_RATIO = 1.0;
+
+
 }

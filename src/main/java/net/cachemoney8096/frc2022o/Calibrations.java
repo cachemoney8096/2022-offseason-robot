@@ -1,9 +1,36 @@
 package net.cachemoney8096.frc2022o;
 
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import net.cachemoney8096.frc2022o.libs_3005.controller.PIDGains;
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.math.controller.ProfiledPIDController;
 /**
  * Use this class to store numbers that are arbitrary but can be tuned (such as thresholds, etc.)
  */
 public class Calibrations {
+  public static final class Drivetrain {
+    public static final SimpleMotorFeedforward DRIVE_FEEDFORWARD =
+    new SimpleMotorFeedforward(0.0467, 3.3076, 0.01897);
+    public static final SimpleMotorFeedforward STEER_FEEDFORWARD =
+    new SimpleMotorFeedforward(0.35233, 0.39185, 0.0058658);
+    
+    public static final PIDGains STEER_PID_GAINS = new PIDGains(8.0, 0.00, 0.3);
+    public static final PIDGains DRIVE_PID_GAINS = new PIDGains(0.04, 0.0, 0.0);
+    
+    public static final TrapezoidProfile.Constraints STEER_TRAPEZOID_CONSTRAINTS =
+        new TrapezoidProfile.Constraints(20, 200);
+
+    // Auton path finding controllers
+    public static final PIDController PATH_X_CONTROLLER = new PIDController(0.100506, 0.0, 0.0);
+    public static final PIDController PATH_Y_CONTROLLER = new PIDController(0.1, 0.0, 0.0);
+
+    // High profile constraints = pure P controller
+    public static final ProfiledPIDController PATH_THETA_CONTROLLER =
+        new ProfiledPIDController(
+            9.0, 0.0, 0.80, new TrapezoidProfile.Constraints(1000.0, 100000.0));
+  }
+
   /** For translation commands above this threshold (in [0,1]), heading lock will not apply */
   public static final double HEADING_LOCK_TRANSLATION_COMMAND_THRESHOLD = 0.1;
   /** For rotation commands below this threshold (in [0,1]), heading lock may apply */
