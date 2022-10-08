@@ -157,7 +157,7 @@ public class Intake extends SubsystemBase {
    * Function to call in the event of not trying to intake. Either this or intakeCargo must be
    * called!
    */
-  public void DontIntakeCargo() {
+  public void dontIntakeCargo() {
     // Stop running and bring the intake in
     // Ignore the ejection timer, the intake must be brought in ASAP
     intakeMotorOne.set(0);
