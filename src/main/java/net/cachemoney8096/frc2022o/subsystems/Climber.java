@@ -18,13 +18,13 @@ public class Climber extends SubsystemBase {
     climbMotorRight.setIdleMode(CANSparkMax.IdleMode.kBrake);
     climbMotorRight.setInverted(
         INVERSION_PLACEHOLDER); // TODO see which way motors are facing and invert such that
-                                // positive = in
+    // positive = in
 
     climbMotorLeft.restoreFactoryDefaults();
     climbMotorLeft.setIdleMode(CANSparkMax.IdleMode.kBrake);
     climbMotorLeft.setInverted(
         INVERSION_PLACEHOLDER); // TODO see which way motors are facing and invert such that
-                                // positive = in
+    // positive = in
   }
 
   public void rightMotorDown() {

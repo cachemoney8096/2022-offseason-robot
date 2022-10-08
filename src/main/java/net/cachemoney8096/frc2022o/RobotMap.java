@@ -3,8 +3,7 @@ package net.cachemoney8096.frc2022o;
 /** Store CAN and port IDs here */
 public class RobotMap {
   /** Driver/Operator controller indices */
-  public static final int DRIVER_CONTROLLER_INDEX = 0,
-      OPERATOR_CONTROLLER_INDEX = 1;
+  public static final int DRIVER_CONTROLLER_INDEX = 0, OPERATOR_CONTROLLER_INDEX = 1;
 
   /** Drivetrain CAN IDs */
   public static final int DRIVE_FRONT_LEFT_ID = 1,
@@ -27,13 +26,10 @@ public class RobotMap {
       INDEXER_MOTOR_THREE_ID = 14;
 
   /** Shooter CAN IDs */
-  public static final int SHOOTER_MOTOR_ONE_ID = 15,
-      SHOOTER_MOTOR_TWO_ID = 16,
-      HOOD_MOTOR_ID = 17;
+  public static final int SHOOTER_MOTOR_ONE_ID = 15, SHOOTER_MOTOR_TWO_ID = 16, HOOD_MOTOR_ID = 17;
 
   /** Climber CAN IDs */
-  public static final int CLIMBER_MOTOR_RIGHT_ID = 18,
-      CLIMBER_MOTOR_LEFT_ID = 19;
+  public static final int CLIMBER_MOTOR_RIGHT_ID = 18, CLIMBER_MOTOR_LEFT_ID = 19;
 
   /** CAN IDs for things other than motor controllers */
   public static final int PIGEON_IMU_ID = 20;
