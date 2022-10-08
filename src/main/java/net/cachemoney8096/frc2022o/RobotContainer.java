@@ -4,6 +4,7 @@
 
 package net.cachemoney8096.frc2022o;
 
+import net.cachemoney8096.frc2022o.subsystems.Climber;
 import net.cachemoney8096.frc2022o.subsystems.Drivetrain;
 import net.cachemoney8096.frc2022o.subsystems.Intake;
 import net.cachemoney8096.frc2022o.subsystems.Indexer;
@@ -31,6 +32,7 @@ public class RobotContainer {
   private final Indexer indexer;
   private final Shooter shooter;
   private final Drivetrain drivetrain;
+  private final Climber climber;
 
   private SendableChooser<Command> autonChooser;
 
@@ -48,6 +50,7 @@ public class RobotContainer {
     intake = new Intake(indexer);
     shooter = new Shooter();
     drivetrain = new Drivetrain();
+    climber = new Climber();
 
     configureButtonBindings();
     configureAuton();
@@ -59,7 +62,12 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-  private void configureButtonBindings() {}
+  private void configureButtonBindings() {
+    operatorController.B().whileHeld(new InstantCommand(climber::rightMotorDown, climber));
+    operatorController.Y().whileHeld(new InstantCommand(climber::rightMotorUp, climber));
+    operatorController.A().whileHeld(new InstantCommand(climber::leftMotorDown, climber));
+    operatorController.X().whileHeld(new InstantCommand(climber::leftMotorUp, climber));
+  }
 
   private void configureAuton() {
     autonChooser = new SendableChooser<>();
