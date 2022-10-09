@@ -10,8 +10,11 @@ import net.cachemoney8096.frc2022o.Constants;
 import net.cachemoney8096.frc2022o.Calibrations;
 import net.cachemoney8096.frc2022o.RobotMap;
 import net.cachemoney8096.frc2022o.libs.SendablePigeon;
+import net.cachemoney8096.frc2022o.libs_3005.vendor.sensor.Limelight;
 
 public class DriveSubsystem extends SwerveDrive {
+    private final Limelight limelight;
+
   public Command trajectoryFollowerCommand(PathPlannerTrajectory trajectory) {
     Calibrations.Drivetrain.PATH_THETA_CONTROLLER.enableContinuousInput(-Math.PI, Math.PI);
     return trajectoryFollowerCommand(
@@ -61,7 +64,7 @@ public class DriveSubsystem extends SwerveDrive {
               2 * Math.PI,
               true));
 
-  public DriveSubsystem(SendablePigeon gyro) {
+  public DriveSubsystem(SendablePigeon gyro, Limelight limelight) {
     super(
         frontLeft,
         frontRight,
@@ -70,6 +73,7 @@ public class DriveSubsystem extends SwerveDrive {
         Constants.Drivetrain.SWERVE_KINEMATICS,
         gyro,
         Constants.Drivetrain.MAX_VELOCITY_METERS_PER_SECOND);
+    this.limelight = limelight;
     // Logger.tag("Swerve Drive").warn("Reset calibration time back to longer for comp");
   }
 
@@ -79,5 +83,9 @@ public class DriveSubsystem extends SwerveDrive {
     addChild("X Controller", Calibrations.Drivetrain.PATH_X_CONTROLLER);
     addChild("Y Controller", Calibrations.Drivetrain.PATH_Y_CONTROLLER);
     addChild("Theta Controller", Calibrations.Drivetrain.PATH_THETA_CONTROLLER);
+  }
+
+  public void rotateToShoot(){
+      
   }
 }
