@@ -61,4 +61,10 @@ public class Constants {
 
   /** Gear ratio from the shooter encoder (internal) to the shooter wheel position */
   public static final double SHOOTER_ENCODER_RATIO = 1.0;
+
+  /** Measurements for the limelight */
+  public static final double ANGLE_DEGREES = PLACEHOLDER_DOUBLE,
+    HEIGHT_METERS = PLACEHOLDER_DOUBLE,
+    TARGET_HEIGHT_METERS = PLACEHOLDER_DOUBLE;
+
 }

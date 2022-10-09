@@ -5,6 +5,8 @@ import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import net.cachemoney8096.frc2022o.libs_3005.controller.PIDGains;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.controller.ProfiledPIDController;
+import net.cachemoney8096.frc2022o.libs_3005.util.LinearInterpolatedTable2d;
+
 /**
  * Use this class to store numbers that are arbitrary but can be tuned (such as thresholds, etc.)
  */
@@ -66,4 +68,9 @@ public class Calibrations {
       HOOD_kD = Constants.PLACEHOLDER_DOUBLE,
       HOOD_kF = Constants.PLACEHOLDER_DOUBLE,
       HOOD_RANGE_DEG = Constants.PLACEHOLDER_DOUBLE;
+
+    /** Linear tables for the limelight - THESE VALUES ARE PLACEHOLDERS.*/
+    public static final LinearInterpolatedTable2d HOOD_TABLE = new LinearInterpolatedTable2d().withPair(0.0, 1.0) .withPair(1.0, 3.0) .withPair(0.5, 2.0) .withPair(2.0, 5.0),
+    SHOOTER_TABLE = new LinearInterpolatedTable2d().withPair(0.0, 1.0) .withPair(1.0, 3.0) .withPair(0.5, 2.0) .withPair(2.0, 5.0);
+    // TODO get actual values
 }

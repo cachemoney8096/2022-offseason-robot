@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import net.cachemoney8096.frc2022o.Calibrations;
 import net.cachemoney8096.frc2022o.Constants;
+import net.cachemoney8096.frc2022o.libs_3005.vendor.sensor.Limelight;
+
 
 public class Shooter extends SubsystemBase {
 
@@ -28,7 +30,9 @@ public class Shooter extends SubsystemBase {
   private double shooterSetpointRPM = 0;
   private double hoodSetpointDeg = 0;
 
-  public Shooter() {
+  private final Limelight limelight;
+
+  public Shooter(Limelight limelight) {
     shooterMotorOne = new CANSparkMax(RobotMap.SHOOTER_MOTOR_ONE_ID, MotorType.kBrushless);
     shooterMotorOne.restoreFactoryDefaults();
     shooterEncoder = shooterMotorOne.getEncoder();
@@ -57,6 +61,8 @@ public class Shooter extends SubsystemBase {
     hoodPID.setI(Calibrations.HOOD_kI);
     hoodPID.setD(Calibrations.HOOD_kD);
     hoodPID.setFF(Calibrations.HOOD_kF);
+
+    this.limelight = limelight;
   }
 
   public double getHoodPosition() {
@@ -96,7 +102,11 @@ public class Shooter extends SubsystemBase {
   }
 
   public void aimHood() {
-    // dummy function because the actual code only exists in another branch 😐
+    if (limelight.isValidTarget()){
+      setHoodPosition(Calibrations.HOOD_TABLE.get(limelight.getDistanceFromTargetMeters()));
+    } else {
+      //TODO - anything?
+    }
   }
 
   @Override

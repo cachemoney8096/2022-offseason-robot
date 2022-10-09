@@ -12,6 +12,7 @@ import net.cachemoney8096.frc2022o.subsystems.drive.DriveSubsystem;
 import net.cachemoney8096.frc2022o.libs.SendablePigeon;
 import net.cachemoney8096.frc2022o.libs.XboxController;
 import net.cachemoney8096.frc2022o.libs_3005.util.JoystickUtil;
+import net.cachemoney8096.frc2022o.libs_3005.vendor.sensor.Limelight;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.*;
@@ -42,6 +43,8 @@ public class RobotContainer {
   private final DriveSubsystem drivetrain;
   private final Climber climber;
 
+  private final Limelight limelight;
+
   private SendableChooser<Command> autonChooser;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -54,11 +57,12 @@ public class RobotContainer {
     driverController = new XboxController(RobotMap.DRIVER_CONTROLLER_INDEX);
     operatorController = new XboxController(RobotMap.OPERATOR_CONTROLLER_INDEX);
 
+    limelight = new Limelight(Constants.ANGLE_DEGREES, Constants.HEIGHT_METERS, Constants.TARGET_HEIGHT_METERS);
     pigeon = new SendablePigeon(RobotMap.PIGEON_IMU_ID);
     indexer = new Indexer();
     intake = new Intake(indexer);
-    shooter = new Shooter();
-    drivetrain = new DriveSubsystem(pigeon);
+    shooter = new Shooter(limelight);
+    drivetrain = new DriveSubsystem(pigeon, limelight);
     climber = new Climber();
 
     Shuffleboard.getTab("Subsystems").add(drivetrain.getName(), drivetrain);
