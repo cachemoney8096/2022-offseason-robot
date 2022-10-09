@@ -1,5 +1,6 @@
 package net.cachemoney8096.frc2022o.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.SparkMaxPIDController;
@@ -104,8 +105,12 @@ public class Shooter extends SubsystemBase {
   public void aimHood() {
     if (limelight.isValidTarget()){
       setHoodPosition(Calibrations.HOOD_TABLE.get(limelight.getDistanceFromTargetMeters()));
-    } else {
-      //TODO - anything?
+    }
+  }
+
+  public void shoot(){
+    if (checkShootReady() && limelight.isValidTarget()){
+      shooterMotorOne.getPIDController().setReference(Calibrations.SHOOTER_TABLE.get(limelight.getDistanceFromTargetMeters()), ControlType.kVelocity);
     }
   }
 
