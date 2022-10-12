@@ -110,7 +110,7 @@ public class Shooter extends SubsystemBase {
 
   public void shoot(){
     if (checkShootReady() && limelight.isValidTarget()){
-      shooterMotorOne.getPIDController().setReference(Calibrations.SHOOTER_TABLE.get(limelight.getDistanceFromTargetMeters()), ControlType.kVelocity);
+      setShooterVelocity(Calibrations.SHOOTER_TABLE.get(limelight.getDistanceFromTargetMeters()));
     }
   }
 
