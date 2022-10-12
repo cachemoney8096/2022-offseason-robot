@@ -139,9 +139,11 @@ public class Indexer extends SubsystemBase {
   /** Gives a string description of the eject timer */
   private String ejectTimerStatus() {
     if (ejectTimer.isPresent()) {
-      return String.format("Time %f, has elapsed %b", ejectTimer.get().get(), ejectTimer.get().hasElapsed(Calibrations.EJECT_CARGO_BACK_SECONDS));
-    }
-    else {
+      return String.format(
+          "Time %f, has elapsed %b",
+          ejectTimer.get().get(),
+          ejectTimer.get().hasElapsed(Calibrations.EJECT_CARGO_BACK_SECONDS));
+    } else {
       return "No eject timer";
     }
   }
@@ -149,7 +151,12 @@ public class Indexer extends SubsystemBase {
   @Override
   public void initSendable(SendableBuilder builder) {
     super.initSendable(builder);
-    builder.addStringProperty("Indexer Instruction", () -> {return instructionFromIntake.name();}, null);
+    builder.addStringProperty(
+        "Indexer Instruction",
+        () -> {
+          return instructionFromIntake.name();
+        },
+        null);
     builder.addStringProperty("Indexer Eject Timer", this::ejectTimerStatus, null);
   }
 }

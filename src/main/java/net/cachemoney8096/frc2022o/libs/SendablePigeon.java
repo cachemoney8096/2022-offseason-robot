@@ -19,7 +19,12 @@ public class SendablePigeon extends Pigeon2 implements Sendable {
 
   @Override
   public void initSendable(SendableBuilder builder) {
-    builder.addDoubleProperty("Yaw Degrees CCW Pos", () -> getYaw(), (double yawDegCcw) -> {setYaw(yawDegCcw);});
+    builder.addDoubleProperty(
+        "Yaw Degrees CCW Pos",
+        () -> getYaw(),
+        (double yawDegCcw) -> {
+          setYaw(yawDegCcw);
+        });
   }
 
   /**

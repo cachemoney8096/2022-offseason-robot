@@ -90,7 +90,17 @@ public class Shooter extends SubsystemBase {
   @Override
   public void initSendable(SendableBuilder builder) {
     super.initSendable(builder);
-    builder.addDoubleProperty("Hood Position (deg)", () -> {return hoodSetpointDeg;}, this::setHoodPosition);
-    builder.addDoubleProperty("Shooter Speed (RPM)", () -> {return shooterSetpointRPM;}, this::setShooterVelocity);
+    builder.addDoubleProperty(
+        "Hood Position (deg)",
+        () -> {
+          return hoodSetpointDeg;
+        },
+        this::setHoodPosition);
+    builder.addDoubleProperty(
+        "Shooter Speed (RPM)",
+        () -> {
+          return shooterSetpointRPM;
+        },
+        this::setShooterVelocity);
   }
 }

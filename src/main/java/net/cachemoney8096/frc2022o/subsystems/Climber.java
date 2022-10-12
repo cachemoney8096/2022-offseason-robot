@@ -47,7 +47,17 @@ public class Climber extends SubsystemBase {
   @Override
   public void initSendable(SendableBuilder builder) {
     super.initSendable(builder);
-    builder.addDoubleProperty("Left Climber Power", () -> {return climbMotorLeft.get();}, null);
-    builder.addDoubleProperty("Right Climber Power", () -> {return climbMotorRight.get();}, null);
+    builder.addDoubleProperty(
+        "Left Climber Power",
+        () -> {
+          return climbMotorLeft.get();
+        },
+        null);
+    builder.addDoubleProperty(
+        "Right Climber Power",
+        () -> {
+          return climbMotorRight.get();
+        },
+        null);
   }
 }
