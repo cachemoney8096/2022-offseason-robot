@@ -13,6 +13,7 @@ import net.cachemoney8096.frc2022o.libs.PicoColorSensor;
 import net.cachemoney8096.frc2022o.libs.CargoColor;
 import net.cachemoney8096.frc2022o.libs.CargoColorDifferentiator;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
@@ -198,5 +199,23 @@ public class Intake extends SubsystemBase {
   private void retractIntake() {
     intakeSolenoidLeft.set(false);
     intakeSolenoidRight.set(false);
+  }
+
+  /** Gives a string description of the eject timer */
+  private String ejectTimerStatus() {
+    if (ejectTimer.isPresent()) {
+      return String.format("Time %f, has elapsed %b", ejectTimer.get().get(), ejectTimer.get().hasElapsed(Calibrations.EJECT_CARGO_BACK_SECONDS));
+    }
+    else {
+      return "No eject timer";
+    }
+  }
+
+  @Override
+  public void initSendable(SendableBuilder builder) {
+    super.initSendable(builder);
+    builder.addBooleanProperty("Intake Solenoids", () -> {return intakeSolenoidLeft.get();}, null);
+    builder.addStringProperty("Intake Eject Timer", this::ejectTimerStatus, null);
+    addChild("Cargo State Manager", cargoStateManager);
   }
 }

@@ -1,5 +1,6 @@
 package net.cachemoney8096.frc2022o.subsystems;
 
+import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.CANSparkMax;
 import net.cachemoney8096.frc2022o.RobotMap;
@@ -41,5 +42,12 @@ public class Climber extends SubsystemBase {
 
   public void leftMotorUp() {
     climbMotorLeft.set(1.0);
+  }
+
+  @Override
+  public void initSendable(SendableBuilder builder) {
+    super.initSendable(builder);
+    builder.addDoubleProperty("Left Climber Power", () -> {return climbMotorLeft.get();}, null);
+    builder.addDoubleProperty("Right Climber Power", () -> {return climbMotorRight.get();}, null);
   }
 }
