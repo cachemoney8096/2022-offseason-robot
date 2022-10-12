@@ -108,6 +108,7 @@ public class RobotContainer {
 
     // TODO set up shooter controls for shooter subsystem
     driverController.A().whileHeld(new InstantCommand(shooter::shoot, shooter).withName("Shooting"));
+    shooter.setDefaultCommand(new InstantCommand(shooter::dontShoot, shooter).withName("Not Shooting"));
     
     // Set up climber controls
     operatorController
