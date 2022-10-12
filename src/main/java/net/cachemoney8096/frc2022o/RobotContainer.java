@@ -17,7 +17,9 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj2.command.*;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -92,14 +94,14 @@ public class RobotContainer {
 
     // Set up intake controls
     intake.setDefaultCommand(
-        new InstantCommand(intake::dontIntakeCargo, intake).withName("Not Intaking"));
+        new RunCommand(intake::dontIntakeCargo, intake).withName("Not Intaking"));
     driverController
         .BumperLeft()
         .whileHeld(new InstantCommand(intake::intakeCargo, intake).withName("Intaking"));
 
     // Set up shooter controls for indexer
     indexer.setDefaultCommand(
-        new InstantCommand(indexer::indexBall, indexer).withName("Not Feeding Shooter"));
+        new RunCommand(indexer::indexBall, indexer).withName("Not Feeding Shooter"));
     driverController
         .BumperRight()
         .whileHeld(new InstantCommand(indexer::feedShooter, indexer).withName("Feed Shooter"));
