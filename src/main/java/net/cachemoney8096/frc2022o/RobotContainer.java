@@ -107,7 +107,8 @@ public class RobotContainer {
         .whileHeld(new InstantCommand(indexer::feedShooter, indexer).withName("Feed Shooter"));
 
     // TODO set up shooter controls for shooter subsystem
-
+    driverController.A().whileHeld(new InstantCommand(shooter::shoot, shooter).withName("Shooting"));
+    
     // Set up climber controls
     operatorController
         .B()

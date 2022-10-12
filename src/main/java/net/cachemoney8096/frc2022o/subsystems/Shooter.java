@@ -87,6 +87,10 @@ public class Shooter extends SubsystemBase {
     }
   }
 
+  public void shoot() {
+    // dummy function because the actual code only exists in another branch 😐
+  }
+
   @Override
   public void initSendable(SendableBuilder builder) {
     super.initSendable(builder);
