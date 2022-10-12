@@ -15,6 +15,7 @@ import net.cachemoney8096.frc2022o.libs_3005.util.JoystickUtil;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.*;
 
@@ -57,6 +58,12 @@ public class RobotContainer {
     shooter = new Shooter();
     drivetrain = new DriveSubsystem(pigeon);
     climber = new Climber();
+
+    Shuffleboard.getTab("Subsystems").add(drivetrain.getName(), drivetrain);
+    Shuffleboard.getTab("Subsystems").add(intake.getName(), intake);
+    Shuffleboard.getTab("Subsystems").add(indexer.getName(), indexer);
+    Shuffleboard.getTab("Subsystems").add(shooter.getName(), shooter);
+    Shuffleboard.getTab("Subsystems").add(climber.getName(), climber);
 
     configureButtonBindings();
     configureAuton();

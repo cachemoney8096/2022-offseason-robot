@@ -4,6 +4,8 @@ import java.util.Optional;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
+import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import net.cachemoney8096.frc2022o.Calibrations;
@@ -132,5 +134,22 @@ public class Indexer extends SubsystemBase {
         indexerMotorThree.set(Calibrations.INDEXER_EJECT_POWER);
         break;
     }
+  }
+
+  /** Gives a string description of the eject timer */
+  private String ejectTimerStatus() {
+    if (ejectTimer.isPresent()) {
+      return String.format("Time %f, has elapsed %b", ejectTimer.get().get(), ejectTimer.get().hasElapsed(Calibrations.EJECT_CARGO_BACK_SECONDS));
+    }
+    else {
+      return "No eject timer";
+    }
+  }
+
+  @Override
+  public void initSendable(SendableBuilder builder) {
+    super.initSendable(builder);
+    builder.addStringProperty("Indexer Instruction", () -> {return instructionFromIntake.name();}, null);
+    builder.addStringProperty("Indexer Eject Timer", this::ejectTimerStatus, null);
   }
 }

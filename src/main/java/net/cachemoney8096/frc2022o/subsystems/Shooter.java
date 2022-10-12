@@ -6,6 +6,7 @@ import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 import net.cachemoney8096.frc2022o.RobotMap;
+import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import net.cachemoney8096.frc2022o.Calibrations;
@@ -24,8 +25,8 @@ public class Shooter extends SubsystemBase {
   private final RelativeEncoder shooterEncoder;
   private final DutyCycleEncoder hoodAbsoluteEncoder;
 
-  private double ShooterSetpointRPM = 0;
-  private double HoodSetpointDeg = 0;
+  private double shooterSetpointRPM = 0;
+  private double hoodSetpointDeg = 0;
 
   public Shooter() {
     shooterMotorOne = new CANSparkMax(RobotMap.SHOOTER_MOTOR_ONE_ID, MotorType.kBrushless);
@@ -68,21 +69,28 @@ public class Shooter extends SubsystemBase {
 
   public void setHoodPosition(double positionDeg) {
     hoodPID.setReference(positionDeg, ControlType.kPosition);
-    HoodSetpointDeg = positionDeg;
+    hoodSetpointDeg = positionDeg;
   }
 
   public void setShooterVelocity(double velocityRpm) {
     shooterPID.setReference(velocityRpm, ControlType.kVelocity);
-    ShooterSetpointRPM = velocityRpm;
+    shooterSetpointRPM = velocityRpm;
   }
 
   public boolean checkShootReady() {
 
-    if (Math.abs(getHoodPosition() - HoodSetpointDeg) < Calibrations.HOOD_RANGE_DEG
-        && Math.abs(getShooterVelocity() - ShooterSetpointRPM) < Calibrations.SHOOTER_RANGE_RPM) {
+    if (Math.abs(getHoodPosition() - hoodSetpointDeg) < Calibrations.HOOD_RANGE_DEG
+        && Math.abs(getShooterVelocity() - shooterSetpointRPM) < Calibrations.SHOOTER_RANGE_RPM) {
       return true; // ready
     } else {
       return false; // not ready
     }
+  }
+
+  @Override
+  public void initSendable(SendableBuilder builder) {
+    super.initSendable(builder);
+    builder.addDoubleProperty("Hood Position (deg)", () -> {return hoodSetpointDeg;}, this::setHoodPosition);
+    builder.addDoubleProperty("Shooter Speed (RPM)", () -> {return shooterSetpointRPM;}, this::setShooterVelocity);
   }
 }

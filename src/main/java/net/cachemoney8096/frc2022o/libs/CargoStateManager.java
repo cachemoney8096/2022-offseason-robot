@@ -2,15 +2,27 @@ package net.cachemoney8096.frc2022o.libs;
 
 import java.util.Optional;
 
+import edu.wpi.first.util.sendable.Sendable;
+import edu.wpi.first.util.sendable.SendableBuilder;
+
 /**
- * This class takes info from the intake and indexer to determine all the cargo states of the robot
+ * This class takes info from the intake and indexer to determine all the cargo
+ * states of the robot
  */
-public class CargoStateManager {
+public class CargoStateManager implements Sendable {
   /** Whether the intake is bringing cargo in, out, or neither */
   public enum IntakeState {
     INTAKING,
     EJECTING,
     NOT_ACTUATING
+  }
+
+  public static String optionalCargoToString(Optional<CargoColor> inputCargo) {
+    if (inputCargo.isPresent()) {
+      return "none";
+    } else {
+      return inputCargo.get().name();
+    }
   }
 
   /** Sensor readings */
@@ -48,7 +60,8 @@ public class CargoStateManager {
     public Optional<CargoColor> intakeCurrentCargo = Optional.empty();
 
     /**
-     * The color of a cargo sent along by the intake, indicating what the indexer might see. This
+     * The color of a cargo sent along by the intake, indicating what the indexer
+     * might see. This
      * may be a cargo still seen by the intake!
      */
     public Optional<CargoColor> intakeCargoPassedToIndexer = Optional.empty();
@@ -56,7 +69,8 @@ public class CargoStateManager {
     /** The color of cargo currently held by the indexer */
     public Optional<CargoColor> indexerCurrentCargo = Optional.empty();
 
-    public RobotCargoState() {}
+    public RobotCargoState() {
+    }
 
     public RobotCargoState(
         Optional<CargoColor> intakeLastColorSeenIn,
@@ -81,7 +95,8 @@ public class CargoStateManager {
   }
 
   /**
-   * Figure out the new state of the robot's cargo, working back-to-front starting with the indexer
+   * Figure out the new state of the robot's cargo, working back-to-front starting
+   * with the indexer
    */
   public RobotCargoState updateCargoState(InputState inputState) {
     // First, update the indexer
@@ -107,7 +122,8 @@ public class CargoStateManager {
     // We only update if:
     // (a) we are trying to pass a cargo to the indexer and
     // (b) we have a cargo to pass and
-    // (c) we have not already passed a cargo (don't update until the forward cargo has reached the
+    // (c) we have not already passed a cargo (don't update until the forward cargo
+    // has reached the
     // indexer)
     if (inputState.intakeState == IntakeState.INTAKING
         && robotCargoState.intakeCurrentCargo.isPresent()
@@ -140,5 +156,52 @@ public class CargoStateManager {
     }
 
     return robotCargoState;
+  }
+
+  private Optional<CargoColor> convertStringToCargoColor(String cargoString) {
+    String lowercaseCargoString = cargoString.toLowerCase();
+    if (lowercaseCargoString == "ours") {
+      return Optional.of(CargoColor.OURS);
+    }
+    else if (lowercaseCargoString == "theirs") {
+      return Optional.of(CargoColor.OURS);
+    }
+    else if (lowercaseCargoString == "unknown") {
+      return Optional.of(CargoColor.UNKNOWN);
+    }
+    else if (lowercaseCargoString == "none") {
+      return Optional.empty();
+    }
+    else {
+      return Optional.empty();
+    }
+  }
+
+  private void overrideIntakeCargo(String intakeCargo) {
+    robotCargoState.intakeCurrentCargo = convertStringToCargoColor(intakeCargo);
+  }
+
+  private void overrideIndexerCargo(String indexerCargo) {
+    robotCargoState.indexerCurrentCargo = convertStringToCargoColor(indexerCargo);
+  }
+
+  @Override
+  public void initSendable(SendableBuilder builder) {
+    builder.addStringProperty(
+      "Intake Last Color Seen",
+      () -> optionalCargoToString(robotCargoState.intakeLastColorSeen),
+      null);
+    builder.addStringProperty(
+      "Intake Current Cargo",
+      () -> optionalCargoToString(robotCargoState.intakeCurrentCargo),
+      this::overrideIntakeCargo);
+    builder.addStringProperty(
+      "Cargo passed intake to indexer",
+      () -> optionalCargoToString(robotCargoState.intakeCargoPassedToIndexer),
+      null);
+    builder.addStringProperty(
+      "Indexer Current Cargo",
+      () -> optionalCargoToString(robotCargoState.indexerCurrentCargo),
+      this::overrideIndexerCargo);
   }
 }
