@@ -61,4 +61,14 @@ public class Constants {
 
   /** Gear ratio from the shooter encoder (internal) to the shooter wheel position */
   public static final double SHOOTER_ENCODER_RATIO = 1.0;
+
+  /** Pitch angle from horizontal of the limelight in degrees (0 = straight ahead, 90 = straight up) */
+  public static final double LIMELIGHT_PITCH_DEGREES = PLACEHOLDER_DOUBLE;
+  
+  /** Height of the limelight on the robot from the carpet */
+  public static final double LIMELIGHT_HEIGHT_METERS = PLACEHOLDER_DOUBLE;
+  
+  /** Height of the vision targets above the carpet */
+  public static final double TARGET_HEIGHT_METERS = Units.inchesToMeters(103);
+
 }

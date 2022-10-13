@@ -1,5 +1,6 @@
 package net.cachemoney8096.frc2022o.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.SparkMaxPIDController;
@@ -11,6 +12,8 @@ import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import net.cachemoney8096.frc2022o.Calibrations;
 import net.cachemoney8096.frc2022o.Constants;
+import net.cachemoney8096.frc2022o.libs_3005.vendor.sensor.Limelight;
+
 
 public class Shooter extends SubsystemBase {
 
@@ -24,11 +27,15 @@ public class Shooter extends SubsystemBase {
   // Sensors
   private final RelativeEncoder shooterEncoder;
   private final DutyCycleEncoder hoodAbsoluteEncoder;
+  private final Limelight limelight;
 
+  // Members
   private double shooterSetpointRPM = 0;
   private double hoodSetpointDeg = 0;
 
-  public Shooter() {
+  public Shooter(Limelight limelightIn) {
+    limelight = limelightIn;
+
     shooterMotorOne = new CANSparkMax(RobotMap.SHOOTER_MOTOR_ONE_ID, MotorType.kBrushless);
     shooterMotorOne.restoreFactoryDefaults();
     shooterEncoder = shooterMotorOne.getEncoder();
@@ -78,7 +85,6 @@ public class Shooter extends SubsystemBase {
   }
 
   public boolean checkShootReady() {
-
     if (Math.abs(getHoodPosition() - hoodSetpointDeg) < Calibrations.HOOD_RANGE_DEG
         && Math.abs(getShooterVelocity() - shooterSetpointRPM) < Calibrations.SHOOTER_RANGE_RPM) {
       return true; // ready
@@ -87,16 +93,20 @@ public class Shooter extends SubsystemBase {
     }
   }
 
-  public void shoot() {
-    // dummy function because the actual code only exists in another branch 😐
-  }
-
   public void dontShoot() {
     setShooterVelocity(0);
   }
 
   public void aimHood() {
-    // dummy function because the actual code only exists in another branch 😐
+    if (limelight.isValidTarget()){
+      setHoodPosition(Calibrations.HOOD_TABLE.get(limelight.getDistanceFromTargetMeters()));
+    }
+  }
+
+  public void shoot(){
+    if (checkShootReady() && limelight.isValidTarget()){
+      setShooterVelocity(Calibrations.SHOOTER_TABLE.get(limelight.getDistanceFromTargetMeters()));
+    }
   }
 
   @Override
