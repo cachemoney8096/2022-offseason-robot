@@ -9,7 +9,6 @@ import net.cachemoney8096.frc2022o.RobotMap;
 import net.cachemoney8096.frc2022o.libs_3005.vendor.sensor.ThroughBoreEncoder;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.util.sendable.SendableBuilder;
-import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import net.cachemoney8096.frc2022o.Calibrations;
 import net.cachemoney8096.frc2022o.Constants;
@@ -59,17 +58,17 @@ public class Shooter extends SubsystemBase {
     final int HOOD_MOTOR_CURRENT_LIMIT = 20;
     hoodMotor.setSmartCurrentLimit(HOOD_MOTOR_CURRENT_LIMIT);
 
-    hoodAbsoluteEncoder = new ThroughBoreEncoder(RobotMap.HOOD_ENCODER_DIO, 0.0, Constants.HOOD_ENCODER_SCALAR,
-        INVERT_HOOD_ENCODER);
+    hoodAbsoluteEncoder =
+        new ThroughBoreEncoder(
+            RobotMap.HOOD_ENCODER_DIO, 0.0, Constants.HOOD_ENCODER_SCALAR, INVERT_HOOD_ENCODER);
     hoodAbsoluteEncoder.setPositionOffsetToCurrentPosition();
 
-    hoodController = new PIDController(
-        Calibrations.HOOD_kP,
-        Calibrations.HOOD_kI,
-        Calibrations.HOOD_kD);
-    hoodController.setIntegratorRange(-Calibrations.HOOD_MAX_INTEGRAL_VALUE, Calibrations.HOOD_MAX_INTEGRAL_VALUE);
-    hoodController.setTolerance(Calibrations.HOOD_POSITION_TOLERANCE_DEG,
-        Calibrations.HOOD_VELOCITY_TOLERANCE_DEG_PER_SEC);
+    hoodController =
+        new PIDController(Calibrations.HOOD_kP, Calibrations.HOOD_kI, Calibrations.HOOD_kD);
+    hoodController.setIntegratorRange(
+        -Calibrations.HOOD_MAX_INTEGRAL_VALUE, Calibrations.HOOD_MAX_INTEGRAL_VALUE);
+    hoodController.setTolerance(
+        Calibrations.HOOD_POSITION_TOLERANCE_DEG, Calibrations.HOOD_VELOCITY_TOLERANCE_DEG_PER_SEC);
   }
 
   @Override
@@ -133,12 +132,18 @@ public class Shooter extends SubsystemBase {
   @Override
   public void initSendable(SendableBuilder builder) {
     super.initSendable(builder);
-    builder.addDoubleProperty("Hood Position (deg)", () -> {
-      return hoodSetpointDeg;
-    }, this::setHoodPosition);
-    builder.addDoubleProperty("Shooter Speed (RPM)", () -> {
-      return shooterSetpointRpm;
-    }, this::setShooterVelocity);
+    builder.addDoubleProperty(
+        "Hood Position (deg)",
+        () -> {
+          return hoodSetpointDeg;
+        },
+        this::setHoodPosition);
+    builder.addDoubleProperty(
+        "Shooter Speed (RPM)",
+        () -> {
+          return shooterSetpointRpm;
+        },
+        this::setShooterVelocity);
     addChild("Hood PID", hoodController);
     builder.addDoubleProperty("Shooter kP", shooterController::getP, shooterController::setP);
     builder.addDoubleProperty("Shooter kI", shooterController::getI, shooterController::setI);
