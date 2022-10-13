@@ -13,7 +13,7 @@ import net.cachemoney8096.frc2022o.libs.SendablePigeon;
 import net.cachemoney8096.frc2022o.libs_3005.vendor.sensor.Limelight;
 
 public class DriveSubsystem extends SwerveDrive {
-    private final Limelight limelight;
+private final Limelight limelight;
 
   public Command trajectoryFollowerCommand(PathPlannerTrajectory trajectory) {
     Calibrations.Drivetrain.PATH_THETA_CONTROLLER.enableContinuousInput(-Math.PI, Math.PI);
@@ -64,7 +64,7 @@ public class DriveSubsystem extends SwerveDrive {
               2 * Math.PI,
               true));
 
-  public DriveSubsystem(SendablePigeon gyro, Limelight limelight) {
+  public DriveSubsystem(SendablePigeon gyro, Limelight limelightIn) {
     super(
         frontLeft,
         frontRight,
@@ -73,7 +73,7 @@ public class DriveSubsystem extends SwerveDrive {
         Constants.Drivetrain.SWERVE_KINEMATICS,
         gyro,
         Constants.Drivetrain.MAX_VELOCITY_METERS_PER_SECOND);
-    this.limelight = limelight;
+    limelight = limelightIn;
     // Logger.tag("Swerve Drive").warn("Reset calibration time back to longer for comp");
   }
 

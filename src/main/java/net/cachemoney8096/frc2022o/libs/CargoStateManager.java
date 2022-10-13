@@ -18,9 +18,9 @@ public class CargoStateManager implements Sendable {
 
   public static String optionalCargoToString(Optional<CargoColor> inputCargo) {
     if (inputCargo.isPresent()) {
-      return "none";
-    } else {
       return inputCargo.get().name();
+    } else {
+      return "none";
     }
   }
 

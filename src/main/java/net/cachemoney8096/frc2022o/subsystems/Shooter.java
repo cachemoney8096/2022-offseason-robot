@@ -27,13 +27,15 @@ public class Shooter extends SubsystemBase {
   // Sensors
   private final RelativeEncoder shooterEncoder;
   private final DutyCycleEncoder hoodAbsoluteEncoder;
+  private final Limelight limelight;
 
+  // Members
   private double shooterSetpointRPM = 0;
   private double hoodSetpointDeg = 0;
 
-  private final Limelight limelight;
+  public Shooter(Limelight limelightIn) {
+    limelight = limelightIn;
 
-  public Shooter(Limelight limelight) {
     shooterMotorOne = new CANSparkMax(RobotMap.SHOOTER_MOTOR_ONE_ID, MotorType.kBrushless);
     shooterMotorOne.restoreFactoryDefaults();
     shooterEncoder = shooterMotorOne.getEncoder();
@@ -62,8 +64,6 @@ public class Shooter extends SubsystemBase {
     hoodPID.setI(Calibrations.HOOD_kI);
     hoodPID.setD(Calibrations.HOOD_kD);
     hoodPID.setFF(Calibrations.HOOD_kF);
-
-    this.limelight = limelight;
   }
 
   public double getHoodPosition() {
@@ -85,17 +85,12 @@ public class Shooter extends SubsystemBase {
   }
 
   public boolean checkShootReady() {
-
     if (Math.abs(getHoodPosition() - hoodSetpointDeg) < Calibrations.HOOD_RANGE_DEG
         && Math.abs(getShooterVelocity() - shooterSetpointRPM) < Calibrations.SHOOTER_RANGE_RPM) {
       return true; // ready
     } else {
       return false; // not ready
     }
-  }
-
-  public void shoot() {
-    // dummy function because the actual code only exists in another branch 😐
   }
 
   public void dontShoot() {

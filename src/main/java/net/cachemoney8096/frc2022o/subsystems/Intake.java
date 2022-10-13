@@ -35,7 +35,7 @@ public class Intake extends SubsystemBase {
 
   // Members
   private CargoColorDifferentiator cargoColorDifferentiator = new CargoColorDifferentiator();
-  private Optional<Timer> ejectTimer;
+  private Optional<Timer> ejectTimer = Optional.empty();
   /** Indexer stored just to see sensor state */
   private Indexer indexer;
 
