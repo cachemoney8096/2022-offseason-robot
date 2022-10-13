@@ -1,6 +1,8 @@
 package net.cachemoney8096.frc2022o.subsystems.drive;
 
 import com.pathplanner.lib.PathPlannerTrajectory;
+
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj2.command.Command;
 import net.cachemoney8096.frc2022o.libs_3005.swerve.SwerveDrive;
@@ -86,6 +88,19 @@ public class DriveSubsystem extends SwerveDrive {
   }
 
   public void rotateToShoot() {
+    if (limelight.isValidTarget()) {
+      Rotation2d targetRelativeYaw = Rotation2d.fromDegrees(limelight.getOffSetX());
+      Rotation2d currentRobotYaw = getPose().getRotation();
+      Rotation2d targetYaw = currentRobotYaw.plus(targetRelativeYaw);
+      // TODO Do something with targetYaw
+    }
+    else {
+      // TODO turning randomly until we see a target?
+    }
+  }
+
+  public boolean alignedToTarget() {
     // TODO this
+    return true;
   }
 }
