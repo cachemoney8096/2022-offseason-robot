@@ -66,6 +66,10 @@ public class ThroughBoreEncoder implements AbsoluteEncoder {
     m_offset = offset;
   }
 
+  public void setPositionOffsetToCurrentPosition() {
+    m_offset = -getRelativePosition();
+  }
+
   public double getPositionOffset() {
     return m_offset;
   }
@@ -84,7 +88,7 @@ public class ThroughBoreEncoder implements AbsoluteEncoder {
     SendableHelper.addChild(builder, this, m_digitalSource, "Digital Source");
     builder.addDoubleProperty("Absolute Position", () -> getPosition(), null);
     builder.addDoubleProperty("Raw Sensor Output", this::dutyCycle, null);
-    builder.addDoubleProperty("Offset", () -> m_offset, null);
+    builder.addDoubleProperty("Offset", () -> m_offset, this::setPositionOffset);
     builder.addDoubleProperty("Scalar", () -> m_scalar, null);
     builder.addBooleanProperty("Inverted", () -> m_inverted, null);
   }

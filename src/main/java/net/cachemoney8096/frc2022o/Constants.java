@@ -59,6 +59,9 @@ public class Constants {
   /** Gear ratio from the hood encoder (external) to actual hood positon */
   public static final double HOOD_ENCODER_RATIO = PLACEHOLDER_DOUBLE;
 
+  /** Scalar for hood encoder from [0,1] to real degrees */
+  public static final double HOOD_ENCODER_SCALAR = 360 / HOOD_ENCODER_RATIO;
+
   /** Gear ratio from the shooter encoder (internal) to the shooter wheel position */
   public static final double SHOOTER_ENCODER_RATIO = 1.0;
 
