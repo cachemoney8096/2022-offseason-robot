@@ -97,17 +97,23 @@ public class RobotContainer {
         new RunCommand(intake::dontIntakeCargo, intake).withName("Not Intaking"));
     driverController
         .TriggerLeft()
-        .whileActiveContinuous(new InstantCommand(intake::intakeCargo, intake).withName("Intaking"));
+        .whileActiveContinuous(
+            new InstantCommand(intake::intakeCargo, intake).withName("Intaking"));
 
     // Set up shooter controls for the indexer and for the shooter
     indexer.setDefaultCommand(
         new RunCommand(indexer::indexBall, indexer).withName("Not Feeding Shooter"));
     driverController
         .TriggerRight()
-        .whileActiveContinuous(new InstantCommand(indexer::feedShooter, indexer).withName("Feed Shooter"));
+        .whileActiveContinuous(
+            new InstantCommand(indexer::feedShooter, indexer).withName("Feed Shooter"));
     shooter.setDefaultCommand(new RunCommand(shooter::dontShoot, shooter).withName("Not Shooting"));
-    driverController.TriggerRight().whileActiveContinuous(new InstantCommand(shooter::shoot, shooter).withName("Shooting"));
-    driverController.BumperRight().whileHeld(new InstantCommand(shooter::aimHood, shooter).withName("Aiming Hood"), true);
+    driverController
+        .TriggerRight()
+        .whileActiveContinuous(new InstantCommand(shooter::shoot, shooter).withName("Shooting"));
+    driverController
+        .BumperRight()
+        .whileHeld(new InstantCommand(shooter::aimHood, shooter).withName("Aiming Hood"), true);
 
     // Set up climber controls
     operatorController
