@@ -69,8 +69,19 @@ public class Calibrations {
       HOOD_kF = Constants.PLACEHOLDER_DOUBLE,
       HOOD_RANGE_DEG = Constants.PLACEHOLDER_DOUBLE;
 
-    /** Linear tables for the limelight - THESE VALUES ARE PLACEHOLDERS.*/
-    public static final LinearInterpolatedTable2d HOOD_TABLE = new LinearInterpolatedTable2d().withPair(0.0, 1.0) .withPair(1.0, 3.0) .withPair(0.5, 2.0) .withPair(2.0, 5.0),
-    SHOOTER_TABLE = new LinearInterpolatedTable2d().withPair(0.0, 1.0) .withPair(1.0, 3.0) .withPair(0.5, 2.0) .withPair(2.0, 5.0);
-    // TODO get actual values
+  /** Linear tables for the limelight - THESE VALUES ARE PLACEHOLDERS. */
+  public static final LinearInterpolatedTable2d
+      HOOD_TABLE =
+          new LinearInterpolatedTable2d()
+              .withPair(0.0, 1.0)
+              .withPair(1.0, 3.0)
+              .withPair(0.5, 2.0)
+              .withPair(2.0, 5.0),
+      SHOOTER_TABLE =
+          new LinearInterpolatedTable2d()
+              .withPair(0.0, 1.0)
+              .withPair(1.0, 3.0)
+              .withPair(0.5, 2.0)
+              .withPair(2.0, 5.0);
+  // TODO get actual values
 }

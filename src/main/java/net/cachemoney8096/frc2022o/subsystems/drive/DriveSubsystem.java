@@ -13,7 +13,7 @@ import net.cachemoney8096.frc2022o.libs.SendablePigeon;
 import net.cachemoney8096.frc2022o.libs_3005.vendor.sensor.Limelight;
 
 public class DriveSubsystem extends SwerveDrive {
-private final Limelight limelight;
+  private final Limelight limelight;
 
   public Command trajectoryFollowerCommand(PathPlannerTrajectory trajectory) {
     Calibrations.Drivetrain.PATH_THETA_CONTROLLER.enableContinuousInput(-Math.PI, Math.PI);
@@ -85,7 +85,7 @@ private final Limelight limelight;
     addChild("Theta Controller", Calibrations.Drivetrain.PATH_THETA_CONTROLLER);
   }
 
-  public void rotateToShoot(){
-      // TODO this
+  public void rotateToShoot() {
+    // TODO this
   }
 }

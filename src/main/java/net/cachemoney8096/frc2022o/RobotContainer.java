@@ -56,7 +56,11 @@ public class RobotContainer {
     driverController = new XboxController(RobotMap.DRIVER_CONTROLLER_INDEX);
     operatorController = new XboxController(RobotMap.OPERATOR_CONTROLLER_INDEX);
 
-    limelight = new Limelight(Constants.LIMELIGHT_PITCH_DEGREES, Constants.LIMELIGHT_HEIGHT_METERS, Constants.TARGET_HEIGHT_METERS);
+    limelight =
+        new Limelight(
+            Constants.LIMELIGHT_PITCH_DEGREES,
+            Constants.LIMELIGHT_HEIGHT_METERS,
+            Constants.TARGET_HEIGHT_METERS);
     pigeon = new SendablePigeon(RobotMap.PIGEON_IMU_ID);
     indexer = new Indexer();
     intake = new Intake(indexer);
