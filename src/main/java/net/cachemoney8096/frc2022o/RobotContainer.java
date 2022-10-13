@@ -96,20 +96,19 @@ public class RobotContainer {
     intake.setDefaultCommand(
         new RunCommand(intake::dontIntakeCargo, intake).withName("Not Intaking"));
     driverController
-        .BumperLeft()
-        .whileHeld(new InstantCommand(intake::intakeCargo, intake).withName("Intaking"));
+        .TriggerLeft()
+        .whileActiveContinuous(new InstantCommand(intake::intakeCargo, intake).withName("Intaking"));
 
-    // Set up shooter controls for indexer
+    // Set up shooter controls for the indexer and for the shooter
     indexer.setDefaultCommand(
         new RunCommand(indexer::indexBall, indexer).withName("Not Feeding Shooter"));
     driverController
-        .BumperRight()
-        .whileHeld(new InstantCommand(indexer::feedShooter, indexer).withName("Feed Shooter"));
-    
-    driverController.BumperRight().whileHeld(new InstantCommand(shooter::shoot, shooter).withName("Shooting"));
+        .TriggerRight()
+        .whileActiveContinuous(new InstantCommand(indexer::feedShooter, indexer).withName("Feed Shooter"));
     shooter.setDefaultCommand(new RunCommand(shooter::dontShoot, shooter).withName("Not Shooting"));
+    driverController.TriggerRight().whileActiveContinuous(new InstantCommand(shooter::shoot, shooter).withName("Shooting"));
+    driverController.BumperRight().whileHeld(new InstantCommand(shooter::aimHood, shooter).withName("Aiming Hood"), true);
 
-    driverController.B().whileHeld(new InstantCommand(shooter::aimHood, shooter).withName("Aiming Hood"));
     // Set up climber controls
     operatorController
         .B()
