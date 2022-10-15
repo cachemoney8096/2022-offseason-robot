@@ -93,8 +93,7 @@ public class DriveSubsystem extends SwerveDrive {
       Rotation2d currentRobotYaw = getPose().getRotation();
       Rotation2d targetYaw = currentRobotYaw.plus(targetRelativeYaw);
       // TODO Do something with targetYaw
-    }
-    else {
+    } else {
       // TODO turning randomly until we see a target?
     }
   }

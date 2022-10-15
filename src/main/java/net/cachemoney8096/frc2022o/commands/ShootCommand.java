@@ -6,7 +6,7 @@ import net.cachemoney8096.frc2022o.subsystems.Shooter;
 import net.cachemoney8096.frc2022o.subsystems.drive.DriveSubsystem;
 
 public class ShootCommand extends InstantCommand {
-  
+
   // Required subsystems
   private final DriveSubsystem drivetrain;
   private final Indexer indexer;
@@ -28,8 +28,7 @@ public class ShootCommand extends InstantCommand {
     drivetrain.rotateToShoot();
     if (drivetrain.alignedToTarget() && shooter.checkShootReady()) {
       indexer.feedShooter();
-    }
-    else {
+    } else {
       indexer.indexBall();
     }
   }

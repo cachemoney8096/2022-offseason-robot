@@ -91,10 +91,11 @@ public class Shooter extends SubsystemBase {
     hoodSetpointDeg = positionDeg;
   }
 
-  /** Sets the velocity set point for the shooter wheel.
-   * There's special handling for 0 RPM, to simply leave the motor unpowered
-   * instead of having the controller force the shooter wheel to zero. 
-   * 
+  /**
+   * Sets the velocity set point for the shooter wheel. There's special handling for 0 RPM, to
+   * simply leave the motor unpowered instead of having the controller force the shooter wheel to
+   * zero.
+   *
    * @param velocityRpm Desired velocity for shooter wheel in rev / minute.
    */
   public void setShooterVelocity(double velocityRpm) {
@@ -102,11 +103,9 @@ public class Shooter extends SubsystemBase {
     if (velocityRpm == 0.0) {
       // Unpowered slow down
       shooterController.setReference(0.0, ControlType.kVoltage);
-    }
-    else {
+    } else {
       shooterController.setReference(velocityRpm, ControlType.kVelocity);
     }
-    
   }
 
   public boolean checkShootReady() {
