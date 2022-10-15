@@ -9,6 +9,7 @@ import net.cachemoney8096.frc2022o.subsystems.Intake;
 import net.cachemoney8096.frc2022o.subsystems.Indexer;
 import net.cachemoney8096.frc2022o.subsystems.Shooter;
 import net.cachemoney8096.frc2022o.subsystems.drive.DriveSubsystem;
+import net.cachemoney8096.frc2022o.commands.ShootCommand;
 import net.cachemoney8096.frc2022o.libs.SendablePigeon;
 import net.cachemoney8096.frc2022o.libs.XboxController;
 import net.cachemoney8096.frc2022o.libs_3005.util.JoystickUtil;
@@ -20,6 +21,7 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 
 /**
@@ -110,17 +112,20 @@ public class RobotContainer {
     // Set up shooter controls for the indexer and for the shooter
     indexer.setDefaultCommand(
         new RunCommand(indexer::indexBall, indexer).withName("Not Feeding Shooter"));
+    final boolean SHOOTING_NOT_INTERRUPTIBLE = false;
     driverController
         .TriggerRight()
         .whileActiveContinuous(
-            new InstantCommand(indexer::feedShooter, indexer).withName("Feed Shooter"));
-    shooter.setDefaultCommand(new RunCommand(shooter::dontShoot, shooter).withName("Not Shooting"));
-    driverController
-        .TriggerRight()
-        .whileActiveContinuous(new InstantCommand(shooter::shoot, shooter).withName("Shooting"));
+            new ShootCommand(drivetrain, indexer, shooter).withName("Trying to shoot"), SHOOTING_NOT_INTERRUPTIBLE);
     driverController
         .BumperRight()
-        .whileHeld(new InstantCommand(shooter::aimHood, shooter).withName("Aiming Hood"), true);
+        .whileActiveContinuous(new InstantCommand(shooter::shoot, shooter).withName("Spinning up shooter"));
+    driverController
+        .TriggerRight()
+        .whenInactive(new InstantCommand(shooter::dontShoot, shooter).withName("Stopping shooter (trigger)"));
+    driverController
+        .BumperRight()
+        .whenInactive(new InstantCommand(shooter::dontShoot, shooter).withName("Stopping shooter (bumper)"));
 
     // Set up climber controls
     operatorController

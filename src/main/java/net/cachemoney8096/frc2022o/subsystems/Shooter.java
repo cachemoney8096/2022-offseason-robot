@@ -71,14 +71,6 @@ public class Shooter extends SubsystemBase {
         Calibrations.HOOD_POSITION_TOLERANCE_DEG, Calibrations.HOOD_VELOCITY_TOLERANCE_DEG_PER_SEC);
   }
 
-  @Override
-  public void periodic() {
-    // TODO consider moving this to a function that gets called after
-    // there's an opportunity to change hoodSetpointDeg
-    // Recall: periodic runs first, so this will lag by a whole cycle
-    hoodMotor.set(calculateHoodControl());
-  }
-
   private double calculateHoodControl() {
     return MathUtil.clamp(
         hoodController.calculate(getHoodPositionDeg(), hoodSetpointDeg) + Calibrations.HOOD_kF,
@@ -99,9 +91,22 @@ public class Shooter extends SubsystemBase {
     hoodSetpointDeg = positionDeg;
   }
 
+  /** Sets the velocity set point for the shooter wheel.
+   * There's special handling for 0 RPM, to simply leave the motor unpowered
+   * instead of having the controller force the shooter wheel to zero. 
+   * 
+   * @param velocityRpm Desired velocity for shooter wheel in rev / minute.
+   */
   public void setShooterVelocity(double velocityRpm) {
-    shooterController.setReference(velocityRpm, ControlType.kVelocity);
     shooterSetpointRpm = velocityRpm;
+    if (velocityRpm == 0.0) {
+      // Unpowered slow down
+      shooterController.setReference(0.0, ControlType.kVoltage);
+    }
+    else {
+      shooterController.setReference(velocityRpm, ControlType.kVelocity);
+    }
+    
   }
 
   public boolean checkShootReady() {
@@ -114,18 +119,19 @@ public class Shooter extends SubsystemBase {
   }
 
   public void dontShoot() {
-    setShooterVelocity(0);
-  }
-
-  public void aimHood() {
-    if (limelight.isValidTarget()) {
-      setHoodPosition(Calibrations.HOOD_TABLE.get(limelight.getDistanceFromTargetMeters()));
-    }
+    setShooterVelocity(0.0);
+    hoodMotor.set(0.0);
+    hoodController.reset();
   }
 
   public void shoot() {
-    if (checkShootReady() && limelight.isValidTarget()) {
+    if (limelight.isValidTarget()) {
+      // Send shooter setpoint to shooter controller (which runs an internal PID)
       setShooterVelocity(Calibrations.SHOOTER_TABLE.get(limelight.getDistanceFromTargetMeters()));
+
+      // Set the hood position then set it, since we're running the PID on the roboRIO
+      setHoodPosition(Calibrations.HOOD_TABLE.get(limelight.getDistanceFromTargetMeters()));
+      hoodMotor.set(calculateHoodControl());
     }
   }
 
