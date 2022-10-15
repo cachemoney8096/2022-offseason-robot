@@ -51,16 +51,18 @@ public class Intake extends SubsystemBase {
     intakeMotorOne.restoreFactoryDefaults();
     intakeMotorOne.setIdleMode(CANSparkMax.IdleMode.kCoast);
     intakeMotorOne.setInverted(
-        false); // TODO see which way motors are facing and invert such that positive = in
+        true);
 
     intakeMotorTwo = new CANSparkMax(RobotMap.INTAKE_MOTOR_TWO_ID, MotorType.kBrushless);
     intakeMotorTwo.restoreFactoryDefaults();
     intakeMotorTwo.setIdleMode(CANSparkMax.IdleMode.kCoast);
+    intakeMotorTwo.setInverted(
+        false);
 
     intakeMotorThree = new CANSparkMax(RobotMap.INTAKE_MOTOR_THREE_ID, MotorType.kBrushless);
     intakeMotorThree.restoreFactoryDefaults();
     intakeMotorThree.setIdleMode(CANSparkMax.IdleMode.kCoast);
-    intakeMotorThree.follow(intakeMotorTwo);
+    intakeMotorThree.follow(intakeMotorTwo, true);
 
     compressor = new Compressor(RobotMap.COMPRESSOR_MODULE_ID, PneumaticsModuleType.CTREPCM);
     intakeSolenoidLeft =
