@@ -29,7 +29,7 @@ public class Shooter extends SubsystemBase {
   private final Limelight limelight;
 
   // Members
-  private final boolean INVERT_HOOD_ENCODER = false; // TODO placeholder
+  private final boolean INVERT_HOOD_ENCODER = true;
   private final PIDController hoodController;
   private double shooterSetpointRpm = 0;
   private double hoodSetpointDeg = 0;
@@ -63,7 +63,6 @@ public class Shooter extends SubsystemBase {
     hoodAbsoluteEncoder =
         new ThroughBoreEncoder(
             RobotMap.HOOD_ENCODER_DIO, 0.0, Constants.HOOD_ENCODER_SCALAR, INVERT_HOOD_ENCODER);
-    hoodAbsoluteEncoder.setPositionOffsetToCurrentPosition();
 
     hoodController =
         new PIDController(Calibrations.HOOD_kP, Calibrations.HOOD_kI, Calibrations.HOOD_kD);
@@ -71,6 +70,12 @@ public class Shooter extends SubsystemBase {
         -Calibrations.HOOD_MAX_INTEGRAL_VALUE, Calibrations.HOOD_MAX_INTEGRAL_VALUE);
     hoodController.setTolerance(
         Calibrations.HOOD_POSITION_TOLERANCE_DEG, Calibrations.HOOD_VELOCITY_TOLERANCE_DEG_PER_SEC);
+  }
+
+  /** Call for initialization at least a couple seconds after construction */
+  public void initialize() {
+    final double HOOD_STARTING_POSITION_DEG = 10;
+    hoodAbsoluteEncoder.setPositionOffsetSuchThatCurrentPositionIs(HOOD_STARTING_POSITION_DEG);
   }
 
   private double calculateHoodControl() {

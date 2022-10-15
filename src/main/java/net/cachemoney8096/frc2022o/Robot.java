@@ -29,6 +29,15 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     robotContainer = new RobotContainer();
+
+    // Some things like the encoders we're using taking a couple seconds to 
+    // start getting correct values, so we wait for two seconds before moving on
+    try {
+      Thread.sleep(2000, 0);
+    }
+    catch (Exception e) { }
+
+    robotContainer.initialize();
   }
 
   /**

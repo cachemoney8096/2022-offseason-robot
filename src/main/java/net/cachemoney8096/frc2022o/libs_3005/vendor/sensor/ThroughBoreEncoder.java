@@ -70,6 +70,14 @@ public class ThroughBoreEncoder implements AbsoluteEncoder {
     m_offset = -getRelativePosition();
   }
 
+  /** Sets the offset such that the current position is some desired position */
+  public void setPositionOffsetSuchThatCurrentPositionIs(double desiredCurPosition) {
+    double curPosition = getPosition();
+    m_offset = m_offset + curPosition - desiredCurPosition;
+    // The following will pass but no sense risking a crash
+    // assert Math.abs(getPosition() - desiredCurPosition) < 0.01;
+  }
+
   public double getPositionOffset() {
     return m_offset;
   }
