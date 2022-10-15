@@ -29,6 +29,9 @@ public class CargoColorDifferentiator {
   // If ratio is above this, consider the ball known
   private final double COLOR_RATIO_THRESHOLD = 1.3;
 
+  // Added to the red value, since the sensor is less sensitive to red
+  private final int RED_OFFSET = 100;
+
   // Updates the alliance color if available.
   // This should only be run in disabled periodic.
   public void updateAllianceColor() {
@@ -45,10 +48,10 @@ public class CargoColorDifferentiator {
     double ourColor =
         ourAllianceColor.get() == Color.BLUE
             ? inputColor.blue + OUR_COLOR_OFFSET
-            : inputColor.red + OUR_COLOR_OFFSET + 100;
+            : inputColor.red + OUR_COLOR_OFFSET + RED_OFFSET;
     double theirColor =
         ourAllianceColor.get() == Color.BLUE
-            ? inputColor.red + THEIR_COLOR_OFFSET + 100
+            ? inputColor.red + THEIR_COLOR_OFFSET + RED_OFFSET
             : inputColor.blue + THEIR_COLOR_OFFSET;
 
     // Apply ratio threshold
