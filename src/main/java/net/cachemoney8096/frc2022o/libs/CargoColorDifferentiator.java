@@ -50,13 +50,6 @@ public class CargoColorDifferentiator {
         ourAllianceColor.get() == Color.BLUE
             ? inputColor.red + THEIR_COLOR_OFFSET + 100
             : inputColor.blue + THEIR_COLOR_OFFSET;
-    
-
-
-    System.out.println("OUR: " + ourColor);
-    System.out.println("THEIR: " + theirColor);
-    System.out.println("OUR:THEIR: " + (ourColor / theirColor));
-    System.out.println("THEIR:OUR: " + (theirColor / ourColor));
 
     // Apply ratio threshold
     if (ourColor / theirColor > COLOR_RATIO_THRESHOLD) return CargoColor.OURS;
