@@ -83,7 +83,7 @@ public class Intake extends SubsystemBase {
 
     // Check color sensor
     CargoColor lastColorSeen = CargoColor.UNKNOWN;
-    if (colorSensor.getProximity0() < Calibrations.COLOR_SENSOR_PROXIMITY_THRESHOLD) {
+    if (colorSensor.getProximity0() > Calibrations.COLOR_SENSOR_PROXIMITY_THRESHOLD) {
       sensorColor = new PicoColorSensor.RawColor();
       colorSensor.getRawColor0(sensorColor);
       lastColorSeen = cargoColorDifferentiator.whatColor(sensorColor);

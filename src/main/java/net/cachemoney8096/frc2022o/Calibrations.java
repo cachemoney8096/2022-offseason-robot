@@ -45,7 +45,7 @@ public class Calibrations {
   public static final double EJECT_CARGO_BACK_SECONDS = 1.0;
 
   /** Threshold for proximity from color sensor to consider there to be something there */
-  public static final int COLOR_SENSOR_PROXIMITY_THRESHOLD = Constants.PLACEHOLDER_INT;
+  public static final int COLOR_SENSOR_PROXIMITY_THRESHOLD = 100;
 
   /** Power for intake/indexer motors in [-1.0, 1.0] */
   public static final double INTAKE_ONE_POWER = 1.0,
