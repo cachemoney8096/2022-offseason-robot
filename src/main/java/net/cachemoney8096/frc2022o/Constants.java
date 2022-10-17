@@ -22,8 +22,8 @@ public class Constants {
   public static final class Drivetrain {
 
     /** Drivetrain size */
-    public static final double TRACK_WIDTH_METERS = PLACEHOLDER_DOUBLE,
-        WHEEL_BASE_METERS = PLACEHOLDER_DOUBLE;
+    public static final double TRACK_WIDTH_METERS = Units.inchesToMeters(20.5),
+        WHEEL_BASE_METERS = Units.inchesToMeters(20.5);
 
     public static final SwerveDriveKinematics SWERVE_KINEMATICS =
         new SwerveDriveKinematics(
@@ -68,11 +68,11 @@ public class Constants {
   /**
    * Pitch angle from horizontal of the limelight in degrees (0 = straight ahead, 90 = straight up)
    */
-  public static final double LIMELIGHT_PITCH_DEGREES = PLACEHOLDER_DOUBLE;
+  public static final double LIMELIGHT_PITCH_DEGREES = 36;
 
-  /** Height of the limelight on the robot from the carpet */
-  public static final double LIMELIGHT_HEIGHT_METERS = PLACEHOLDER_DOUBLE;
+  /** Height of the limelight on the robot from the carpet in meters */
+  public static final double LIMELIGHT_HEIGHT_METERS =  Units.inchesToMeters(35.4);
 
   /** Height of the vision targets above the carpet */
-  public static final double TARGET_HEIGHT_METERS = Units.inchesToMeters(103);
+  public static final double TARGET_HEIGHT_METERS = Units.inchesToMeters(103.0);
 }
