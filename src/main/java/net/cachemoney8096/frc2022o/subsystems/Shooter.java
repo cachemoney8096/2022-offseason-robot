@@ -37,7 +37,7 @@ public class Shooter extends SubsystemBase {
   public Shooter(Limelight limelightIn) {
     limelight = limelightIn;
 
-    shooterMotorLeft = new CANSparkMax(RobotMap.SHOOTER_MOTOR_ONE_ID, MotorType.kBrushless);
+    shooterMotorLeft = new CANSparkMax(RobotMap.SHOOTER_MOTOR_LEFT_ID, MotorType.kBrushless);
     shooterMotorLeft.restoreFactoryDefaults();
     shooterEncoder = shooterMotorLeft.getEncoder();
     shooterEncoder.setVelocityConversionFactor(Constants.SHOOTER_ENCODER_RATIO);
@@ -50,7 +50,7 @@ public class Shooter extends SubsystemBase {
     shooterController.setD(Calibrations.SHOOTER_kD);
     shooterController.setFF(Calibrations.SHOOTER_kF);
 
-    shooterMotorRight = new CANSparkMax(RobotMap.SHOOTER_MOTOR_TWO_ID, MotorType.kBrushless);
+    shooterMotorRight = new CANSparkMax(RobotMap.SHOOTER_MOTOR_RIGHT_ID, MotorType.kBrushless);
     shooterMotorRight.restoreFactoryDefaults();
     final boolean INVERT_FOLLOW = true;
     shooterMotorRight.follow(shooterMotorLeft, INVERT_FOLLOW);
