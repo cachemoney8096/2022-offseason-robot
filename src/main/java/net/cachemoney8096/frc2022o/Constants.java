@@ -56,11 +56,20 @@ public class Constants {
     public static final int DRIVE_CURRENT_LIMIT_AMPS = 50;
   }
 
-  /** Gear ratio from the hood encoder (external) to actual hood positon */
-  public static final double HOOD_ENCODER_RATIO = PLACEHOLDER_DOUBLE;
+  /** Gear ratio from the hood encoder (external) to actual hood position */
+  public static final double HOOD_EXTERNAL_ENCODER_RATIO = 8.0333;
 
-  /** Scalar for hood encoder from [0,1] to real degrees */
-  public static final double HOOD_ENCODER_SCALAR = 360 / HOOD_ENCODER_RATIO;
+  /** Gear ratio from motor to the driving gear shaft */
+  public static final double HOOD_GEARBOX_RATIO = 18.9;
+
+  /** Scalar for hood external encoder from [0,1] to real degrees */
+  public static final double HOOD_EXTERNAL_ENCODER_SCALAR = 360 / HOOD_EXTERNAL_ENCODER_RATIO;
+
+  /** Scalar for hood motor encoder from rotations to real degrees */
+  public static final double HOOD_MOTOR_ENCODER_SCALAR = 360 / (HOOD_GEARBOX_RATIO * HOOD_EXTERNAL_ENCODER_RATIO);
+
+  /** Scalar for hood motor encoder from RPM to real degrees per seconds */
+  public static final double HOOD_MOTOR_ENCODER_VELOCITY_SCALAR = HOOD_MOTOR_ENCODER_SCALAR / 60;
 
   /** Gear ratio from the shooter encoder (internal) to the shooter wheel position */
   public static final double SHOOTER_ENCODER_RATIO = 1.0;
