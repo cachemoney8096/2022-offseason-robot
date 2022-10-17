@@ -71,7 +71,7 @@ public class Constants {
   public static final double LIMELIGHT_PITCH_DEGREES = 36;
 
   /** Height of the limelight on the robot from the carpet in meters */
-  public static final double LIMELIGHT_HEIGHT_METERS =  Units.inchesToMeters(35.4);
+  public static final double LIMELIGHT_HEIGHT_METERS = Units.inchesToMeters(35.4);
 
   /** Height of the vision targets above the carpet */
   public static final double TARGET_HEIGHT_METERS = Units.inchesToMeters(103.0);
