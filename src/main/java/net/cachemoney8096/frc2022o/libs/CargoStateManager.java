@@ -6,7 +6,8 @@ import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
 
 /**
- * This class takes info from the intake and indexer to determine all the cargo states of the robot
+ * This class takes info from the intake and indexer to determine all the cargo
+ * states of the robot
  */
 public class CargoStateManager implements Sendable {
   /** Whether the intake is bringing cargo in, out, or neither */
@@ -59,7 +60,8 @@ public class CargoStateManager implements Sendable {
     public Optional<CargoColor> intakeCurrentCargo = Optional.empty();
 
     /**
-     * The color of a cargo sent along by the intake, indicating what the indexer might see. This
+     * The color of a cargo sent along by the intake, indicating what the indexer
+     * might see. This
      * may be a cargo still seen by the intake!
      */
     public Optional<CargoColor> intakeCargoPassedToIndexer = Optional.empty();
@@ -67,7 +69,8 @@ public class CargoStateManager implements Sendable {
     /** The color of cargo currently held by the indexer */
     public Optional<CargoColor> indexerCurrentCargo = Optional.empty();
 
-    public RobotCargoState() {}
+    public RobotCargoState() {
+    }
 
     public RobotCargoState(
         Optional<CargoColor> intakeLastColorSeenIn,
@@ -92,7 +95,8 @@ public class CargoStateManager implements Sendable {
   }
 
   /**
-   * Figure out the new state of the robot's cargo, working back-to-front starting with the indexer
+   * Figure out the new state of the robot's cargo, working back-to-front starting
+   * with the indexer
    */
   public RobotCargoState updateCargoState(InputState inputState) {
     // First, update the indexer
@@ -132,17 +136,18 @@ public class CargoStateManager implements Sendable {
     if (inputState.intakeSeeCargo ^ robotCargoState.intakeCurrentCargo.isPresent()) {
       if (inputState.intakeSeeCargo) {
         // We see a cargo we didn't see before.
-        if (robotCargoState.intakeLastColorSeen.isPresent())
+        if (robotCargoState.intakeLastColorSeen.isPresent()) {
           // We saw this cargo, that's probably what's here now
           robotCargoState.intakeCurrentCargo = robotCargoState.intakeLastColorSeen;
-        robotCargoState.intakeLastColorSeen = Optional.empty();
+          robotCargoState.intakeLastColorSeen = Optional.empty();
+        } else {
+          // We didn't see the cargo that was passed in, weird..
+          robotCargoState.intakeCurrentCargo = Optional.of(CargoColor.UNKNOWN);
+        }
       } else {
-        // We didn't see the cargo that was passed in, weird..
-        robotCargoState.intakeCurrentCargo = Optional.of(CargoColor.UNKNOWN);
+        // A cargo we previously saw has disappeared
+        robotCargoState.intakeCurrentCargo = Optional.empty();
       }
-    } else {
-      // A cargo we previously saw has disappeared
-      robotCargoState.intakeCurrentCargo = Optional.empty();
     }
 
     // Finally, we update the "last color seen" from the color sensor
