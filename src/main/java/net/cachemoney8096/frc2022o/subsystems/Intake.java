@@ -50,14 +50,12 @@ public class Intake extends SubsystemBase {
     intakeMotorOne = new CANSparkMax(RobotMap.INTAKE_MOTOR_ONE_ID, MotorType.kBrushless);
     intakeMotorOne.restoreFactoryDefaults();
     intakeMotorOne.setIdleMode(CANSparkMax.IdleMode.kCoast);
-    intakeMotorOne.setInverted(
-        true);
+    intakeMotorOne.setInverted(true);
 
     intakeMotorTwo = new CANSparkMax(RobotMap.INTAKE_MOTOR_TWO_ID, MotorType.kBrushless);
     intakeMotorTwo.restoreFactoryDefaults();
     intakeMotorTwo.setIdleMode(CANSparkMax.IdleMode.kCoast);
-    intakeMotorTwo.setInverted(
-        false);
+    intakeMotorTwo.setInverted(false);
 
     intakeMotorThree = new CANSparkMax(RobotMap.INTAKE_MOTOR_THREE_ID, MotorType.kBrushless);
     intakeMotorThree.restoreFactoryDefaults();

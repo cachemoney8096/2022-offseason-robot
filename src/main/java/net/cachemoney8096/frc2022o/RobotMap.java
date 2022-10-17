@@ -26,7 +26,9 @@ public class RobotMap {
       INDEXER_MOTOR_THREE_ID = 14;
 
   /** Shooter CAN IDs */
-  public static final int SHOOTER_MOTOR_LEFT_ID = 15, SHOOTER_MOTOR_RIGHT_ID = 16, HOOD_MOTOR_ID = 17;
+  public static final int SHOOTER_MOTOR_LEFT_ID = 15,
+      SHOOTER_MOTOR_RIGHT_ID = 16,
+      HOOD_MOTOR_ID = 17;
 
   /** Climber CAN IDs */
   public static final int CLIMBER_MOTOR_RIGHT_ID = 18, CLIMBER_MOTOR_LEFT_ID = 19;

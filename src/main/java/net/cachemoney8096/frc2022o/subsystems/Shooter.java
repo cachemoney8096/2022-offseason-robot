@@ -41,8 +41,7 @@ public class Shooter extends SubsystemBase {
     shooterMotorLeft.restoreFactoryDefaults();
     shooterEncoder = shooterMotorLeft.getEncoder();
     shooterEncoder.setVelocityConversionFactor(Constants.SHOOTER_ENCODER_RATIO);
-    shooterMotorLeft.setInverted(
-        false);
+    shooterMotorLeft.setInverted(false);
 
     shooterController = shooterMotorLeft.getPIDController();
     shooterController.setP(Calibrations.SHOOTER_kP);
@@ -59,8 +58,7 @@ public class Shooter extends SubsystemBase {
     hoodMotor.restoreFactoryDefaults();
     final int HOOD_MOTOR_CURRENT_LIMIT = 20;
     hoodMotor.setSmartCurrentLimit(HOOD_MOTOR_CURRENT_LIMIT);
-    hoodMotor.setInverted(
-        true);
+    hoodMotor.setInverted(true);
 
     hoodAbsoluteEncoder =
         new ThroughBoreEncoder(

@@ -36,8 +36,7 @@ public class Indexer extends SubsystemBase {
     indexerMotorOne = new CANSparkMax(RobotMap.INDEXER_MOTOR_ONE_ID, MotorType.kBrushless);
     indexerMotorOne.restoreFactoryDefaults();
     indexerMotorOne.setIdleMode(CANSparkMax.IdleMode.kCoast);
-    indexerMotorOne.setInverted(
-        false);
+    indexerMotorOne.setInverted(false);
     // indexerMotorOne.setSmartCurrentLimit(25);
     // following line used to reduce CAN utilization?
     // indexerMotorOne.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus1, 100);
@@ -50,8 +49,7 @@ public class Indexer extends SubsystemBase {
     indexerMotorThree = new CANSparkMax(RobotMap.INDEXER_MOTOR_THREE_ID, MotorType.kBrushless);
     indexerMotorThree.restoreFactoryDefaults();
     indexerMotorThree.setIdleMode(CANSparkMax.IdleMode.kBrake); // to keep balls from leaving
-    indexerMotorThree.setInverted(
-        false);
+    indexerMotorThree.setInverted(false);
 
     cargoSensor = new DigitalInput(RobotMap.INDEXER_CARGO_DIO);
   }
