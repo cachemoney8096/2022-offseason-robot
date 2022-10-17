@@ -18,9 +18,9 @@ import edu.wpi.first.math.MathUtil;
 public class Shooter extends SubsystemBase {
 
   // Actuators
-  private final CANSparkMax shooterMotorOne;
+  private final CANSparkMax shooterMotorLeft;
   private final SparkMaxPIDController shooterController;
-  private final CANSparkMax shooterMotorTwo;
+  private final CANSparkMax shooterMotorRight;
   private final CANSparkMax hoodMotor;
 
   // Sensors
@@ -37,26 +37,30 @@ public class Shooter extends SubsystemBase {
   public Shooter(Limelight limelightIn) {
     limelight = limelightIn;
 
-    shooterMotorOne = new CANSparkMax(RobotMap.SHOOTER_MOTOR_ONE_ID, MotorType.kBrushless);
-    shooterMotorOne.restoreFactoryDefaults();
-    shooterEncoder = shooterMotorOne.getEncoder();
+    shooterMotorLeft = new CANSparkMax(RobotMap.SHOOTER_MOTOR_LEFT_ID, MotorType.kBrushless);
+    shooterMotorLeft.restoreFactoryDefaults();
+    shooterEncoder = shooterMotorLeft.getEncoder();
     shooterEncoder.setVelocityConversionFactor(Constants.SHOOTER_ENCODER_RATIO);
+    shooterMotorLeft.setInverted(
+        false);
 
-    shooterController = shooterMotorOne.getPIDController();
+    shooterController = shooterMotorLeft.getPIDController();
     shooterController.setP(Calibrations.SHOOTER_kP);
     shooterController.setI(Calibrations.SHOOTER_kI);
     shooterController.setD(Calibrations.SHOOTER_kD);
     shooterController.setFF(Calibrations.SHOOTER_kF);
 
-    shooterMotorTwo = new CANSparkMax(RobotMap.SHOOTER_MOTOR_TWO_ID, MotorType.kBrushless);
-    shooterMotorTwo.restoreFactoryDefaults();
+    shooterMotorRight = new CANSparkMax(RobotMap.SHOOTER_MOTOR_RIGHT_ID, MotorType.kBrushless);
+    shooterMotorRight.restoreFactoryDefaults();
     final boolean INVERT_FOLLOW = true;
-    shooterMotorTwo.follow(shooterMotorOne, INVERT_FOLLOW);
+    shooterMotorRight.follow(shooterMotorLeft, INVERT_FOLLOW);
 
     hoodMotor = new CANSparkMax(RobotMap.HOOD_MOTOR_ID, MotorType.kBrushless);
     hoodMotor.restoreFactoryDefaults();
     final int HOOD_MOTOR_CURRENT_LIMIT = 20;
     hoodMotor.setSmartCurrentLimit(HOOD_MOTOR_CURRENT_LIMIT);
+    hoodMotor.setInverted(
+        true);
 
     hoodAbsoluteEncoder =
         new ThroughBoreEncoder(
