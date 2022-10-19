@@ -7,13 +7,11 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 import net.cachemoney8096.frc2022o.RobotMap;
 import net.cachemoney8096.frc2022o.libs_3005.vendor.sensor.ThroughBoreEncoder;
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import net.cachemoney8096.frc2022o.Calibrations;
 import net.cachemoney8096.frc2022o.Constants;
 import net.cachemoney8096.frc2022o.libs_3005.vendor.sensor.Limelight;
-import edu.wpi.first.math.MathUtil;
 
 public class Shooter extends SubsystemBase {
 
@@ -66,7 +64,10 @@ public class Shooter extends SubsystemBase {
 
     hoodAbsoluteEncoder =
         new ThroughBoreEncoder(
-            RobotMap.HOOD_ENCODER_DIO, 0.0, Constants.HOOD_EXTERNAL_ENCODER_SCALAR, INVERT_HOOD_ENCODER);
+            RobotMap.HOOD_ENCODER_DIO,
+            0.0,
+            Constants.HOOD_EXTERNAL_ENCODER_SCALAR,
+            INVERT_HOOD_ENCODER);
     hoodMotorEncoder = shooterMotorLeft.getEncoder();
     hoodMotorEncoder.setPositionConversionFactor(Constants.HOOD_MOTOR_ENCODER_SCALAR);
     hoodMotorEncoder.setVelocityConversionFactor(Constants.HOOD_MOTOR_ENCODER_VELOCITY_SCALAR);
@@ -83,7 +84,8 @@ public class Shooter extends SubsystemBase {
     // This allows for the hood to not be fully retracted when we turn on the robot
     // The absolute encoder minus offset gets us the real current position
     // From then on we can use the hoodMotorEncoder position, which is relative to start position
-    hoodMotorEncoder.setPosition(hoodAbsoluteEncoder.getPosition() - HOOD_ABSOLUTE_ENCODER_OFFSET_DEG);
+    hoodMotorEncoder.setPosition(
+        hoodAbsoluteEncoder.getPosition() - HOOD_ABSOLUTE_ENCODER_OFFSET_DEG);
   }
 
   /** Get hood position in actual degrees of hood movement from start */

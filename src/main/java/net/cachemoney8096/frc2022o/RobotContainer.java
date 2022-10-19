@@ -81,7 +81,7 @@ public class RobotContainer {
 
   /** Call for initialization at least a couple seconds after construction */
   public void initialize() {
-      shooter.initialize();
+    shooter.initialize();
   }
 
   /**

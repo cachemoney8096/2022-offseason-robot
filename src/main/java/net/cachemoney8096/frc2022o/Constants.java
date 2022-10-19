@@ -66,7 +66,8 @@ public class Constants {
   public static final double HOOD_EXTERNAL_ENCODER_SCALAR = 360 / HOOD_EXTERNAL_ENCODER_RATIO;
 
   /** Scalar for hood motor encoder from rotations to real degrees */
-  public static final double HOOD_MOTOR_ENCODER_SCALAR = 360 / (HOOD_GEARBOX_RATIO * HOOD_EXTERNAL_ENCODER_RATIO);
+  public static final double HOOD_MOTOR_ENCODER_SCALAR =
+      360 / (HOOD_GEARBOX_RATIO * HOOD_EXTERNAL_ENCODER_RATIO);
 
   /** Scalar for hood motor encoder from RPM to real degrees per seconds */
   public static final double HOOD_MOTOR_ENCODER_VELOCITY_SCALAR = HOOD_MOTOR_ENCODER_SCALAR / 60;
