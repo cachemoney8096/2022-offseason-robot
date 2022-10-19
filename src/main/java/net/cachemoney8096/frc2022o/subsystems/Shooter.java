@@ -25,14 +25,18 @@ public class Shooter extends SubsystemBase {
 
   // Sensors
   private final RelativeEncoder shooterEncoder;
+  private final RelativeEncoder hoodMotorEncoder;
   private final ThroughBoreEncoder hoodAbsoluteEncoder;
   private final Limelight limelight;
 
   // Members
-  private final boolean INVERT_HOOD_ENCODER = false; // TODO placeholder
-  private final PIDController hoodController;
+  private final boolean INVERT_HOOD_ENCODER = true;
+  private final SparkMaxPIDController hoodController;
   private double shooterSetpointRpm = 0;
   private double hoodSetpointDeg = 0;
+
+  /** Reading from the hoodAbsoluteEncoder when the hood is at its lowest (retracted) point */
+  private final double HOOD_ABSOLUTE_ENCODER_OFFSET_DEG = Constants.PLACEHOLDER_DOUBLE;
 
   public Shooter(Limelight limelightIn) {
     limelight = limelightIn;
@@ -62,27 +66,29 @@ public class Shooter extends SubsystemBase {
 
     hoodAbsoluteEncoder =
         new ThroughBoreEncoder(
-            RobotMap.HOOD_ENCODER_DIO, 0.0, Constants.HOOD_ENCODER_SCALAR, INVERT_HOOD_ENCODER);
-    hoodAbsoluteEncoder.setPositionOffsetToCurrentPosition();
+            RobotMap.HOOD_ENCODER_DIO, 0.0, Constants.HOOD_EXTERNAL_ENCODER_SCALAR, INVERT_HOOD_ENCODER);
+    hoodMotorEncoder = shooterMotorLeft.getEncoder();
+    hoodMotorEncoder.setPositionConversionFactor(Constants.HOOD_MOTOR_ENCODER_SCALAR);
+    hoodMotorEncoder.setVelocityConversionFactor(Constants.HOOD_MOTOR_ENCODER_VELOCITY_SCALAR);
 
-    hoodController =
-        new PIDController(Calibrations.HOOD_kP, Calibrations.HOOD_kI, Calibrations.HOOD_kD);
-    hoodController.setIntegratorRange(
-        -Calibrations.HOOD_MAX_INTEGRAL_VALUE, Calibrations.HOOD_MAX_INTEGRAL_VALUE);
-    hoodController.setTolerance(
-        Calibrations.HOOD_POSITION_TOLERANCE_DEG, Calibrations.HOOD_VELOCITY_TOLERANCE_DEG_PER_SEC);
+    hoodController = hoodMotor.getPIDController();
+    hoodController.setP(Calibrations.HOOD_kP);
+    hoodController.setI(Calibrations.HOOD_kI);
+    hoodController.setD(Calibrations.HOOD_kD);
+    hoodController.setFF(Calibrations.HOOD_kF);
   }
 
-  private double calculateHoodControl() {
-    return MathUtil.clamp(
-        hoodController.calculate(getHoodPositionDeg(), hoodSetpointDeg) + Calibrations.HOOD_kF,
-        -1.0,
-        1.0);
+  /** Call for initialization at least a couple seconds after construction */
+  public void initialize() {
+    // This allows for the hood to not be fully retracted when we turn on the robot
+    // The absolute encoder minus offset gets us the real current position
+    // From then on we can use the hoodMotorEncoder position, which is relative to start position
+    hoodMotorEncoder.setPosition(hoodAbsoluteEncoder.getPosition() - HOOD_ABSOLUTE_ENCODER_OFFSET_DEG);
   }
 
   /** Get hood position in actual degrees of hood movement from start */
   public double getHoodPositionDeg() {
-    return hoodAbsoluteEncoder.getPosition();
+    return hoodMotorEncoder.getPosition();
   }
 
   public double getShooterVelocity() {
@@ -91,6 +97,7 @@ public class Shooter extends SubsystemBase {
 
   public void setHoodPosition(double positionDeg) {
     hoodSetpointDeg = positionDeg;
+    hoodController.setReference(hoodSetpointDeg, ControlType.kPosition);
   }
 
   /**
@@ -111,7 +118,7 @@ public class Shooter extends SubsystemBase {
   }
 
   public boolean checkShootReady() {
-    if (hoodController.atSetpoint()
+    if (Math.abs(getHoodPositionDeg() - hoodSetpointDeg) < Calibrations.HOOD_POSITION_TOLERANCE_DEG
         && Math.abs(getShooterVelocity() - shooterSetpointRpm) < Calibrations.SHOOTER_RANGE_RPM) {
       return true; // ready
     } else {
@@ -121,18 +128,18 @@ public class Shooter extends SubsystemBase {
 
   public void dontShoot() {
     setShooterVelocity(0.0);
-    hoodMotor.set(0.0);
-    hoodController.reset();
+    hoodController.setReference(0.0, ControlType.kVoltage);
   }
 
   public void shoot() {
     if (limelight.isValidTarget()) {
-      // Send shooter setpoint to shooter controller (which runs an internal PID)
-      setShooterVelocity(Calibrations.SHOOTER_TABLE.get(limelight.getDistanceFromTargetMeters()));
+      double distanceFromTargetMeters = limelight.getDistanceFromTargetMeters();
 
-      // Set the hood position then set it, since we're running the PID on the roboRIO
-      setHoodPosition(Calibrations.HOOD_TABLE.get(limelight.getDistanceFromTargetMeters()));
-      hoodMotor.set(calculateHoodControl());
+      // Send shooter setpoint to shooter controller (which runs an internal PID)
+      setShooterVelocity(Calibrations.SHOOTER_TABLE.get(distanceFromTargetMeters));
+
+      // Send hood setpoint to hood controller (which also runs an internal PID)
+      setHoodPosition(Calibrations.HOOD_TABLE.get(distanceFromTargetMeters));
     }
   }
 
@@ -140,22 +147,25 @@ public class Shooter extends SubsystemBase {
   public void initSendable(SendableBuilder builder) {
     super.initSendable(builder);
     builder.addDoubleProperty(
-        "Hood Position (deg)",
+        "Hood Setpoint Position (deg)",
         () -> {
           return hoodSetpointDeg;
         },
         this::setHoodPosition);
     builder.addDoubleProperty(
-        "Shooter Speed (RPM)",
+        "Shooter Setpoint Speed (RPM)",
         () -> {
           return shooterSetpointRpm;
         },
         this::setShooterVelocity);
-    addChild("Hood PID", hoodController);
+    builder.addDoubleProperty("Hood kP", hoodController::getP, hoodController::setP);
+    builder.addDoubleProperty("Hood kI", hoodController::getI, hoodController::setI);
+    builder.addDoubleProperty("Hood kD", hoodController::getD, hoodController::setD);
+    builder.addDoubleProperty("Hood kFF", hoodController::getFF, hoodController::setFF);
     builder.addDoubleProperty("Shooter kP", shooterController::getP, shooterController::setP);
     builder.addDoubleProperty("Shooter kI", shooterController::getI, shooterController::setI);
     builder.addDoubleProperty("Shooter kD", shooterController::getD, shooterController::setD);
     builder.addDoubleProperty("Shooter kFF", shooterController::getFF, shooterController::setFF);
-    addChild("Hood Encoder", hoodAbsoluteEncoder);
+    addChild("Hood Absolute Encoder", hoodAbsoluteEncoder);
   }
 }

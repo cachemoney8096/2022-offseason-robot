@@ -79,6 +79,11 @@ public class RobotContainer {
     configureAuton();
   }
 
+  /** Call for initialization at least a couple seconds after construction */
+  public void initialize() {
+      shooter.initialize();
+  }
+
   /**
    * Use this method to define your button->command mappings. Buttons can be created by
    * instantiating a {@link GenericHID} or one of its subclasses ({@link

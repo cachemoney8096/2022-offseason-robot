@@ -67,9 +67,7 @@ public class Calibrations {
       HOOD_kI = Constants.PLACEHOLDER_DOUBLE,
       HOOD_kD = Constants.PLACEHOLDER_DOUBLE,
       HOOD_kF = Constants.PLACEHOLDER_DOUBLE,
-      HOOD_MAX_INTEGRAL_VALUE = Constants.PLACEHOLDER_DOUBLE,
-      HOOD_POSITION_TOLERANCE_DEG = Constants.PLACEHOLDER_DOUBLE,
-      HOOD_VELOCITY_TOLERANCE_DEG_PER_SEC = Constants.PLACEHOLDER_DOUBLE;
+      HOOD_POSITION_TOLERANCE_DEG = Constants.PLACEHOLDER_DOUBLE;
 
   /**
    * Hood setpoint table for shooter. X = target linear distance from limelight Y = Hood setpoint in
