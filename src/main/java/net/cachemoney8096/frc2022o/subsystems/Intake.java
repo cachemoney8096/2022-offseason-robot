@@ -198,13 +198,13 @@ public class Intake extends SubsystemBase {
     }
   }
 
-  private void extendIntake() {
+  public void extendIntake() {
     intakeSolenoidLeft.set(DoubleSolenoid.Value.kForward);
     intakeSolenoidRight.set(DoubleSolenoid.Value.kForward);
     intakeExtended = true;
   }
 
-  private void retractIntake() {
+  public void retractIntake() {
     intakeSolenoidLeft.set(DoubleSolenoid.Value.kReverse);
     intakeSolenoidRight.set(DoubleSolenoid.Value.kReverse);
     intakeExtended = false;
@@ -233,5 +233,15 @@ public class Intake extends SubsystemBase {
         null);
     builder.addStringProperty("Intake Eject Timer", this::ejectTimerStatus, null);
     addChild("Cargo State Manager", cargoStateManager);
+  }
+
+  public void runAllIntakeBackwardsOverride() {
+    intakeMotorOne.set(Calibrations.INTAKE_BACKWARDS_POWER);
+    intakeMotorTwo.set(Calibrations.INTAKE_BACKWARDS_POWER); // 3 follows 2
+  }
+
+  public void runAllIntakeForwardsOverride() {
+    intakeMotorOne.set(Calibrations.INTAKE_FORWARDS_POWER);
+    intakeMotorTwo.set(Calibrations.INTAKE_FORWARDS_POWER); // 3 follows 2
   }
 }

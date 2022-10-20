@@ -53,7 +53,11 @@ public class Calibrations {
       INTAKE_EJECT_POWER = -1.0,
       INDEXER_ONE_POWER = 0.5,
       INDEXER_THREE_POWER = 0.5,
-      INDEXER_EJECT_POWER = -1.0;
+      INDEXER_EJECT_POWER = -1.0,
+      INTAKE_BACKWARDS_POWER = -1.0,
+      INDEXER_BACKWARDS_POWER = -1.0,
+      INTAKE_FORWARDS_POWER = 1.0,
+      INDEXER_FORWARDS_POWER = 1.0;
 
   /** Shooter PID */
   public static final double SHOOTER_kP = Constants.PLACEHOLDER_DOUBLE,
