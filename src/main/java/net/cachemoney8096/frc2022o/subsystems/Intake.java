@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
-import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import net.cachemoney8096.frc2022o.libs.CargoStateManager;
 
 public class Intake extends SubsystemBase {
@@ -26,8 +26,8 @@ public class Intake extends SubsystemBase {
   private final CANSparkMax intakeMotorTwo;
   private final CANSparkMax intakeMotorThree;
   private final Compressor compressor;
-  private final Solenoid intakeSolenoidLeft;
-  private final Solenoid intakeSolenoidRight;
+  private final DoubleSolenoid intakeSolenoidLeft;
+  private final DoubleSolenoid intakeSolenoidRight;
 
   // Sensors
   private final DigitalInput cargoSensor;
@@ -36,6 +36,7 @@ public class Intake extends SubsystemBase {
   // Members
   private CargoColorDifferentiator cargoColorDifferentiator = new CargoColorDifferentiator();
   private Optional<Timer> ejectTimer = Optional.empty();
+  private boolean intakeExtended = false;
   /** Indexer stored just to see sensor state */
   private Indexer indexer;
 
@@ -63,10 +64,10 @@ public class Intake extends SubsystemBase {
     intakeMotorThree.follow(intakeMotorTwo, true);
 
     compressor = new Compressor(RobotMap.COMPRESSOR_MODULE_ID, PneumaticsModuleType.CTREPCM);
-    intakeSolenoidLeft =
-        new Solenoid(PneumaticsModuleType.CTREPCM, RobotMap.LEFT_INTAKE_SOLENOID_CHANNEL);
-    intakeSolenoidRight =
-        new Solenoid(PneumaticsModuleType.CTREPCM, RobotMap.RIGHT_INTAKE_SOLENOID_CHANNEL);
+     intakeSolenoidLeft =
+        new DoubleSolenoid(PneumaticsModuleType.CTREPCM, RobotMap.LEFT_INTAKE_SOLENOID_CHANNEL_FORWARD, RobotMap.LEFT_INTAKE_SOLENOID_CHANNEL_REVERSE);
+     intakeSolenoidRight =
+        new DoubleSolenoid(PneumaticsModuleType.CTREPCM, RobotMap.RIGHT_INTAKE_SOLENOID_CHANNEL_FORWARD, RobotMap.RIGHT_INTAKE_SOLENOID_CHANNEL_REVERSE);
 
     cargoSensor = new DigitalInput(RobotMap.INTAKE_CARGO_DIO);
     colorSensor = new PicoColorSensor();
@@ -192,13 +193,15 @@ public class Intake extends SubsystemBase {
   }
 
   private void extendIntake() {
-    intakeSolenoidLeft.set(true);
-    intakeSolenoidRight.set(true);
+    intakeSolenoidLeft.set(DoubleSolenoid.Value.kForward);
+    intakeSolenoidRight.set(DoubleSolenoid.Value.kForward);
+    intakeExtended = true;
   }
 
   private void retractIntake() {
-    intakeSolenoidLeft.set(false);
-    intakeSolenoidRight.set(false);
+    intakeSolenoidLeft.set(DoubleSolenoid.Value.kReverse);
+    intakeSolenoidRight.set(DoubleSolenoid.Value.kReverse);
+    intakeExtended = false;
   }
 
   /** Gives a string description of the eject timer */
@@ -219,7 +222,7 @@ public class Intake extends SubsystemBase {
     builder.addBooleanProperty(
         "Intake Solenoids",
         () -> {
-          return intakeSolenoidLeft.get();
+          return intakeExtended;
         },
         null);
     builder.addStringProperty("Intake Eject Timer", this::ejectTimerStatus, null);
