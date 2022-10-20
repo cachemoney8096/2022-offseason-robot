@@ -119,13 +119,16 @@ public class Shooter extends SubsystemBase {
     }
   }
 
+  private boolean hoodPositionReady() {
+    return Math.abs(getHoodPositionDeg() - hoodSetpointDeg) < Calibrations.HOOD_POSITION_TOLERANCE_DEG;
+  }
+
+  private boolean shooterSpeedReady() {
+    return Math.abs(getShooterVelocity() - shooterSetpointRpm) < Calibrations.SHOOTER_RANGE_RPM;
+  }
+
   public boolean checkShootReady() {
-    if (Math.abs(getHoodPositionDeg() - hoodSetpointDeg) < Calibrations.HOOD_POSITION_TOLERANCE_DEG
-        && Math.abs(getShooterVelocity() - shooterSetpointRpm) < Calibrations.SHOOTER_RANGE_RPM) {
-      return true; // ready
-    } else {
-      return false; // not ready
-    }
+    return hoodPositionReady() && shooterSpeedReady();
   }
 
   public void dontShoot() {
@@ -160,6 +163,8 @@ public class Shooter extends SubsystemBase {
           return shooterSetpointRpm;
         },
         this::setShooterVelocity);
+    builder.addBooleanProperty("Hood Position Ready", this::hoodPositionReady, null);
+    builder.addBooleanProperty("Shooter Speed Ready", this::shooterSpeedReady, null);
     builder.addDoubleProperty("Hood kP", hoodController::getP, hoodController::setP);
     builder.addDoubleProperty("Hood kI", hoodController::getI, hoodController::setI);
     builder.addDoubleProperty("Hood kD", hoodController::getD, hoodController::setD);
