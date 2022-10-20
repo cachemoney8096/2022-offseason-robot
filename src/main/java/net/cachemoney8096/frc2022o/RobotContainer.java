@@ -150,6 +150,46 @@ public class RobotContainer {
     operatorController
         .X()
         .whileHeld(new InstantCommand(climber::leftMotorUp, climber).withName("Left Climber Up"));
+    
+    operatorController
+      .BumperLeft()
+      .whileHeld(
+          new InstantCommand(intake::runAllIntakeBackwardsOverride, intake).withName("Run All Intake Backwards"));
+
+    operatorController
+    .BumperLeft()
+    .whileHeld(
+        new InstantCommand(indexer::runAllIndexerBackwardsOverride, indexer).withName("Run All Indexer Backwards"));
+
+    operatorController
+    .BumperRight()
+    .whileHeld(
+        new InstantCommand(intake::runAllIntakeForwardsOverride, intake).withName("Run All Intake Forwards"));
+
+    operatorController
+    .BumperRight()
+    .whileHeld(
+        new InstantCommand(indexer::runOneAndTwoIndexerForwardsOverride, indexer).withName("Run One and Two Indexer Forwards"));
+
+    operatorController
+    .TriggerRight()
+    .whileActiveContinuous(
+        new InstantCommand(intake:: runAllIntakeForwardsOverride, intake).withName("Run All Intake Forwards"));
+
+    operatorController
+    .TriggerRight()
+    .whileActiveContinuous(
+        new InstantCommand(indexer:: runAllIndexerForwardsOverride, indexer).withName("Run All Indexer Forwards"));
+
+    operatorController
+    .TriggerLeft()
+    .whenActive(
+        new InstantCommand(intake:: extendIntakeOverride, intake).withName("Extending Intake"));
+
+    operatorController
+    .TriggerLeft()
+    .whenInactive(
+        new InstantCommand(intake::retractIntakeOverride, intake).withName("Retracting Intake"));
   }
 
   private void configureAuton() {

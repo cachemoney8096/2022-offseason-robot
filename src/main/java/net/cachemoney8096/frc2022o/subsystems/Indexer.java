@@ -159,4 +159,21 @@ public class Indexer extends SubsystemBase {
         null);
     builder.addStringProperty("Indexer Eject Timer", this::ejectTimerStatus, null);
   }
+
+  public void runAllIndexerBackwardsOverride() {
+    indexerMotorOne.set(Calibrations.INDEXER_BACKWARDS_POWER);
+    indexerMotorTwo.set(Calibrations.INDEXER_BACKWARDS_POWER);
+    indexerMotorThree.set(Calibrations.INDEXER_BACKWARDS_POWER);
+  }
+
+  public void runOneAndTwoIndexerForwardsOverride() {
+    indexerMotorOne.set(Calibrations.INDEXER_FORWARDS_POWER);
+    indexerMotorTwo.set(Calibrations.INDEXER_FORWARDS_POWER);
+  }
+
+  public void runAllIndexerForwardsOverride() {
+    indexerMotorOne.set(Calibrations.INDEXER_FORWARDS_POWER);
+    indexerMotorTwo.set(Calibrations.INDEXER_FORWARDS_POWER);
+    indexerMotorThree.set(Calibrations.INDEXER_FORWARDS_POWER);
+  }
 }

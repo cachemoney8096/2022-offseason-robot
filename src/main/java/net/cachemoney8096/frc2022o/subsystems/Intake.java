@@ -234,4 +234,28 @@ public class Intake extends SubsystemBase {
     builder.addStringProperty("Intake Eject Timer", this::ejectTimerStatus, null);
     addChild("Cargo State Manager", cargoStateManager);
   }
+
+  public void runAllIntakeBackwardsOverride() {
+    intakeMotorOne.set(Calibrations.INTAKE_BACKWARDS_POWER);
+    intakeMotorTwo.set(Calibrations.INTAKE_BACKWARDS_POWER);
+    intakeMotorThree.set(Calibrations.INTAKE_BACKWARDS_POWER);
+  }
+
+  public void runAllIntakeForwardsOverride() {
+    intakeMotorOne.set(Calibrations.INTAKE_FORWARDS_POWER);
+    intakeMotorTwo.set(Calibrations.INTAKE_FORWARDS_POWER);
+    intakeMotorThree.set(Calibrations.INTAKE_FORWARDS_POWER);
+  }
+
+  public void extendIntakeOverride() {
+    intakeSolenoidLeft.set(DoubleSolenoid.Value.kForward);
+    intakeSolenoidRight.set(DoubleSolenoid.Value.kForward);
+    intakeExtended = true;
+  }
+
+  public void retractIntakeOverride() {
+    intakeSolenoidLeft.set(DoubleSolenoid.Value.kReverse);
+    intakeSolenoidRight.set(DoubleSolenoid.Value.kReverse);
+    intakeExtended = false;
+  }
 }
