@@ -172,6 +172,11 @@ public class RobotContainer {
         new InstantCommand(indexer::runOneAndTwoIndexerForwardsOverride, indexer).withName("Run One and Two Indexer Forwards"));
 
     operatorController
+    .TriggerRight()
+    .whileActiveContinuous(
+        new InstantCommand(indexer:: runAllIndexerForwardsOverride, indexer).withName("Run All Indexer Forwards"));
+
+    operatorController
     .TriggerLeft()
     .whenActive(
         new InstantCommand(intake:: extendIntake, intake).withName("Extending Intake"));
