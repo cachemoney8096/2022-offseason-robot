@@ -16,7 +16,6 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
-//import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import net.cachemoney8096.frc2022o.libs.CargoStateManager;
 
@@ -37,7 +36,7 @@ public class Intake extends SubsystemBase {
   // Members
   private CargoColorDifferentiator cargoColorDifferentiator = new CargoColorDifferentiator();
   private Optional<Timer> ejectTimer = Optional.empty();
-  private boolean forward = true;
+  private boolean intakeExtended = false;
   /** Indexer stored just to see sensor state */
   private Indexer indexer;
 
@@ -196,13 +195,13 @@ public class Intake extends SubsystemBase {
   private void extendIntake() {
     intakeSolenoidLeft.set(DoubleSolenoid.Value.kForward);
     intakeSolenoidRight.set(DoubleSolenoid.Value.kForward);
-    forward = true;
+    intakeExtended = true;
   }
 
   private void retractIntake() {
     intakeSolenoidLeft.set(DoubleSolenoid.Value.kReverse);
     intakeSolenoidRight.set(DoubleSolenoid.Value.kReverse);
-    forward = false;
+    intakeExtended = false;
   }
 
   /** Gives a string description of the eject timer */
@@ -223,7 +222,7 @@ public class Intake extends SubsystemBase {
     builder.addBooleanProperty(
         "Intake Solenoids",
         () -> {
-          return forward;
+          return intakeExtended;
         },
         null);
     builder.addStringProperty("Intake Eject Timer", this::ejectTimerStatus, null);
