@@ -64,10 +64,16 @@ public class Intake extends SubsystemBase {
     intakeMotorThree.follow(intakeMotorTwo, true);
 
     compressor = new Compressor(RobotMap.COMPRESSOR_MODULE_ID, PneumaticsModuleType.CTREPCM);
-     intakeSolenoidLeft =
-        new DoubleSolenoid(PneumaticsModuleType.CTREPCM, RobotMap.LEFT_INTAKE_SOLENOID_CHANNEL_FORWARD, RobotMap.LEFT_INTAKE_SOLENOID_CHANNEL_REVERSE);
-     intakeSolenoidRight =
-        new DoubleSolenoid(PneumaticsModuleType.CTREPCM, RobotMap.RIGHT_INTAKE_SOLENOID_CHANNEL_FORWARD, RobotMap.RIGHT_INTAKE_SOLENOID_CHANNEL_REVERSE);
+    intakeSolenoidLeft =
+        new DoubleSolenoid(
+            PneumaticsModuleType.CTREPCM,
+            RobotMap.LEFT_INTAKE_SOLENOID_CHANNEL_FORWARD,
+            RobotMap.LEFT_INTAKE_SOLENOID_CHANNEL_REVERSE);
+    intakeSolenoidRight =
+        new DoubleSolenoid(
+            PneumaticsModuleType.CTREPCM,
+            RobotMap.RIGHT_INTAKE_SOLENOID_CHANNEL_FORWARD,
+            RobotMap.RIGHT_INTAKE_SOLENOID_CHANNEL_REVERSE);
 
     cargoSensor = new DigitalInput(RobotMap.INTAKE_CARGO_DIO);
     colorSensor = new PicoColorSensor();
