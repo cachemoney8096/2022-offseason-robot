@@ -172,24 +172,14 @@ public class RobotContainer {
         new InstantCommand(indexer::runOneAndTwoIndexerForwardsOverride, indexer).withName("Run One and Two Indexer Forwards"));
 
     operatorController
-    .TriggerRight()
-    .whileActiveContinuous(
-        new InstantCommand(intake:: runAllIntakeForwardsOverride, intake).withName("Run All Intake Forwards"));
-
-    operatorController
-    .TriggerRight()
-    .whileActiveContinuous(
-        new InstantCommand(indexer:: runAllIndexerForwardsOverride, indexer).withName("Run All Indexer Forwards"));
-
-    operatorController
     .TriggerLeft()
     .whenActive(
-        new InstantCommand(intake:: extendIntakeOverride, intake).withName("Extending Intake"));
+        new InstantCommand(intake:: extendIntake, intake).withName("Extending Intake"));
 
     operatorController
     .TriggerLeft()
     .whenInactive(
-        new InstantCommand(intake::retractIntakeOverride, intake).withName("Retracting Intake"));
+        new InstantCommand(intake::retractIntake, intake).withName("Retracting Intake"));
   }
 
   private void configureAuton() {

@@ -161,8 +161,7 @@ public class Indexer extends SubsystemBase {
   }
 
   public void runAllIndexerBackwardsOverride() {
-    indexerMotorOne.set(Calibrations.INDEXER_BACKWARDS_POWER);
-    indexerMotorTwo.set(Calibrations.INDEXER_BACKWARDS_POWER);
+    indexerMotorOne.set(Calibrations.INDEXER_BACKWARDS_POWER); // 2 follows 1
     indexerMotorThree.set(Calibrations.INDEXER_BACKWARDS_POWER);
   }
 
@@ -172,8 +171,7 @@ public class Indexer extends SubsystemBase {
   }
 
   public void runAllIndexerForwardsOverride() {
-    indexerMotorOne.set(Calibrations.INDEXER_FORWARDS_POWER);
-    indexerMotorTwo.set(Calibrations.INDEXER_FORWARDS_POWER);
+    indexerMotorOne.set(Calibrations.INDEXER_FORWARDS_POWER); // 2 follows 1
     indexerMotorThree.set(Calibrations.INDEXER_FORWARDS_POWER);
   }
 }
