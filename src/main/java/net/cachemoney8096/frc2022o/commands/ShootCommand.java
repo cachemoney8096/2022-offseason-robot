@@ -6,12 +6,11 @@ import net.cachemoney8096.frc2022o.subsystems.Indexer;
 import net.cachemoney8096.frc2022o.subsystems.Shooter;
 import net.cachemoney8096.frc2022o.subsystems.drive.DriveSubsystem;
 
-/** Controls the robot to try to shoot
- * When robot doesn't see a target, driver controls translation and rotation
- * When robot sees a target, driver controls translation still
- * When robot sees a target, the shooter velocity and hood position controllers are set
- * When the robot is aligned, movement is locked
- * When the robot is aligned and everything is ready, shooting is automatic
+/**
+ * Controls the robot to try to shoot When robot doesn't see a target, driver controls translation
+ * and rotation When robot sees a target, driver controls translation still When robot sees a
+ * target, the shooter velocity and hood position controllers are set When the robot is aligned,
+ * movement is locked When the robot is aligned and everything is ready, shooting is automatic
  */
 public class ShootCommand extends InstantCommand {
 
@@ -27,16 +26,16 @@ public class ShootCommand extends InstantCommand {
   private final boolean fieldRelative;
 
   /**
-   * @param xSpeedIn        Speed of the robot in the x direction (forward) in
-   *                        [0,1].
-   * @param ySpeedIn        Speed of the robot in the y direction (sideways) in
-   *                        [0,1].
-   * @param rotSpeedIn      Rotation of the robot (CCW) in [0,1]. Only applies if
-   *                        target is not observed.
-   * @param fieldRelativeIn Whether the provided x and y speeds are relative to
-   *                        the field.
+   * @param xSpeedIn Speed of the robot in the x direction (forward) in [0,1].
+   * @param ySpeedIn Speed of the robot in the y direction (sideways) in [0,1].
+   * @param rotSpeedIn Rotation of the robot (CCW) in [0,1]. Only applies if target is not observed.
+   * @param fieldRelativeIn Whether the provided x and y speeds are relative to the field.
    */
-  public ShootCommand(DriveSubsystem drivetrainIn, Indexer indexerIn, Shooter shooterIn, double xSpeedIn,
+  public ShootCommand(
+      DriveSubsystem drivetrainIn,
+      Indexer indexerIn,
+      Shooter shooterIn,
+      double xSpeedIn,
       double ySpeedIn,
       double rotSpeedIn,
       boolean fieldRelativeIn) {
@@ -72,7 +71,6 @@ public class ShootCommand extends InstantCommand {
     }
   }
 
-  
   @Override
   public void initSendable(SendableBuilder builder) {
     super.initSendable(builder);

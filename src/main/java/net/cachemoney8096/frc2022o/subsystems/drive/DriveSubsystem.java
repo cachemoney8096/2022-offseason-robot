@@ -2,9 +2,6 @@ package net.cachemoney8096.frc2022o.subsystems.drive;
 
 import com.pathplanner.lib.PathPlannerTrajectory;
 
-import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj2.command.Command;
 import net.cachemoney8096.frc2022o.libs_3005.swerve.SwerveDrive;
@@ -89,23 +86,23 @@ public class DriveSubsystem extends SwerveDrive {
     addChild("Theta Controller", Calibrations.Drivetrain.PATH_THETA_CONTROLLER);
   }
 
-  /** Rotates the robot towards the target while following some desired translation
-   * @param xSpeed        Speed of the robot in the x direction (forward) in
-   *                      [0,1].
-   * @param ySpeed        Speed of the robot in the y direction (sideways) in
-   *                      [0,1].
-   * @param rotSpeedIn      Rotation of the robot (CCW) in [0,1]. Only applies if
-   *                        target is not observed.
-   * @param fieldRelative Whether the provided x and y speeds are relative to the
-   *                      field.
+  /**
+   * Rotates the robot towards the target while following some desired translation
+   *
+   * @param xSpeed Speed of the robot in the x direction (forward) in [0,1].
+   * @param ySpeed Speed of the robot in the y direction (sideways) in [0,1].
+   * @param rotSpeedIn Rotation of the robot (CCW) in [0,1]. Only applies if target is not observed.
+   * @param fieldRelative Whether the provided x and y speeds are relative to the field.
    */
   public void rotateToShoot(double xSpeed, double ySpeed, double rotSpeed, boolean fieldRelative) {
     if (limelight.isValidTarget()) {
       // Get target angle relative to robot
-      double targetRelativeAngleDegrees = -limelight.getOffSetX();  // flipping so left is positive
-      
+      double targetRelativeAngleDegrees = -limelight.getOffSetX(); // flipping so left is positive
+
       // Get desired rotation (in [0,1])
-      double desiredRotation = Calibrations.Drivetrain.ROTATE_TO_TARGET_PID_CONTROLLER.calculate(targetRelativeAngleDegrees, 0.0);
+      double desiredRotation =
+          Calibrations.Drivetrain.ROTATE_TO_TARGET_PID_CONTROLLER.calculate(
+              targetRelativeAngleDegrees, 0.0);
 
       drive(xSpeed, ySpeed, desiredRotation, fieldRelative);
     } else {
@@ -114,7 +111,8 @@ public class DriveSubsystem extends SwerveDrive {
   }
 
   public boolean alignedToTarget() {
-    double targetRelativeAngleDegrees = -limelight.getOffSetX();  // flipping so left is positive
-    return Math.abs(targetRelativeAngleDegrees) < Calibrations.SHOOTER_TARGET_ALIGNMENT_TOLERANCE_DEG;
+    double targetRelativeAngleDegrees = -limelight.getOffSetX(); // flipping so left is positive
+    return Math.abs(targetRelativeAngleDegrees)
+        < Calibrations.SHOOTER_TARGET_ALIGNMENT_TOLERANCE_DEG;
   }
 }

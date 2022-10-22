@@ -185,10 +185,9 @@ public abstract class SwerveDrive extends SubsystemBase {
   public boolean isMoving() {
     final double MOVING_THRESHOLD_METERS_PER_SECOND = 0.1;
     final double ROTATING_THRESHOLD_RADIANS_PER_SECOND = 0.1;
-    if (m_chassisSpeed.vxMetersPerSecond > MOVING_THRESHOLD_METERS_PER_SECOND || 
-    m_chassisSpeed.vyMetersPerSecond > MOVING_THRESHOLD_METERS_PER_SECOND ||
-    m_chassisSpeed.omegaRadiansPerSecond > ROTATING_THRESHOLD_RADIANS_PER_SECOND)
-    {
+    if (m_chassisSpeed.vxMetersPerSecond > MOVING_THRESHOLD_METERS_PER_SECOND
+        || m_chassisSpeed.vyMetersPerSecond > MOVING_THRESHOLD_METERS_PER_SECOND
+        || m_chassisSpeed.omegaRadiansPerSecond > ROTATING_THRESHOLD_RADIANS_PER_SECOND) {
       return true;
     }
     return false;

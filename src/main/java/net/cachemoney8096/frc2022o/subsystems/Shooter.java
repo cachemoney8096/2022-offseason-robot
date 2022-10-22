@@ -120,7 +120,8 @@ public class Shooter extends SubsystemBase {
   }
 
   private boolean hoodPositionReady() {
-    return Math.abs(getHoodPositionDeg() - hoodSetpointDeg) < Calibrations.HOOD_POSITION_TOLERANCE_DEG;
+    return Math.abs(getHoodPositionDeg() - hoodSetpointDeg)
+        < Calibrations.HOOD_POSITION_TOLERANCE_DEG;
   }
 
   private boolean shooterSpeedReady() {

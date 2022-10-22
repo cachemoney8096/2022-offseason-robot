@@ -119,13 +119,16 @@ public class RobotContainer {
     driverController
         .TriggerRight()
         .whileActiveContinuous(
-            new ShootCommand(drivetrain, indexer, shooter,
-            
-            MathUtil.applyDeadband(-driverController.getLeftY(), 0.1),
-            MathUtil.applyDeadband(-driverController.getLeftX(), 0.1),
-            JoystickUtil.squareAxis(
-                MathUtil.applyDeadband(-driverController.getRightX(), 0.1)),
-            driverController.getLeftBumper()).withName("Trying to shoot"),
+            new ShootCommand(
+                    drivetrain,
+                    indexer,
+                    shooter,
+                    MathUtil.applyDeadband(-driverController.getLeftY(), 0.1),
+                    MathUtil.applyDeadband(-driverController.getLeftX(), 0.1),
+                    JoystickUtil.squareAxis(
+                        MathUtil.applyDeadband(-driverController.getRightX(), 0.1)),
+                    driverController.getLeftBumper())
+                .withName("Trying to shoot"),
             SHOOTING_NOT_INTERRUPTIBLE);
     driverController
         .BumperRight()
