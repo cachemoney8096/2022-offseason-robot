@@ -181,6 +181,19 @@ public abstract class SwerveDrive extends SubsystemBase {
     return m_chassisSpeed;
   }
 
+  /** Checks whether the chassis is moving appreciably or not */
+  public boolean isMoving() {
+    final double MOVING_THRESHOLD_METERS_PER_SECOND = 0.1;
+    final double ROTATING_THRESHOLD_RADIANS_PER_SECOND = 0.1;
+    if (m_chassisSpeed.vxMetersPerSecond > MOVING_THRESHOLD_METERS_PER_SECOND || 
+    m_chassisSpeed.vyMetersPerSecond > MOVING_THRESHOLD_METERS_PER_SECOND ||
+    m_chassisSpeed.omegaRadiansPerSecond > ROTATING_THRESHOLD_RADIANS_PER_SECOND)
+    {
+      return true;
+    }
+    return false;
+  }
+
   /**
    * Predict the motion between the current position and a future state.
    *
@@ -216,9 +229,9 @@ public abstract class SwerveDrive extends SubsystemBase {
   /**
    * Method to drive the robot using joystick info.
    *
-   * @param xSpeed Speed of the robot in the x direction (forward).
-   * @param ySpeed Speed of the robot in the y direction (sideways).
-   * @param rot Angular rate of the robot.
+   * @param xSpeed Speed of the robot in the x direction (forward) in [0,1].
+   * @param ySpeed Speed of the robot in the y direction (sideways) in [0,1].
+   * @param rot Angular rate of the robot in [0,1], where positive is CCW.
    * @param fieldRelative Whether the provided x and y speeds are relative to the field.
    */
   @SuppressWarnings("ParameterName")

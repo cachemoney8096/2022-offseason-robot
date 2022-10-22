@@ -12,7 +12,9 @@ public class Constants {
   /** Placeholder, if this value is used it's because we haven't figured out the right value yet */
   public static final int PLACEHOLDER_INT = 21;
 
-  /** Swerve module encoder offsets (in radians!!) */
+  /** Swerve module encoder offsets (in radians!!).
+   * This is the output of the absolute encoder on the module when the wheel is pointed forwards (towards intake).
+   */
   public static final double FRONT_LEFT_STEER_OFFSET_RAD = PLACEHOLDER_DOUBLE,
       FRONT_RIGHT_STEER_OFFSET_RAD = PLACEHOLDER_DOUBLE,
       BACK_LEFT_STEER_OFFSET_RAD = PLACEHOLDER_DOUBLE,

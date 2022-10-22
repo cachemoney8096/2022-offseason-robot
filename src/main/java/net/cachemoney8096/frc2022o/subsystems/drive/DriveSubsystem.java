@@ -2,7 +2,9 @@ package net.cachemoney8096.frc2022o.subsystems.drive;
 
 import com.pathplanner.lib.PathPlannerTrajectory;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj2.command.Command;
 import net.cachemoney8096.frc2022o.libs_3005.swerve.SwerveDrive;
@@ -87,19 +89,32 @@ public class DriveSubsystem extends SwerveDrive {
     addChild("Theta Controller", Calibrations.Drivetrain.PATH_THETA_CONTROLLER);
   }
 
-  public void rotateToShoot() {
+  /** Rotates the robot towards the target while following some desired translation
+   * @param xSpeed        Speed of the robot in the x direction (forward) in
+   *                      [0,1].
+   * @param ySpeed        Speed of the robot in the y direction (sideways) in
+   *                      [0,1].
+   * @param rotSpeedIn      Rotation of the robot (CCW) in [0,1]. Only applies if
+   *                        target is not observed.
+   * @param fieldRelative Whether the provided x and y speeds are relative to the
+   *                      field.
+   */
+  public void rotateToShoot(double xSpeed, double ySpeed, double rotSpeed, boolean fieldRelative) {
     if (limelight.isValidTarget()) {
-      Rotation2d targetRelativeYaw = Rotation2d.fromDegrees(limelight.getOffSetX());
-      Rotation2d currentRobotYaw = getPose().getRotation();
-      Rotation2d targetYaw = currentRobotYaw.plus(targetRelativeYaw);
-      // TODO Do something with targetYaw
+      // Get target angle relative to robot
+      double targetRelativeAngleDegrees = -limelight.getOffSetX();  // flipping so left is positive
+      
+      // Get desired rotation (in [0,1])
+      double desiredRotation = Calibrations.Drivetrain.ROTATE_TO_TARGET_PID_CONTROLLER.calculate(targetRelativeAngleDegrees, 0.0);
+
+      drive(xSpeed, ySpeed, desiredRotation, fieldRelative);
     } else {
-      // TODO turning randomly until we see a target?
+      drive(xSpeed, ySpeed, rotSpeed, fieldRelative);
     }
   }
 
   public boolean alignedToTarget() {
-    // TODO this
-    return true;
+    double targetRelativeAngleDegrees = -limelight.getOffSetX();  // flipping so left is positive
+    return Math.abs(targetRelativeAngleDegrees) < Calibrations.SHOOTER_TARGET_ALIGNMENT_TOLERANCE_DEG;
   }
 }

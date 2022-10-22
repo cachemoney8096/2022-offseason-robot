@@ -23,14 +23,19 @@ public class Calibrations {
     public static final TrapezoidProfile.Constraints STEER_TRAPEZOID_CONSTRAINTS =
         new TrapezoidProfile.Constraints(20, 200);
 
-    // Auton path finding controllers
-    public static final PIDController PATH_X_CONTROLLER = new PIDController(0.100506, 0.0, 0.0);
-    public static final PIDController PATH_Y_CONTROLLER = new PIDController(0.1, 0.0, 0.0);
+    /** Auton path finding controllers */
+    public static final PIDController PATH_X_CONTROLLER = new PIDController(0.100506, 0.0, 0.0),
+    PATH_Y_CONTROLLER = new PIDController(0.1, 0.0, 0.0);
 
-    // High profile constraints = pure P controller
+    /** High profile constraints = pure P controller */
     public static final ProfiledPIDController PATH_THETA_CONTROLLER =
         new ProfiledPIDController(
             9.0, 0.0, 0.80, new TrapezoidProfile.Constraints(1000.0, 100000.0));
+
+    /** Controller on module speed for rotating to target
+     * Input degrees, output [0,1]
+    */
+    public static final PIDController ROTATE_TO_TARGET_PID_CONTROLLER = new PIDController(Constants.PLACEHOLDER_DOUBLE, Constants.PLACEHOLDER_DOUBLE, Constants.PLACEHOLDER_DOUBLE);
   }
 
   /** For translation commands above this threshold (in [0,1]), heading lock will not apply */
@@ -94,4 +99,7 @@ public class Calibrations {
           .withPair(1.0, 3.0)
           .withPair(0.5, 2.0)
           .withPair(2.0, 5.0);
+
+  /** Tolerance for angle to goal for shooting (in degrees) */
+  public static final double SHOOTER_TARGET_ALIGNMENT_TOLERANCE_DEG = 5.0;
 }
