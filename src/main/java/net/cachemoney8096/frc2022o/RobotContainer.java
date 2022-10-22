@@ -145,18 +145,18 @@ public class RobotContainer {
 
     // Set up climber controls
     operatorController
-        .B()
+        .A()
         .whileHeld(
             new InstantCommand(climber::rightMotorDown, climber).withName("Right Climber Down"));
     operatorController
-        .Y()
+        .B()
         .whileHeld(new InstantCommand(climber::rightMotorUp, climber).withName("Right Climber Up"));
     operatorController
-        .A()
+        .X()
         .whileHeld(
             new InstantCommand(climber::leftMotorDown, climber).withName("Left Climber Down"));
     operatorController
-        .X()
+        .Y()
         .whileHeld(new InstantCommand(climber::leftMotorUp, climber).withName("Left Climber Up"));
 
     operatorController
