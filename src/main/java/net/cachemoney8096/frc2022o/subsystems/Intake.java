@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import net.cachemoney8096.frc2022o.libs.CargoStateManager;
+import edu.wpi.first.wpilibj.RobotBase;
 
 public class Intake extends SubsystemBase {
 
@@ -85,6 +86,9 @@ public class Intake extends SubsystemBase {
     // based on https://www.chiefdelphi.com/t/rev-color-sensor-stops-outputting/405153/3
     PicoColorSensor.RawColor sensorColor = colorSensor.getRawColor0();
     if (sensorColor.red == 0 && sensorColor.green == 0 && sensorColor.blue == 0) {
+      colorSensor = new PicoColorSensor();
+    }
+    if (RobotBase.isReal()) {
       colorSensor = new PicoColorSensor();
     }
 
