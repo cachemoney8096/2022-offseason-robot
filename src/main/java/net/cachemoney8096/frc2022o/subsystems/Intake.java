@@ -89,7 +89,6 @@ public class Intake extends SubsystemBase {
       if (RobotBase.isReal()) {
         colorSensor = new PicoColorSensor();
       }
-  
     }
     // Check color sensor
     CargoColor lastColorSeen = CargoColor.UNKNOWN;
