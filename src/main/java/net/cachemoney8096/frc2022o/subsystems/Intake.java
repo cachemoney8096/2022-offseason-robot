@@ -86,12 +86,11 @@ public class Intake extends SubsystemBase {
     // based on https://www.chiefdelphi.com/t/rev-color-sensor-stops-outputting/405153/3
     PicoColorSensor.RawColor sensorColor = colorSensor.getRawColor0();
     if (sensorColor.red == 0 && sensorColor.green == 0 && sensorColor.blue == 0) {
-      colorSensor = new PicoColorSensor();
+      if (RobotBase.isReal()) {
+        colorSensor = new PicoColorSensor();
+      }
+  
     }
-    if (RobotBase.isReal()) {
-      colorSensor = new PicoColorSensor();
-    }
-
     // Check color sensor
     CargoColor lastColorSeen = CargoColor.UNKNOWN;
     if (colorSensor.getProximity0() > Calibrations.COLOR_SENSOR_PROXIMITY_THRESHOLD) {
