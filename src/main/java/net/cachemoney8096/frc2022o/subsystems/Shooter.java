@@ -34,7 +34,7 @@ public class Shooter extends SubsystemBase {
   private double hoodSetpointDeg = 0;
 
   /** Reading from the hoodAbsoluteEncoder when the hood is at its lowest (retracted) point */
-  private final double HOOD_ABSOLUTE_ENCODER_OFFSET_DEG = Constants.PLACEHOLDER_DOUBLE;
+  private final double HOOD_ABSOLUTE_ENCODER_OFFSET_DEG = 10;
 
   public Shooter(Limelight limelightIn) {
     limelight = limelightIn;
@@ -43,7 +43,7 @@ public class Shooter extends SubsystemBase {
     shooterMotorLeft.restoreFactoryDefaults();
     shooterEncoder = shooterMotorLeft.getEncoder();
     shooterEncoder.setVelocityConversionFactor(Constants.SHOOTER_ENCODER_RATIO);
-    shooterMotorLeft.setInverted(false);
+    shooterMotorLeft.setInverted(true);
 
     shooterController = shooterMotorLeft.getPIDController();
     shooterController.setP(Calibrations.SHOOTER_kP);
@@ -58,17 +58,17 @@ public class Shooter extends SubsystemBase {
 
     hoodMotor = new CANSparkMax(RobotMap.HOOD_MOTOR_ID, MotorType.kBrushless);
     hoodMotor.restoreFactoryDefaults();
-    final int HOOD_MOTOR_CURRENT_LIMIT = 20;
+    final int HOOD_MOTOR_CURRENT_LIMIT = 15; //20
     hoodMotor.setSmartCurrentLimit(HOOD_MOTOR_CURRENT_LIMIT);
     hoodMotor.setInverted(true);
 
     hoodAbsoluteEncoder =
         new ThroughBoreEncoder(
             RobotMap.HOOD_ENCODER_DIO,
-            0.0,
+            HOOD_ABSOLUTE_ENCODER_OFFSET_DEG,
             Constants.HOOD_EXTERNAL_ENCODER_SCALAR,
             INVERT_HOOD_ENCODER);
-    hoodMotorEncoder = shooterMotorLeft.getEncoder();
+    hoodMotorEncoder = hoodMotor.getEncoder();
     hoodMotorEncoder.setPositionConversionFactor(Constants.HOOD_MOTOR_ENCODER_SCALAR);
     hoodMotorEncoder.setVelocityConversionFactor(Constants.HOOD_MOTOR_ENCODER_VELOCITY_SCALAR);
 
@@ -85,12 +85,16 @@ public class Shooter extends SubsystemBase {
     // The absolute encoder minus offset gets us the real current position
     // From then on we can use the hoodMotorEncoder position, which is relative to start position
     hoodMotorEncoder.setPosition(
-        hoodAbsoluteEncoder.getPosition() - HOOD_ABSOLUTE_ENCODER_OFFSET_DEG);
+        hoodAbsoluteEncoder.getPosition());
   }
 
   /** Get hood position in actual degrees of hood movement from start */
   public double getHoodPositionDeg() {
     return hoodMotorEncoder.getPosition();
+  }
+
+  public double getHoodAbsolutePosition(){
+    return hoodAbsoluteEncoder.getPosition();
   }
 
   public double getShooterVelocity() {
@@ -146,6 +150,9 @@ public class Shooter extends SubsystemBase {
 
       // Send hood setpoint to hood controller (which also runs an internal PID)
       setHoodPosition(Calibrations.HOOD_TABLE.get(distanceFromTargetMeters));
+    } else {
+      setShooterVelocity(2000);
+      setHoodPosition(25);
     }
   }
 
@@ -158,12 +165,15 @@ public class Shooter extends SubsystemBase {
           return hoodSetpointDeg;
         },
         this::setHoodPosition);
+    builder.addDoubleProperty("Absolute Hood Position", this::getHoodAbsolutePosition, null);
+    builder.addDoubleProperty("Motor Hood Position", this::getHoodPositionDeg, null);
     builder.addDoubleProperty(
         "Shooter Setpoint Speed (RPM)",
         () -> {
           return shooterSetpointRpm;
         },
         this::setShooterVelocity);
+    builder.addDoubleProperty("Shooter Velocity", this::getShooterVelocity, null);
     builder.addBooleanProperty("Hood Position Ready", this::hoodPositionReady, null);
     builder.addBooleanProperty("Shooter Speed Ready", this::shooterSpeedReady, null);
     builder.addDoubleProperty("Hood kP", hoodController::getP, hoodController::setP);

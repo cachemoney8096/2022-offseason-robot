@@ -7,10 +7,10 @@ import edu.wpi.first.math.util.Units;
 /** Store physical / mathematical constants here */
 public class Constants {
   /** Placeholder, if this value is used it's because we haven't figured out the right value yet */
-  public static final double PLACEHOLDER_DOUBLE = 21.0;
+  public static final double PLACEHOLDER_DOUBLE = 0;
 
   /** Placeholder, if this value is used it's because we haven't figured out the right value yet */
-  public static final int PLACEHOLDER_INT = 21;
+  public static final int PLACEHOLDER_INT = 0;
 
   /**
    * Swerve module encoder offsets (in radians!!). This is the output of the absolute encoder on the
@@ -70,7 +70,7 @@ public class Constants {
 
   /** Scalar for hood motor encoder from rotations to real degrees */
   public static final double HOOD_MOTOR_ENCODER_SCALAR =
-      360 / (HOOD_GEARBOX_RATIO * HOOD_EXTERNAL_ENCODER_RATIO);
+    360 / (HOOD_GEARBOX_RATIO * HOOD_EXTERNAL_ENCODER_RATIO);
 
   /** Scalar for hood motor encoder from RPM to real degrees per seconds */
   public static final double HOOD_MOTOR_ENCODER_VELOCITY_SCALAR = HOOD_MOTOR_ENCODER_SCALAR / 60;

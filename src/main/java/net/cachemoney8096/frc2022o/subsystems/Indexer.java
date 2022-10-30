@@ -172,5 +172,6 @@ public class Indexer extends SubsystemBase {
   public void runAllIndexerForwardsOverride() {
     indexerMotorOne.set(Calibrations.INDEXER_FORWARDS_POWER); // 2 follows 1
     indexerMotorThree.set(Calibrations.INDEXER_FORWARDS_POWER);
+    System.out.println("HHHHHHHHHHH!");
   }
 }

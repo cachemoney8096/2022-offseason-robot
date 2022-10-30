@@ -17,7 +17,7 @@ public class Calibrations {
     public static final SimpleMotorFeedforward STEER_FEEDFORWARD =
         new SimpleMotorFeedforward(0.35233, 0.39185, 0.0058658);
 
-    public static final PIDGains STEER_PID_GAINS = new PIDGains(8.0, 0.00, 0.3);
+    public static final PIDGains STEER_PID_GAINS = new PIDGains(0, 0.00, 0.3);
     public static final PIDGains DRIVE_PID_GAINS = new PIDGains(0.04, 0.0, 0.0);
 
     public static final TrapezoidProfile.Constraints STEER_TRAPEZOID_CONSTRAINTS =
@@ -56,7 +56,7 @@ public class Calibrations {
 
   /** Power for intake/indexer motors in [-1.0, 1.0] */
   public static final double INTAKE_ONE_POWER = 1.0,
-      INTAKE_TWO_POWER = 0.5,
+      INTAKE_TWO_POWER = 1,
       INTAKE_EJECT_POWER = -1.0,
       INDEXER_ONE_POWER = 0.5,
       INDEXER_THREE_POWER = 0.5,
@@ -67,18 +67,18 @@ public class Calibrations {
       INDEXER_FORWARDS_POWER = 1.0;
 
   /** Shooter PID */
-  public static final double SHOOTER_kP = Constants.PLACEHOLDER_DOUBLE,
-      SHOOTER_kI = Constants.PLACEHOLDER_DOUBLE,
-      SHOOTER_kD = Constants.PLACEHOLDER_DOUBLE,
-      SHOOTER_kF = Constants.PLACEHOLDER_DOUBLE,
-      SHOOTER_RANGE_RPM = Constants.PLACEHOLDER_DOUBLE;
+  public static final double SHOOTER_kP = 0.0001,
+      SHOOTER_kI = 0,
+      SHOOTER_kD = 0,
+      SHOOTER_kF = 0.000203,
+      SHOOTER_RANGE_RPM = 0;
 
   /** Hood PID */
-  public static final double HOOD_kP = Constants.PLACEHOLDER_DOUBLE,
-      HOOD_kI = Constants.PLACEHOLDER_DOUBLE,
-      HOOD_kD = Constants.PLACEHOLDER_DOUBLE,
-      HOOD_kF = Constants.PLACEHOLDER_DOUBLE,
-      HOOD_POSITION_TOLERANCE_DEG = Constants.PLACEHOLDER_DOUBLE;
+  public static final double HOOD_kP = 0.2,
+      HOOD_kI = 0.001,
+      HOOD_kD = 0,
+      HOOD_kF = 0,
+      HOOD_POSITION_TOLERANCE_DEG = 5;
 
   /**
    * Hood setpoint table for shooter. X = target linear distance from limelight Y = Hood setpoint in
