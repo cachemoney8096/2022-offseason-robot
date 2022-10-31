@@ -19,7 +19,7 @@ public interface Controller extends Sendable {
    *
    * @param setpoint controller setpoint
    * @param measurement process variable
-   * @param feedforward feedforward value
+   * @param feedforward feedforward value (in volts!)
    */
   void setReference(double setpoint, double measurement, double feedforward);
 

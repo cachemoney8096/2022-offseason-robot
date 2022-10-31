@@ -12,12 +12,18 @@ import net.cachemoney8096.frc2022o.libs_3005.util.LinearInterpolatedTable2d;
  */
 public class Calibrations {
   public static final class Drivetrain {
+    /** For output value in volts, input m/s */
     public static final SimpleMotorFeedforward DRIVE_FEEDFORWARD =
-        new SimpleMotorFeedforward(0.0467, 3.3076, 0.01897);
+        new SimpleMotorFeedforward(0.0467, 2.4, 0.0);
+
+    /** For output value in volts, input rad/s */
     public static final SimpleMotorFeedforward STEER_FEEDFORWARD =
         new SimpleMotorFeedforward(0.18233, 0.19, 0.0);
 
+    /** For output value in [0,1], input rad/s */
     public static final PIDGains STEER_PID_GAINS = new PIDGains(4, 0.00, 0.05);
+    
+    /** For output value in [0,1], input m/s */
     public static final PIDGains DRIVE_PID_GAINS = new PIDGains(0.04, 0.0, 0.0);
 
     public static final TrapezoidProfile.Constraints STEER_TRAPEZOID_CONSTRAINTS =

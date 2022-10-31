@@ -52,8 +52,10 @@ public class Constants {
     public static final double STEERING_ENCODER_VELOCITY_FACTOR =
         ((2 * Math.PI) / STEER_REDUCTION) / 60.0;
 
+    /** What percentage of theoretical free speed we believe the robot can achieve */
+    public static final double MAX_VELOCITY_FUDGE_FACTOR = 0.8;
     public static final double MAX_VELOCITY_METERS_PER_SECOND =
-        6380.0 / 60.0 * DRIVE_REDUCTION * WHEEL_DIAMETER_METERS * Math.PI;
+        6380.0 / 60.0 * WHEEL_DIAMETER_METERS * Math.PI * MAX_VELOCITY_FUDGE_FACTOR / DRIVE_REDUCTION;
     public static final double MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND = 3 * Math.PI;
 
     public static final int DRIVE_CURRENT_LIMIT_AMPS = 50;
