@@ -193,11 +193,13 @@ public class NickSwerveModule implements SwerveModule {
 
   @Override
   public void periodic() {
-    // Calculate the turning motor output from the turning PID controller.
     m_driveController.setReference(
-        m_desiredState.speedMetersPerSecond,
-        m_driveEncoder.getVelocity(),
-        m_driveFeedforward.calculate(m_desiredState.speedMetersPerSecond));
+      m_desiredState.speedMetersPerSecond,
+      m_driveEncoder.getVelocity(),
+      m_driveFeedforward.calculate(m_desiredState.speedMetersPerSecond));
+      
+      
+    // Calculate the turning motor output from the turning PID controller.
     m_turningController.setGoal(m_desiredState.angle.getRadians());
     double demand = m_turningController.calculate(m_turningAbsoluteEncoder.getPosition());
     demand += m_turningFeedforward.calculate(m_turningController.getSetpoint().velocity);

@@ -16,10 +16,10 @@ public class Constants {
    * Swerve module encoder offsets (in radians!!). This is the output of the absolute encoder on the
    * module when the wheel is pointed forwards (towards intake).
    */
-  public static final double FRONT_LEFT_STEER_OFFSET_RAD = PLACEHOLDER_DOUBLE,
-      FRONT_RIGHT_STEER_OFFSET_RAD = PLACEHOLDER_DOUBLE,
-      BACK_LEFT_STEER_OFFSET_RAD = PLACEHOLDER_DOUBLE,
-      BACK_RIGHT_STEER_OFFSET_RAD = PLACEHOLDER_DOUBLE;
+  public static final double FRONT_LEFT_STEER_OFFSET_RAD = 3.304,
+      FRONT_RIGHT_STEER_OFFSET_RAD = 4.98,
+      BACK_LEFT_STEER_OFFSET_RAD = 0.657,
+      BACK_RIGHT_STEER_OFFSET_RAD = 2.341;
 
   // Constants for swerve
   public static final class Drivetrain {
@@ -39,8 +39,8 @@ public class Constants {
     public static final double WHEEL_DIAMETER_METERS = Units.inchesToMeters(WHEEL_DIAMETER_INCHES);
     public static final double DRIVE_REDUCTION = 4.8;
     public static final boolean DRIVE_INVERTED = false;
-    public static final double STEER_REDUCTION = 11.25;
-    public static final boolean STEER_INVERTED = true;
+    public static final double STEER_REDUCTION = 12.65625;
+    public static final boolean STEER_INVERTED = false;
 
     public static final double DRIVE_ENCODER_POSITION_FACTOR =
         (WHEEL_DIAMETER_METERS * Math.PI) / (double) DRIVE_REDUCTION;

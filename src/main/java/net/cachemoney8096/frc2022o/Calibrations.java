@@ -15,9 +15,9 @@ public class Calibrations {
     public static final SimpleMotorFeedforward DRIVE_FEEDFORWARD =
         new SimpleMotorFeedforward(0.0467, 3.3076, 0.01897);
     public static final SimpleMotorFeedforward STEER_FEEDFORWARD =
-        new SimpleMotorFeedforward(0.35233, 0.39185, 0.0058658);
+        new SimpleMotorFeedforward(0.18233, 0.19, 0.0);
 
-    public static final PIDGains STEER_PID_GAINS = new PIDGains(0, 0.00, 0.3);
+    public static final PIDGains STEER_PID_GAINS = new PIDGains(4, 0.00, 0.05);
     public static final PIDGains DRIVE_PID_GAINS = new PIDGains(0.04, 0.0, 0.0);
 
     public static final TrapezoidProfile.Constraints STEER_TRAPEZOID_CONSTRAINTS =
