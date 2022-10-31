@@ -1,6 +1,7 @@
 package net.cachemoney8096.frc2022o.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.SoftLimitDirection;
 import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -61,6 +62,8 @@ public class Shooter extends SubsystemBase {
     final int HOOD_MOTOR_CURRENT_LIMIT = 15; //20
     hoodMotor.setSmartCurrentLimit(HOOD_MOTOR_CURRENT_LIMIT);
     hoodMotor.setInverted(true);
+    hoodMotor.setSoftLimit(SoftLimitDirection.kReverse, 11.0f);
+    hoodMotor.setSoftLimit(SoftLimitDirection.kForward, 36.0f);
 
     hoodAbsoluteEncoder =
         new ThroughBoreEncoder(
@@ -77,6 +80,7 @@ public class Shooter extends SubsystemBase {
     hoodController.setI(Calibrations.HOOD_kI);
     hoodController.setD(Calibrations.HOOD_kD);
     hoodController.setFF(Calibrations.HOOD_kF);
+    hoodController.setIZone(Calibrations.HOOD_IZone);
   }
 
   /** Call for initialization at least a couple seconds after construction */

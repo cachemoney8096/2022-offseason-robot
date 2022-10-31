@@ -77,14 +77,15 @@ public class Calibrations {
       SHOOTER_kI = 0,
       SHOOTER_kD = 0,
       SHOOTER_kF = 0.000203,
-      SHOOTER_RANGE_RPM = 0;
+      SHOOTER_RANGE_RPM = 20.0;
 
   /** Hood PID */
   public static final double HOOD_kP = 0.2,
       HOOD_kI = 0.001,
       HOOD_kD = 0,
       HOOD_kF = 0,
-      HOOD_POSITION_TOLERANCE_DEG = 5;
+      HOOD_IZone = 0.4,
+      HOOD_POSITION_TOLERANCE_DEG = 0.3;
 
   /**
    * Hood setpoint table for shooter. X = target linear distance from limelight Y = Hood setpoint in
