@@ -85,11 +85,12 @@ public class Intake extends SubsystemBase {
     // if all three colors return 0, reinstantiate the color sensor
     // based on https://www.chiefdelphi.com/t/rev-color-sensor-stops-outputting/405153/3
     PicoColorSensor.RawColor sensorColor = colorSensor.getRawColor0();
-    if (sensorColor.red == 0 && sensorColor.green == 0 && sensorColor.blue == 0) {
+    if (colorSensor.isSensor0Connected() && sensorColor.red == 0 && sensorColor.green == 0 && sensorColor.blue == 0) {
       if (RobotBase.isReal()) {
         colorSensor = new PicoColorSensor();
       }
     }
+
     // Check color sensor
     CargoColor lastColorSeen = CargoColor.UNKNOWN;
     if (colorSensor.getProximity0() > Calibrations.COLOR_SENSOR_PROXIMITY_THRESHOLD) {
@@ -125,6 +126,7 @@ public class Intake extends SubsystemBase {
         // There's a cargo we want to keep past the wrong-colored cargo, so we need to eject to the
         // front
         ejectTimer = Optional.of(new Timer());
+        ejectTimer.get().start();
       }
     }
 
@@ -138,18 +140,20 @@ public class Intake extends SubsystemBase {
         // Our cargo or an unknown cargo, keep it
         indexer.setInstruction(Indexer.IndexerInstruction.HOLD);
       }
-    } else {
-      // Indexer does not already have a cargo
-      if (robotCargoState.intakeCargoPassedToIndexer.isPresent()) {
-        // There is a cargo potentially coming
-        if (robotCargoState.intakeCargoPassedToIndexer.get() == CargoColor.THEIRS) {
-          // Their cargo, get rid of it
-          indexer.setInstruction(Indexer.IndexerInstruction.EJECT);
-        } else {
-          // Our cargo or an unknown cargo, bring it in
-          indexer.setInstruction(Indexer.IndexerInstruction.INDEX);
-        }
+    } 
+    else if (robotCargoState.intakeCargoPassedToIndexer.isPresent()) {
+      // Indexer does not already have a cargo but there is a cargo potentially coming
+      if (robotCargoState.intakeCargoPassedToIndexer.get() == CargoColor.THEIRS) {
+        // Their cargo, get rid of it
+        indexer.setInstruction(Indexer.IndexerInstruction.EJECT);
+      } else {
+        // Our cargo or an unknown cargo, bring it in
+        indexer.setInstruction(Indexer.IndexerInstruction.INDEX);
       }
+    }
+    else {
+      // No cargo in indexer and none coming, just hold
+      indexer.setInstruction(Indexer.IndexerInstruction.HOLD);
     }
   }
 
@@ -235,6 +239,7 @@ public class Intake extends SubsystemBase {
         null);
     builder.addStringProperty("Intake Eject Timer", this::ejectTimerStatus, null);
     addChild("Cargo State Manager", cargoStateManager);
+    builder.addStringProperty("Intake state", () -> prevIntakeState.name(), null);
   }
 
   public void runAllIntakeBackwardsOverride() {

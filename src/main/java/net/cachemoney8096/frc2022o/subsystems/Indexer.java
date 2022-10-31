@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import net.cachemoney8096.frc2022o.Calibrations;
 import net.cachemoney8096.frc2022o.RobotMap;
+import net.cachemoney8096.frc2022o.libs.CargoStateManager.IntakeState;
 import edu.wpi.first.wpilibj.Timer;
 
 public class Indexer extends SubsystemBase {
@@ -94,6 +95,7 @@ public class Indexer extends SubsystemBase {
       case EJECT:
         // Should eject => set new ejection timer and start ejecting!
         ejectTimer = Optional.of(new Timer());
+        ejectTimer.get().start();
         indexerMotorOne.set(Calibrations.INDEXER_ONE_POWER); // 2 follows 1
         indexerMotorThree.set(Calibrations.INDEXER_EJECT_POWER);
         break;
@@ -130,6 +132,7 @@ public class Indexer extends SubsystemBase {
       case EJECT:
         // Should eject => set new ejection timer and start ejecting!
         ejectTimer = Optional.of(new Timer());
+        ejectTimer.get().start();
         indexerMotorOne.set(Calibrations.INDEXER_ONE_POWER); // 2 follows 1
         indexerMotorThree.set(Calibrations.INDEXER_EJECT_POWER);
         break;
@@ -172,6 +175,5 @@ public class Indexer extends SubsystemBase {
   public void runAllIndexerForwardsOverride() {
     indexerMotorOne.set(Calibrations.INDEXER_FORWARDS_POWER); // 2 follows 1
     indexerMotorThree.set(Calibrations.INDEXER_FORWARDS_POWER);
-    System.out.println("HHHHHHHHHHH!");
   }
 }

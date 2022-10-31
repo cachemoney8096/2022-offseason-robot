@@ -5,7 +5,7 @@
 package net.cachemoney8096.frc2022o;
 
 import net.cachemoney8096.frc2022o.subsystems.Climber;
-// import net.cachemoney8096.frc2022o.subsystems.Intake;
+import net.cachemoney8096.frc2022o.subsystems.Intake;
 import net.cachemoney8096.frc2022o.subsystems.Indexer;
 import net.cachemoney8096.frc2022o.subsystems.Shooter;
 import net.cachemoney8096.frc2022o.subsystems.drive.DriveSubsystem;
@@ -38,7 +38,7 @@ public class RobotContainer {
 
   private final SendablePigeon pigeon;
   private final PowerDistribution powerDistribution;
-//   public final Intake intake;
+  public final Intake intake;
   private final Indexer indexer;
   private final Shooter shooter;
   private final DriveSubsystem drivetrain;
@@ -64,13 +64,13 @@ public class RobotContainer {
             Constants.TARGET_HEIGHT_METERS);
     pigeon = new SendablePigeon(RobotMap.PIGEON_IMU_ID);
     indexer = new Indexer();
-    // intake = new Intake(indexer);
+    intake = new Intake(indexer);
     shooter = new Shooter(limelight);
     drivetrain = new DriveSubsystem(pigeon, limelight);
     climber = new Climber();
 
     Shuffleboard.getTab("Subsystems").add(drivetrain.getName(), drivetrain);
-    // Shuffleboard.getTab("Subsystems").add(intake.getName(), intake);
+    Shuffleboard.getTab("Subsystems").add(intake.getName(), intake);
     Shuffleboard.getTab("Subsystems").add(indexer.getName(), indexer);
     Shuffleboard.getTab("Subsystems").add(shooter.getName(), shooter);
     Shuffleboard.getTab("Subsystems").add(climber.getName(), climber);
@@ -105,12 +105,12 @@ public class RobotContainer {
             .withName("Manual Drive"));
 
     // Set up intake controls
-    // intake.setDefaultCommand(
-    //     new RunCommand(intake::dontIntakeCargo, intake).withName("Not Intaking"));
-    // driverController
-    //     .TriggerLeft()
-        // .whileActiveContinuous(
-        //     new InstantCommand(intake::intakeCargo, intake).withName("Intaking"));
+    intake.setDefaultCommand(
+        new RunCommand(intake::dontIntakeCargo, intake).withName("Not Intaking"));
+    driverController
+        .TriggerLeft()
+        .whileActiveContinuous(
+            new InstantCommand(intake::intakeCargo, intake).withName("Intaking"));
 
     // Set up shooter controls for the indexer and for the shooter
     indexer.setDefaultCommand(
@@ -159,11 +159,11 @@ public class RobotContainer {
         .Y()
         .whileHeld(new InstantCommand(climber::leftMotorUp, climber).withName("Left Climber Up"));
 
-    // operatorController
-    //     .BumperLeft()
-    //     .whileHeld(
-    //         new InstantCommand(intake::runAllIntakeBackwardsOverride, intake)
-    //             .withName("Run All Intake Backwards"));
+    operatorController
+        .BumperLeft()
+        .whileHeld(
+            new InstantCommand(intake::runAllIntakeBackwardsOverride, intake)
+                .withName("Run All Intake Backwards"));
 
     operatorController
         .BumperLeft()
@@ -171,11 +171,11 @@ public class RobotContainer {
             new InstantCommand(indexer::runAllIndexerBackwardsOverride, indexer)
                 .withName("Run All Indexer Backwards"));
 
-    // operatorController
-    //     .BumperRight()
-    //     .whileHeld(
-    //         new InstantCommand(intake::runAllIntakeForwardsOverride, intake)
-    //             .withName("Run All Intake Forwards"));
+    operatorController
+        .BumperRight()
+        .whileHeld(
+            new InstantCommand(intake::runAllIntakeForwardsOverride, intake)
+                .withName("Run All Intake Forwards"));
 
     operatorController
         .BumperRight()
@@ -189,14 +189,14 @@ public class RobotContainer {
             new InstantCommand(indexer::runAllIndexerForwardsOverride, indexer)
                 .withName("Run All Indexer Forwards"));
 
-    // operatorController
-    //     .TriggerLeft()
-    //     .whenActive(new InstantCommand(intake::extendIntake, intake).withName("Extending Intake"));
+    operatorController
+        .TriggerLeft()
+        .whenActive(new InstantCommand(intake::extendIntake, intake).withName("Extending Intake"));
 
-    // operatorController
-    //     .TriggerLeft()
-    //     .whenInactive(
-    //         new InstantCommand(intake::retractIntake, intake).withName("Retracting Intake"));
+    operatorController
+        .TriggerLeft()
+        .whenInactive(
+            new InstantCommand(intake::retractIntake, intake).withName("Retracting Intake"));
   }
 
   private void configureAuton() {
