@@ -142,6 +142,10 @@ public class RobotContainer {
         .BumperRight()
         .whenInactive(
             new InstantCommand(shooter::dontShoot, shooter).withName("Stopping shooter (bumper)"));
+    driverController
+        .A()
+        .whenPressed(
+            new InstantCommand(shooter::setHoodFromLimelight, shooter).withName("Setting hood from limelight"));
 
     // Set up climber controls
     operatorController
