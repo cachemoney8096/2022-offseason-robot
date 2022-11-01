@@ -177,8 +177,7 @@ public class Shooter extends SubsystemBase {
           return shooterSetpointRpm;
         },
         this::setShooterVelocity);
-    builder.addDoubleProperty("Shooter Velocity", this::getShooterVelocity, this::setShooterVelocity);
-    builder.addDoubleProperty("Hood Angle", this::getHoodPositionDeg, this::setHoodPosition);
+    builder.addDoubleProperty("Shooter Velocity", this::getShooterVelocity, null);
     builder.addBooleanProperty("Hood Position Ready", this::hoodPositionReady, null);
     builder.addBooleanProperty("Shooter Speed Ready", this::shooterSpeedReady, null);
     builder.addDoubleProperty("Hood kP", hoodController::getP, hoodController::setP);
