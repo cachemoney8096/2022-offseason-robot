@@ -120,13 +120,10 @@ public class CargoStateManager implements Sendable {
     // Next, update the "cargo passed to indexer"
     // We only update if:
     // (a) we are trying to pass a cargo to the indexer and
-    // (b) we have a cargo to pass and
-    // (c) we have not already passed a cargo (don't update until the forward cargo
-    // has reached the
-    // indexer)
+    // (b) we have a cargo to pass
+    // Note that this could override an existing cargo state if that cargo has not reached the indexer sensor yet 
     if (inputState.intakeState == IntakeState.INTAKING
-        && robotCargoState.intakeCurrentCargo.isPresent()
-        && robotCargoState.intakeCargoPassedToIndexer.isEmpty()) {
+        && robotCargoState.intakeCurrentCargo.isPresent()) {
       robotCargoState.intakeCargoPassedToIndexer = robotCargoState.intakeCurrentCargo;
     }
 
