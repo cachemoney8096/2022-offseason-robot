@@ -11,8 +11,11 @@ import edu.wpi.first.util.sendable.SendableBuilder;
 public class CargoStateManager implements Sendable {
   /** Whether the intake is bringing cargo in, out, or neither */
   public enum IntakeState {
+    /** Bringing cargo in and sending to indexer */
     INTAKING,
+    /** Ejecting cargo out the front */
     EJECTING,
+    /** No rollers moving */
     NOT_ACTUATING
   }
 
