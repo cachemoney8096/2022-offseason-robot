@@ -146,6 +146,12 @@ public class Shooter extends SubsystemBase {
     setShooterVelocity(0.0);
     hoodController.setReference(0.0, ControlType.kVoltage);
   }
+  
+  //Used to specify shot in auton without tuning the rest of our limelight lookup tables.
+  public void shootFixed(double speed, double angle) {
+    setShooterVelocity(speed);
+    setHoodPosition(angle);
+  }
 
   public void shoot() {
     // if (limelight.isValidTarget()) {
