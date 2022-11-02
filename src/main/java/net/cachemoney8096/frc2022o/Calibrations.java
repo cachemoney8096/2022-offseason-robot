@@ -73,12 +73,12 @@ public class Calibrations {
       INDEXER_FORWARDS_POWER = 1.0;
 
   /** Shooter PID */
-  public static final double SHOOTER_kP = 0.0002,
+  public static final double SHOOTER_kP = 0.00015,
       SHOOTER_kI = 0.000000001,
       SHOOTER_kD = 0,
       SHOOTER_kF = 0.000197,
-      SHOOTER_RANGE_RPM = 80.0,
-      SHOOTER_I_ZONE = 100;
+      SHOOTER_RANGE_RPM = 50.0,
+      SHOOTER_I_ZONE = 200;
 
   /** Hood PID */
   public static final double HOOD_kP = 0.2,
