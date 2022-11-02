@@ -51,6 +51,7 @@ public class Shooter extends SubsystemBase {
     shooterController.setI(Calibrations.SHOOTER_kI);
     shooterController.setD(Calibrations.SHOOTER_kD);
     shooterController.setFF(Calibrations.SHOOTER_kF);
+    shooterController.setIZone(Calibrations.SHOOTER_I_ZONE);
 
     shooterMotorRight = new CANSparkMax(RobotMap.SHOOTER_MOTOR_RIGHT_ID, MotorType.kBrushless);
     shooterMotorRight.restoreFactoryDefaults();
@@ -90,6 +91,7 @@ public class Shooter extends SubsystemBase {
     // From then on we can use the hoodMotorEncoder position, which is relative to start position
     hoodMotorEncoder.setPosition(
         hoodAbsoluteEncoder.getPosition());
+    setHoodPosition(20);
   }
 
   /** Get hood position in actual degrees of hood movement from start */
@@ -184,6 +186,7 @@ public class Shooter extends SubsystemBase {
           return shooterSetpointRpm;
         },
         this::setShooterVelocity);
+    builder.addDoubleProperty("Distance From Goal", limelight::getDistanceFromTargetMeters, null);
     builder.addDoubleProperty("Shooter Velocity", this::getShooterVelocity, null);
     builder.addBooleanProperty("Hood Position Ready", this::hoodPositionReady, null);
     builder.addBooleanProperty("Shooter Speed Ready", this::shooterSpeedReady, null);
@@ -195,6 +198,7 @@ public class Shooter extends SubsystemBase {
     builder.addDoubleProperty("Shooter kI", shooterController::getI, shooterController::setI);
     builder.addDoubleProperty("Shooter kD", shooterController::getD, shooterController::setD);
     builder.addDoubleProperty("Shooter kFF", shooterController::getFF, shooterController::setFF);
+    builder.addDoubleProperty("Shooter I-Zone", shooterController::getIZone, shooterController::setIZone);
     addChild("Hood Absolute Encoder", hoodAbsoluteEncoder);
   }
 }

@@ -134,10 +134,10 @@ public class RobotContainer {
         .BumperRight()
         .whileActiveContinuous(
             new InstantCommand(shooter::shoot, shooter).withName("Spinning up shooter"));
-    driverController
-        .TriggerRight()
-        .whenInactive(
-            new InstantCommand(shooter::dontShoot, shooter).withName("Stopping shooter (trigger)"));
+    // driverController
+    //     .TriggerRight()
+    //     .whenInactive(
+    //         new InstantCommand(shooter::dontShoot, shooter).withName("Stopping shooter (trigger)"));
     driverController
         .BumperRight()
         .whenInactive(

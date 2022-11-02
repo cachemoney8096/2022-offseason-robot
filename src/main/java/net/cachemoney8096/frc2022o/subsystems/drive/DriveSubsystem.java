@@ -84,6 +84,7 @@ public class DriveSubsystem extends SwerveDrive {
     addChild("X Controller", Calibrations.Drivetrain.PATH_X_CONTROLLER);
     addChild("Y Controller", Calibrations.Drivetrain.PATH_Y_CONTROLLER);
     addChild("Theta Controller", Calibrations.Drivetrain.PATH_THETA_CONTROLLER);
+    builder.addBooleanProperty("Aligned to Target", this::alignedToTarget, null);
   }
 
   /**

@@ -18,7 +18,7 @@ public class RobotMap {
   /** Intake CAN IDs */
   public static final int INTAKE_MOTOR_ONE_ID = 9,
       INTAKE_MOTOR_TWO_ID = 10,
-      INTAKE_MOTOR_THREE_ID = 11;
+      INTAKE_MOTOR_THREE_ID = 18;
 
   /** Indexer CAN IDs */
   public static final int INDEXER_MOTOR_ONE_ID = 12,
@@ -31,7 +31,7 @@ public class RobotMap {
       HOOD_MOTOR_ID = 17;
 
   /** Climber CAN IDs */
-  public static final int CLIMBER_MOTOR_RIGHT_ID = 18, CLIMBER_MOTOR_LEFT_ID = 19;
+  public static final int CLIMBER_MOTOR_RIGHT_ID = 11, CLIMBER_MOTOR_LEFT_ID = 19;
 
   /** CAN IDs for things other than motor controllers */
   public static final int PIGEON_IMU_ID = 20;

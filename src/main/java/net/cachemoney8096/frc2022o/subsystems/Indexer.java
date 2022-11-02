@@ -36,7 +36,7 @@ public class Indexer extends SubsystemBase {
   public Indexer() {
     indexerMotorOne = new CANSparkMax(RobotMap.INDEXER_MOTOR_ONE_ID, MotorType.kBrushless);
     indexerMotorOne.restoreFactoryDefaults();
-    indexerMotorOne.setIdleMode(CANSparkMax.IdleMode.kCoast);
+    indexerMotorOne.setIdleMode(CANSparkMax.IdleMode.kBrake);
     indexerMotorOne.setInverted(false);
     // indexerMotorOne.setSmartCurrentLimit(25);
     // following line used to reduce CAN utilization?
@@ -44,7 +44,7 @@ public class Indexer extends SubsystemBase {
 
     indexerMotorTwo = new CANSparkMax(RobotMap.INDEXER_MOTOR_TWO_ID, MotorType.kBrushless);
     indexerMotorTwo.restoreFactoryDefaults();
-    indexerMotorTwo.setIdleMode(CANSparkMax.IdleMode.kCoast);
+    indexerMotorTwo.setIdleMode(CANSparkMax.IdleMode.kBrake);
     indexerMotorTwo.follow(indexerMotorOne, false);
 
     indexerMotorThree = new CANSparkMax(RobotMap.INDEXER_MOTOR_THREE_ID, MotorType.kBrushless);
