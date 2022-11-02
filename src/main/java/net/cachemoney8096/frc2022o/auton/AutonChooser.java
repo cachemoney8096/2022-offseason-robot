@@ -18,7 +18,6 @@ public class AutonChooser {
   static {
     addAuton(new WaitCommand(0.0).withName("Do Nothing Auton"), "Do Nothing");
   }
-
   /**
    * Add an auton to the available autons.
    *

@@ -22,7 +22,7 @@ public class SimpleDriveBackAndShoot extends AutonCommandBase {
       Climber climber,
       Location startLocation) {
 
-    super(startLocation.getName().replace("Start", "") + "Drive Back SIMPLE");
+    super(startLocation.getName().replace("Start", "") + " Drive Back SIMPLE");
 
     double kDriveTime = 1.7;
     double kIntakeTimeout = 3.0;
@@ -43,9 +43,9 @@ public class SimpleDriveBackAndShoot extends AutonCommandBase {
 
         // Drive back while intaking
         
-        new InstantCommand(intake::runAllIntakeForwardsOverride, intake)
+        new RunCommand(intake::runAllIntakeForwardsOverride, intake)
           .withName("Deploy and Run Intake"),
-        new InstantCommand(shooter::shoot, shooter)
+        new RunCommand(shooter::shoot, shooter)
           .withName("Spinning up shooter"),
 
         new RunCommand(() -> drivetrain.drive(kDriveSpeed, 0.0, 0.0, false), drivetrain)
@@ -59,6 +59,7 @@ public class SimpleDriveBackAndShoot extends AutonCommandBase {
 
         // Stop and bring the intake in before shooting to be more stable
         new InstantCommand(() -> drivetrain.stop()).withName("Stop Drive"),
+        new WaitCommand(0.25).withName("Wait for Ball"),
         new InstantCommand(intake::dontIntakeCargo, intake)
           .withName("Retract Intake"),
         new WaitCommand(1.0).withName("Wait for intake"),
