@@ -114,6 +114,10 @@ public class RobotContainer {
         .TriggerLeft()
         .whileActiveContinuous(
             new InstantCommand(intake::intakeCargo, intake).withName("Intaking"));
+    driverController
+        .TriggerLeft()
+        .whenInactive(
+            new InstantCommand(() -> {intake.retractIntake(); intake.dontIntakeCargo();}, intake).withName("Stopping intake and retracting"));
 
     // Set up shooter controls for the indexer and for the shooter
     indexer.setDefaultCommand(
@@ -196,14 +200,15 @@ public class RobotContainer {
             new InstantCommand(indexer::runAllIndexerForwardsOverride, indexer)
                 .withName("Run All Indexer Forwards"));
 
+    final boolean NOT_INTERRUPTIBLE = false;
     operatorController
         .TriggerLeft()
-        .whenActive(new InstantCommand(intake::extendIntake, intake).withName("Extending Intake"));
+        .whenActive(new InstantCommand(intake::extendIntake, intake).withName("Extending Intake"), NOT_INTERRUPTIBLE);
 
     operatorController
         .Start()
         .whenActive(
-            new InstantCommand(intake::retractIntake, intake).withName("Retracting Intake"));
+            new InstantCommand(intake::retractIntake, intake).withName("Retracting Intake"), NOT_INTERRUPTIBLE);
   }
 
   private void configureAuton() {

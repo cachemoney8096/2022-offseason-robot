@@ -49,6 +49,8 @@ public class Intake extends SubsystemBase {
   private CargoStateManager.IntakeState prevIntakeState = CargoStateManager.IntakeState.NOT_ACTUATING;
   private CargoStateManager.IntakeState nextIntakeState = CargoStateManager.IntakeState.NOT_ACTUATING;
   private boolean ejectionShouldBePartial = false;
+  PicoColorSensor.RawColor lastSensorColor = new PicoColorSensor.RawColor();
+  int lastColorSensorProximity = 0;
 
   public Intake(Indexer indexerIn) {
     super();
@@ -85,6 +87,7 @@ public class Intake extends SubsystemBase {
     // based on
     // https://www.chiefdelphi.com/t/rev-color-sensor-stops-outputting/405153/3
     PicoColorSensor.RawColor sensorColor = colorSensor.getRawColor0();
+    lastSensorColor = sensorColor;
     if (colorSensor.isSensor0Connected() && sensorColor.red == 0 && sensorColor.green == 0 && sensorColor.blue == 0) {
       if (RobotBase.isReal()) {
         colorSensor = new PicoColorSensor();
@@ -93,9 +96,9 @@ public class Intake extends SubsystemBase {
 
     // Check color sensor
     CargoColor lastColorSeen = CargoColor.UNKNOWN;
-    if (colorSensor.getProximity0() > Calibrations.COLOR_SENSOR_PROXIMITY_THRESHOLD) {
-      sensorColor = new PicoColorSensor.RawColor();
-      colorSensor.getRawColor0(sensorColor);
+    int colorSensorProximity = colorSensor.getProximity0();
+    lastColorSensorProximity = colorSensorProximity;
+    if (colorSensorProximity > Calibrations.COLOR_SENSOR_PROXIMITY_THRESHOLD) {
       lastColorSeen = cargoColorDifferentiator.whatColor(sensorColor);
     }
 
@@ -200,7 +203,6 @@ public class Intake extends SubsystemBase {
     intakeMotorTwo.set(0);
     intakeMotorThree.set(0);
     prevIntakeState = CargoStateManager.IntakeState.NOT_ACTUATING;
-    retractIntake();
   }
 
   /**
@@ -293,6 +295,10 @@ public class Intake extends SubsystemBase {
     builder.addStringProperty("Intake Eject Timer", this::ejectTimerStatus, null);
     addChild("Cargo State Manager", cargoStateManager);
     builder.addStringProperty("Intake state", () -> prevIntakeState.name(), null);
+    builder.addDoubleProperty("Color Sensor Proximity", () -> lastColorSensorProximity, null);
+    builder.addDoubleProperty("Color Sensor Red", () -> lastSensorColor.red, null);
+    builder.addDoubleProperty("Color Sensor Green", () -> lastSensorColor.green, null);
+    builder.addDoubleProperty("Color Sensor Blue", () -> lastSensorColor.blue, null);
   }
 
   public void runAllIntakeBackwardsOverride() {
