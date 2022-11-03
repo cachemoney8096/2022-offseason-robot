@@ -39,11 +39,8 @@ public class Calibrations {
             9.0, 0.0, 0.80, new TrapezoidProfile.Constraints(1000.0, 100000.0));
 
     /** Controller on module speed for rotating to target Input degrees, output [0,1] */
-    public static final PIDController ROTATE_TO_TARGET_PID_CONTROLLER =
-        new PIDController(
-            Constants.PLACEHOLDER_DOUBLE,
-            Constants.PLACEHOLDER_DOUBLE,
-            Constants.PLACEHOLDER_DOUBLE);
+    public static final PIDController ROTATE_TO_TARGET_PID_CONTROLLER = new PIDController(0.030, 0, 0.000);
+    public static final double ROTATE_TO_SHOOT_FF = 0.1;
   }
 
   /** For translation commands above this threshold (in [0,1]), heading lock will not apply */
@@ -74,7 +71,7 @@ public class Calibrations {
 
   /** Shooter PID */
   public static final double SHOOTER_kP = 0.00015,
-      SHOOTER_kI = 0.000000001,
+      SHOOTER_kI = 0.000001,
       SHOOTER_kD = 0,
       SHOOTER_kF = 0.000197,
       SHOOTER_RANGE_RPM = 50.0,
@@ -94,27 +91,9 @@ public class Calibrations {
    */
   public static final LinearInterpolatedTable2d HOOD_TABLE =
       new LinearInterpolatedTable2d()
-      .withPair(1.0, 11.0)
-      .withPair(1.25, 12.0)
-      .withPair(1.50, 16.0)
-      .withPair(1.75, 18.0)
-      .withPair(2.0, 20.0)
-      .withPair(2.25, 24.0)
-      .withPair(2.5, 25.0)
-      .withPair(2.75, 26.0)
-      .withPair(3.0, 27.0)
-      .withPair(3.25, 28.0)
-      .withPair(3.5, 29.0)
-      .withPair(3.75, 31.0)
-      .withPair(4.0, 32.0)
-      .withPair(4.25, 33.0)
-      .withPair(4.5, 34.0)
-      .withPair(4.75, 34.0)
-      .withPair(5.0, 34.0)
-      .withPair(5.5, 35.0)
-      .withPair(6.0, 35.0)
-      .withPair(6.5, 35.0)
-      .withPair(7.0, 35.0);
+      .withPair(1.85, 22.0)
+      .withPair(2.85, 29.0)
+      .withPair(5.41, 36.0);
 
   /**
    * Shooter speed setpoint table for shooter. X = target linear distance from limelight Y = Shooter
@@ -122,28 +101,12 @@ public class Calibrations {
    */
   public static final LinearInterpolatedTable2d SHOOTER_TABLE =
       new LinearInterpolatedTable2d()
-        .withPair(1.0, 2050)
-        .withPair(1.25, 2050)
-        .withPair(1.50, 2200)
-        .withPair(1.75, 2200)
-        .withPair(2.0, 2200)
-        .withPair(2.25, 2200)
-        .withPair(2.5, 2300)
-        .withPair(2.75, 2300)
-        .withPair(3.0, 2350)
-        .withPair(3.25, 2400)
-        .withPair(3.5, 2420)
-        .withPair(3.75, 2450)
-        .withPair(4.0, 2500)
-        .withPair(4.25, 2520)
-        .withPair(4.5, 2600)
-        .withPair(4.75, 2700)
-        .withPair(5.0, 2710)
-        .withPair(5.5, 2780)
-        .withPair(6.0, 2900)
-        .withPair(6.5, 3000)
-        .withPair(7.0, 3150);
+        .withPair(1.85, 2500)
+        .withPair(2.85, 2700)
+        .withPair(5.41, 3250);
 
   /** Tolerance for angle to goal for shooting (in degrees) */
   public static final double SHOOTER_TARGET_ALIGNMENT_TOLERANCE_DEG = 5.0;
+
+  public static final int STEER_MOTOR_CURRENT_LIMIT_AMPS = 40;
 }

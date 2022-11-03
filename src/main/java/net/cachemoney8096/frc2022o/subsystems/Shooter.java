@@ -148,20 +148,19 @@ public class Shooter extends SubsystemBase {
   }
 
   public void shoot() {
-    // if (limelight.isValidTarget()) {
-    //   double distanceFromTargetMeters = limelight.getDistanceFromTargetMeters();
+    if (limelight.isValidTarget()) {
+      double distanceFromTargetMeters = limelight.getDistanceFromTargetMeters();
 
-    //   // Send shooter setpoint to shooter controller (which runs an internal PID)
-    //   setShooterVelocity(Calibrations.SHOOTER_TABLE.get(distanceFromTargetMeters));
+      // Send shooter setpoint to shooter controller (which runs an internal PID)
+      setShooterVelocity(Calibrations.SHOOTER_TABLE.get(distanceFromTargetMeters));
 
-    //   // Send hood setpoint to hood controller (which also runs an internal PID)
-    //   setHoodPosition(Calibrations.HOOD_TABLE.get(distanceFromTargetMeters));
-    // } else {
-    //   setShooterVelocity(2000);
-    //   setHoodPosition(25);
-    // }
-    setShooterVelocity(shooterSetpointRpm);
-    setHoodPosition(hoodSetpointDeg);
+      // Send hood setpoint to hood controller (which also runs an internal PID)
+      setHoodPosition(Calibrations.HOOD_TABLE.get(distanceFromTargetMeters));
+    } else {
+      // Close to some of our other values
+      setShooterVelocity(2700);
+      setHoodPosition(30);
+    }
   }
 
   public void setHoodFromLimelight(){

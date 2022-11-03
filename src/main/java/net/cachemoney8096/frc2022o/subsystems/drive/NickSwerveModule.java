@@ -91,7 +91,7 @@ public class NickSwerveModule implements SwerveModule {
     errors += SparkMaxUtils.check(sparkMax.getPIDController().setOutputRange(-1, 1));
     errors += SparkMaxUtils.check(sparkMax.setIdleMode(IdleMode.kBrake));
     // errors += SparkMaxUtils.check(SparkMaxUtils.setDefaultsForNeo500(sparkMax));
-    // sparkMax.setSmartCurrentLimit(Constants.Drivetrain.kTurningMotorCurrentLimit);
+    sparkMax.setSmartCurrentLimit(Calibrations.STEER_MOTOR_CURRENT_LIMIT_AMPS);
     // sparkMax.getEncoder().setPosition(0.0);
 
     sparkMax.setPeriodicFramePeriod(PeriodicFrame.kStatus0, 100);

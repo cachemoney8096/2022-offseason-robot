@@ -84,6 +84,7 @@ public class DriveSubsystem extends SwerveDrive {
     addChild("X Controller", Calibrations.Drivetrain.PATH_X_CONTROLLER);
     addChild("Y Controller", Calibrations.Drivetrain.PATH_Y_CONTROLLER);
     addChild("Theta Controller", Calibrations.Drivetrain.PATH_THETA_CONTROLLER);
+    addChild("Rotate to target controller", Calibrations.Drivetrain.ROTATE_TO_TARGET_PID_CONTROLLER);
     builder.addBooleanProperty("Aligned to Target", this::alignedToTarget, null);
   }
 
@@ -98,12 +99,13 @@ public class DriveSubsystem extends SwerveDrive {
   public void rotateToShoot(double xSpeed, double ySpeed, double rotSpeed, boolean fieldRelative) {
     if (limelight.isValidTarget()) {
       // Get target angle relative to robot
-      double targetRelativeAngleDegrees = -limelight.getOffSetX(); // flipping so left is positive
+      double targetRelativeAngleDegrees = limelight.getOffSetX(); // flipping so left is positive
 
       // Get desired rotation (in [0,1])
       double desiredRotation =
           Calibrations.Drivetrain.ROTATE_TO_TARGET_PID_CONTROLLER.calculate(
-              targetRelativeAngleDegrees, 0.0);
+              targetRelativeAngleDegrees, 0.0) +
+              Math.signum(targetRelativeAngleDegrees) * Calibrations.Drivetrain.ROTATE_TO_SHOOT_FF;
 
       drive(xSpeed, ySpeed, desiredRotation, fieldRelative);
     } else {
