@@ -15,6 +15,8 @@ import net.cachemoney8096.frc2022o.libs.XboxController;
 import net.cachemoney8096.frc2022o.libs_3005.util.JoystickUtil;
 import net.cachemoney8096.frc2022o.libs_3005.vendor.sensor.Limelight;
 
+import com.ctre.phoenix.sensors.Pigeon2.AxisDirection;
+
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -81,6 +83,7 @@ public class RobotContainer {
 
   /** Call for initialization at least a couple seconds after construction */
   public void initialize() {
+    pigeon.configMountPose(AxisDirection.PositiveY, AxisDirection.PositiveX);
     shooter.initialize();
   }
 
@@ -198,8 +201,8 @@ public class RobotContainer {
         .whenActive(new InstantCommand(intake::extendIntake, intake).withName("Extending Intake"));
 
     operatorController
-        .TriggerLeft()
-        .whenInactive(
+        .Start()
+        .whenActive(
             new InstantCommand(intake::retractIntake, intake).withName("Retracting Intake"));
   }
 

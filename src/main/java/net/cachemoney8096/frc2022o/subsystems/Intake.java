@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import net.cachemoney8096.frc2022o.libs.CargoStateManager;
 import edu.wpi.first.wpilibj.RobotBase;
+import edu.wpi.first.wpilibj.Solenoid;
 
 public class Intake extends SubsystemBase {
 
@@ -28,8 +29,10 @@ public class Intake extends SubsystemBase {
   private final CANSparkMax intakeMotorTwo;
   private final CANSparkMax intakeMotorThree;
   private final Compressor compressor;
-  private final DoubleSolenoid intakeSolenoidLeft;
-  private final DoubleSolenoid intakeSolenoidRight;
+
+  
+  private final Solenoid intakeSolenoidForward;
+  private final Solenoid intakeSolenoidReverse;
 
   // Sensors
   private final DigitalInput cargoSensor;
@@ -67,14 +70,10 @@ public class Intake extends SubsystemBase {
     intakeMotorThree.setInverted(true);
 
     compressor = new Compressor(RobotMap.COMPRESSOR_MODULE_ID, PneumaticsModuleType.CTREPCM);
-    intakeSolenoidLeft = new DoubleSolenoid(
-        PneumaticsModuleType.CTREPCM,
-        RobotMap.LEFT_INTAKE_SOLENOID_CHANNEL_FORWARD,
-        RobotMap.LEFT_INTAKE_SOLENOID_CHANNEL_REVERSE);
-    intakeSolenoidRight = new DoubleSolenoid(
-        PneumaticsModuleType.CTREPCM,
-        RobotMap.RIGHT_INTAKE_SOLENOID_CHANNEL_FORWARD,
-        RobotMap.RIGHT_INTAKE_SOLENOID_CHANNEL_REVERSE);
+    intakeSolenoidForward = new Solenoid(PneumaticsModuleType.CTREPCM,
+    RobotMap.LEFT_INTAKE_SOLENOID_CHANNEL_FORWARD);
+    intakeSolenoidReverse = new Solenoid(PneumaticsModuleType.CTREPCM,
+    RobotMap.LEFT_INTAKE_SOLENOID_CHANNEL_REVERSE);
 
     cargoSensor = new DigitalInput(RobotMap.INTAKE_CARGO_DIO);
     colorSensor = new PicoColorSensor();
@@ -259,14 +258,14 @@ public class Intake extends SubsystemBase {
   }
 
   public void extendIntake() {
-    intakeSolenoidLeft.set(DoubleSolenoid.Value.kForward);
-    intakeSolenoidRight.set(DoubleSolenoid.Value.kForward);
+    intakeSolenoidForward.set(true);
+    intakeSolenoidReverse.set(false);
     intakeExtended = true;
   }
 
   public void retractIntake() {
-    intakeSolenoidLeft.set(DoubleSolenoid.Value.kReverse);
-    intakeSolenoidRight.set(DoubleSolenoid.Value.kReverse);
+    intakeSolenoidForward.set(false);
+    intakeSolenoidReverse.set(true);
     intakeExtended = false;
   }
 
