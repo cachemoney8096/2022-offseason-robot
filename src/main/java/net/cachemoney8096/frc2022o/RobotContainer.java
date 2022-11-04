@@ -98,7 +98,7 @@ public class RobotContainer {
     drivetrain.setDefaultCommand(
         new RunCommand(
                 () ->
-                    drivetrain.drive(
+                    drivetrain.choose(
                         MathUtil.applyDeadband(-driverController.getLeftY(), 0.1),
                         MathUtil.applyDeadband(-driverController.getLeftX(), 0.1),
                         JoystickUtil.squareAxis(

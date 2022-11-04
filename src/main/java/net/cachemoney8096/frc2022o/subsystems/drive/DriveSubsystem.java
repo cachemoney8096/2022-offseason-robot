@@ -123,6 +123,14 @@ public class DriveSubsystem extends SwerveDrive {
     drive(x, y, desiredRotation, fieldRelative);
   }
 
+  public void choose(double x, double y, double rot, boolean fieldRelative){
+    if (rot > 0){
+      drive(x, y, rot, fieldRelative);
+    } else {
+      keepHeading(x, y, rot, fieldRelative);
+    }
+  }
+
 
 
   public boolean alignedToTarget() {
