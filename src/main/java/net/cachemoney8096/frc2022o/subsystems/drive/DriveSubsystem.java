@@ -124,7 +124,7 @@ public class DriveSubsystem extends SwerveDrive {
   }
 
   public void choose(double x, double y, double rot, boolean fieldRelative){
-    if (rot > 0){
+    if (rot != 0){
       drive(x, y, rot, fieldRelative);
     } else {
       keepHeading(x, y, rot, fieldRelative);
