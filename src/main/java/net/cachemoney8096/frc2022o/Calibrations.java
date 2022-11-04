@@ -14,7 +14,7 @@ public class Calibrations {
   public static final class Drivetrain {
     /** For output value in volts, input m/s */
     public static final SimpleMotorFeedforward DRIVE_FEEDFORWARD =
-        new SimpleMotorFeedforward(0.0467, 2.4, 0.0);
+        new SimpleMotorFeedforward(0.0467, 2.4, 0.0); //0.0467
 
     /** For output value in volts, input rad/s */
     public static final SimpleMotorFeedforward STEER_FEEDFORWARD =
