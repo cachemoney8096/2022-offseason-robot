@@ -25,6 +25,10 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 
+import net.cachemoney8096.frc2022o.auton.AutonChooser;
+import net.cachemoney8096.frc2022o.auton.SimpleDriveBackAndShoot;
+import net.cachemoney8096.frc2022o.auton.locations.Location;
+
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -70,6 +74,7 @@ public class RobotContainer {
     shooter = new Shooter(limelight);
     drivetrain = new DriveSubsystem(pigeon, limelight);
     climber = new Climber();
+    
 
     Shuffleboard.getTab("Subsystems").add(drivetrain.getName(), drivetrain);
     Shuffleboard.getTab("Subsystems").add(intake.getName(), intake);
@@ -85,6 +90,10 @@ public class RobotContainer {
   public void initialize() {
     pigeon.configMountPose(AxisDirection.PositiveY, AxisDirection.PositiveX);
     shooter.initialize();
+    //autons
+    new SimpleDriveBackAndShoot(drivetrain, shooter, indexer, intake, climber, Location.LeftStart());
+    AutonChooser.setDefaultAuton(
+        new SimpleDriveBackAndShoot(drivetrain, shooter, indexer, intake, climber, Location.LeftStart()));
   }
 
   /**
