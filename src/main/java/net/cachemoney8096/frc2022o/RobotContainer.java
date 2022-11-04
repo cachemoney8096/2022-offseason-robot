@@ -103,7 +103,7 @@ public class RobotContainer {
                         MathUtil.applyDeadband(-driverController.getLeftX(), 0.1),
                         JoystickUtil.squareAxis(
                             MathUtil.applyDeadband(-driverController.getRightX(), 0.1)),
-                        !driverController.getLeftBumper()), // default to robot-relative for now
+                        !driverController.getLeftBumper()),
                 drivetrain)
             .withName("Manual Drive"));
 

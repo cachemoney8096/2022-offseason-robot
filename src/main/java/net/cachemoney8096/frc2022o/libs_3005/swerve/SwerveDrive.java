@@ -65,6 +65,8 @@ public abstract class SwerveDrive extends SubsystemBase {
   private double[] m_lastDistances;
   private double m_lastLoopTime;
 
+  private double heading;
+
   /**
    * Create a Swerve Drive module
    *
@@ -241,6 +243,10 @@ public abstract class SwerveDrive extends SubsystemBase {
       return;
     }
 
+    if (rot != 0){
+      heading = getHeading();
+    }
+
     ySpeed = ySpeed * m_maxSpeed;
     xSpeed = xSpeed * m_maxSpeed;
     rot = rot * m_maxSpeed;
@@ -382,5 +388,10 @@ public abstract class SwerveDrive extends SubsystemBase {
             this);
     return new InstantCommand(() -> m_field.getObject("Trajectory").setTrajectory(trajectory))
         .alongWith(swCommand);
+  }
+
+  /** Returns the stored heading from the last time the robot was commanded to rotate */
+  public double getLastHeading(){
+    return this.heading;
   }
 }

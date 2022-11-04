@@ -113,9 +113,22 @@ public class DriveSubsystem extends SwerveDrive {
     }
   }
 
+  public void keepHeading(double x, double y, double rot, boolean fieldRelative){
+    double targetHeading = super.getLastHeading();
+    double currentHeading = super.getHeading();
+    double offsetHeading = currentHeading - targetHeading;
+
+    double desiredRotation = Calibrations.Drivetrain.ROTATE_TO_TARGET_PID_CONTROLLER.calculate(offsetHeading, 0.0) + Math.signum(offsetHeading) * Calibrations.Drivetrain.ROTATE_TO_SHOOT_FF;
+
+    drive(x, y, desiredRotation, fieldRelative);
+  }
+
+
+
   public boolean alignedToTarget() {
     double targetRelativeAngleDegrees = -limelight.getOffSetX(); // flipping so left is positive
     return Math.abs(targetRelativeAngleDegrees)
         < Calibrations.SHOOTER_TARGET_ALIGNMENT_TOLERANCE_DEG;
   }
+
 }
