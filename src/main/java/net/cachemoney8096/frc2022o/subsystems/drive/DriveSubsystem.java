@@ -2,6 +2,7 @@ package net.cachemoney8096.frc2022o.subsystems.drive;
 
 import com.pathplanner.lib.PathPlannerTrajectory;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj2.command.Command;
 import net.cachemoney8096.frc2022o.libs_3005.swerve.SwerveDrive;
@@ -116,7 +117,7 @@ public class DriveSubsystem extends SwerveDrive {
   public void keepHeading(double x, double y, double rot, boolean fieldRelative){
     double targetHeading = super.getLastHeading();
     double currentHeading = super.getHeading();
-    double offsetHeading = currentHeading - targetHeading;
+    double offsetHeading = MathUtil.inputModulus(currentHeading - targetHeading, -180, 180);
 
     double desiredRotation = Calibrations.Drivetrain.ROTATE_TO_TARGET_PID_CONTROLLER.calculate(offsetHeading, 0.0) + Math.signum(offsetHeading) * Calibrations.Drivetrain.ROTATE_TO_SHOOT_FF;
 
