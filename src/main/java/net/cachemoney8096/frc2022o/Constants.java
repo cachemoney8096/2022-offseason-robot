@@ -58,7 +58,7 @@ public class Constants {
         6380.0 / 60.0 * WHEEL_DIAMETER_METERS * Math.PI * MAX_VELOCITY_FUDGE_FACTOR / DRIVE_REDUCTION;
     public static final double MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND = 3 * Math.PI;
 
-    public static final int DRIVE_CURRENT_LIMIT_AMPS = 50;
+    public static final int DRIVE_CURRENT_LIMIT_AMPS = 40;
   }
 
   /** Gear ratio from the hood encoder (external) to actual hood position */

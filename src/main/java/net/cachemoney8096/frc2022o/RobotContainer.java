@@ -178,6 +178,8 @@ public class RobotContainer {
     operatorController
         .Y()
         .whileHeld(new InstantCommand(climber::leftMotorUp, climber).withName("Left Climber Up"));
+    climber.setDefaultCommand(
+        new RunCommand(climber::holdClimb, climber).withName("Holding Climb"));
 
     operatorController
         .BumperLeft()

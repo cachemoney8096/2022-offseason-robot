@@ -120,8 +120,9 @@ public class DriveSubsystem extends SwerveDrive {
     double offsetHeading = MathUtil.inputModulus(currentHeading - targetHeading, -180, 180);
 
     double desiredRotation = Calibrations.Drivetrain.ROTATE_TO_TARGET_PID_CONTROLLER.calculate(offsetHeading, 0.0) + Math.signum(offsetHeading) * Calibrations.Drivetrain.ROTATE_TO_SHOOT_FF;
+    double deadbandDesiredRotation = MathUtil.applyDeadband(desiredRotation, 3);
 
-    drive(x, y, desiredRotation, fieldRelative);
+    drive(x, y, deadbandDesiredRotation, fieldRelative);
   }
 
   public void choose(double x, double y, double rot, boolean fieldRelative){
