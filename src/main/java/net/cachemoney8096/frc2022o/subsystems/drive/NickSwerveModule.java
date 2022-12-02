@@ -68,8 +68,6 @@ public class NickSwerveModule implements SwerveModule {
     sparkMax.setPeriodicFramePeriod(PeriodicFrame.kStatus2, 15);
     sparkMax.setPeriodicFramePeriod(PeriodicFrame.kStatus3, 200);
 
-    // sparkMax.setClosedLoopRampRate(0.3);
-
     return errors == 0;
   }
 

@@ -26,7 +26,7 @@ public class Climber extends SubsystemBase {
     climbMotorRight.restoreFactoryDefaults();
     climbMotorRight.setIdleMode(CANSparkMax.IdleMode.kBrake);
     climbMotorRight.setInverted(
-        INVERSION_PLACEHOLDER); // TODO see which way motors are facing and invert such that
+        !INVERSION_PLACEHOLDER); // TODO see which way motors are facing and invert such that
     // positive = in
 
     climbMotorLeft.restoreFactoryDefaults();
@@ -34,24 +34,29 @@ public class Climber extends SubsystemBase {
     climbMotorLeft.setInverted(
         INVERSION_PLACEHOLDER); // TODO see which way motors are facing and invert such that
     // positive = in
+    
     climbMotorLeft.setSoftLimit(SoftLimitDirection.kForward, -110.0f);
     climbMotorLeft.setSoftLimit(SoftLimitDirection.kReverse, -110.0f);
     climbMotorLeft.enableSoftLimit(SoftLimitDirection.kReverse, true);
     climbMotorLeft.enableSoftLimit(SoftLimitDirection.kForward, true);
+    climbMotorRight.setSoftLimit(SoftLimitDirection.kForward, -110.0f);
+    climbMotorRight.setSoftLimit(SoftLimitDirection.kReverse, -110.0f);
+    climbMotorRight.enableSoftLimit(SoftLimitDirection.kReverse, true);
+    climbMotorRight.enableSoftLimit(SoftLimitDirection.kForward, true);
     // climbMotorLeft.setSmartCurrentLimit(80);
     // climbMotorRight.setSmartCurrentLimit(80);
   }
 
   public void rightMotorDown() {
-    climbMotorRight.set(-0.5);
+    climbMotorRight.set(1.0);
   }
 
   public void rightMotorUp() {
-    climbMotorRight.set(0.5);
+    climbMotorRight.set(-0.5);
   }
 
   public void leftMotorDown() {
-    climbMotorLeft.set(1);
+    climbMotorLeft.set(1.0);
   }
 
   public void leftMotorUp() {

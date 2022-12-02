@@ -65,6 +65,8 @@ public class Shooter extends SubsystemBase {
     hoodMotor.setInverted(true);
     hoodMotor.setSoftLimit(SoftLimitDirection.kReverse, 11.0f);
     hoodMotor.setSoftLimit(SoftLimitDirection.kForward, 36.0f);
+    hoodMotor.enableSoftLimit(SoftLimitDirection.kForward, true);
+    hoodMotor.enableSoftLimit(SoftLimitDirection.kReverse, true);
 
     hoodAbsoluteEncoder =
         new ThroughBoreEncoder(
@@ -91,7 +93,7 @@ public class Shooter extends SubsystemBase {
     // From then on we can use the hoodMotorEncoder position, which is relative to start position
     hoodMotorEncoder.setPosition(
         hoodAbsoluteEncoder.getPosition());
-    setHoodPosition(20);
+    setHoodPosition(Calibrations.HOOD_INIT_VALUE_DEG);
   }
 
   /** Get hood position in actual degrees of hood movement from start */
@@ -147,7 +149,7 @@ public class Shooter extends SubsystemBase {
     hoodController.setReference(0.0, ControlType.kVoltage);
   }
   
-  //Used to specify shot in auton without tuning the rest of our limelight lookup tables.
+  /** Used to specify shot in auton without tuning the rest of our limelight lookup tables. */
   public void shootFixed(double speed, double angle) {
     setShooterVelocity(speed);
     setHoodPosition(angle);
