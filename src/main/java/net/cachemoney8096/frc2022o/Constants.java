@@ -59,6 +59,7 @@ public class Constants {
     public static final double MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND = 3 * Math.PI;
 
     public static final int DRIVE_CURRENT_LIMIT_AMPS = 40;
+    public static final int STEER_MOTOR_CURRENT_LIMIT_AMPS = 30;
   }
 
   /** Gear ratio from the hood encoder (external) to actual hood position */

@@ -108,8 +108,6 @@ public class Calibrations {
   /** Tolerance for angle to goal for shooting (in degrees) */
   public static final double SHOOTER_TARGET_ALIGNMENT_TOLERANCE_DEG = 5.0;
 
-  public static final int STEER_MOTOR_CURRENT_LIMIT_AMPS = 30;
-
   /** Initalization value for hood angle */
   public static final double HOOD_INIT_VALUE_DEG = 20;
 }

@@ -24,11 +24,14 @@ public class SimpleDriveBackAndShoot extends AutonCommandBase {
 
     super(startLocation.getName().replace("Start", "") + " Drive Back SIMPLE");
 
-    double kDriveTime = 1.7;
-    double kIntakeTimeout = 3.0;
+    double DRIVE_TIME_SECONDS = 1.7;
+    double INTAKE_TIME_SECONDS = 3.0;
+    double SHOOT_TIME_SECONDS = 4.0;
+    double WAIT_FOR_BALL_TIME_SECONDS = 0.25;
+    double RETRACT_INTAKE_TIME_SECONDS = 1.0;
 
-    // Percent
-    double kDriveSpeed = 0.15;
+
+    double DRIVE_SPEED_PERCENT = 0.15;
 
     /* Uses no trajectory, just super simple drive back for time, and shoot */
     // spotless:off
@@ -37,32 +40,23 @@ public class SimpleDriveBackAndShoot extends AutonCommandBase {
         new InstantCommand(() -> drivetrain.setHeading(startLocation.get().getRotation().getDegrees())).withName("Set Heading"),
         new InstantCommand(() -> drivetrain.resetOdometry(startLocation.get())).withName("Reset Odometry"),
 
-        // Enable tracking, turn on shooter and hood
-        //visionCommands.enableTracking(),
-        //hood.enableCommand(),
-
         // Drive back while intaking
-        
         new RunCommand(intake::runAllIntakeForwardsOverride, intake)
           .withName("Deploy and Run Intake"),
         new RunCommand(shooter::shoot, shooter)
           .withName("Spinning up shooter"),
 
-        new RunCommand(() -> drivetrain.drive(kDriveSpeed, 0.0, 0.0, false), drivetrain)
-              .withTimeout(kDriveTime)
+        new RunCommand(() -> drivetrain.drive(DRIVE_SPEED_PERCENT, 0.0, 0.0, false), drivetrain)
+              .withTimeout(DRIVE_TIME_SECONDS)
               .withName("Drive Back Time")
-              .andThen(() -> drivetrain.stop()).withName("Drive x Speed for Y Time").withTimeout(kIntakeTimeout),
-
-
-        //new InstantCommand(() -> Logger.tag("Simple Drive Back and Shoot").info("Finished drive back"))
-      //   visionCommands.waitOnTarget(2.0),
+              .andThen(() -> drivetrain.stop()).withName("Drive x Speed for Y Time").withTimeout(INTAKE_TIME_SECONDS),
 
         // Stop and bring the intake in before shooting to be more stable
         new InstantCommand(() -> drivetrain.stop()).withName("Stop Drive"),
-        new WaitCommand(0.25).withName("Wait for Ball"),
+        new WaitCommand(WAIT_FOR_BALL_TIME_SECONDS).withName("Wait for Ball"),
         new InstantCommand(intake::dontIntakeCargo, intake)
           .withName("Retract Intake"),
-        new WaitCommand(1.0).withName("Wait for intake"),
+        new WaitCommand(RETRACT_INTAKE_TIME_SECONDS).withName("Wait for intake"),
         new ShootCommand(
           drivetrain,
           indexer,
@@ -71,14 +65,7 @@ public class SimpleDriveBackAndShoot extends AutonCommandBase {
           0.0,
           0.0,
           true)
-          .withName("Trying to shoot").withTimeout(4.0)
-
-        
-      //   // Disable tracking and reset hood and turret
-      //   visionCommands.disableTracking(),
-      //   turret.setDegreesCommand(0.0),
-      //   hood.disableCommand()
+          .withName("Trying to shoot").withTimeout(SHOOT_TIME_SECONDS)
     );
-    // spotless:on
   }
 }
