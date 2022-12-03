@@ -16,6 +16,7 @@ import net.cachemoney8096.frc2022o.libs_3005.vendor.sensor.Limelight;
 
 public class DriveSubsystem extends SwerveDrive {
   private final Limelight limelight;
+  private double targetHeading;
 
   public Command trajectoryFollowerCommand(PathPlannerTrajectory trajectory) {
     Calibrations.Drivetrain.PATH_THETA_CONTROLLER.enableContinuousInput(-Math.PI, Math.PI);
@@ -115,18 +116,17 @@ public class DriveSubsystem extends SwerveDrive {
   }
 
   public void keepHeading(double x, double y, double rot, boolean fieldRelative){
-    double targetHeading = super.getLastHeading();
     double currentHeading = super.getHeading();
     double offsetHeading = MathUtil.inputModulus(currentHeading - targetHeading, -180, 180);
 
     double desiredRotation = Calibrations.Drivetrain.ROTATE_TO_TARGET_PID_CONTROLLER.calculate(offsetHeading, 0.0) + Math.signum(offsetHeading) * Calibrations.Drivetrain.ROTATE_TO_SHOOT_FF;
-    double deadbandDesiredRotation = MathUtil.applyDeadband(desiredRotation, 3);
 
-    drive(x, y, deadbandDesiredRotation, fieldRelative);
+    drive(x, y, desiredRotation, fieldRelative);
   }
 
   public void choose(double x, double y, double rot, boolean fieldRelative){
     if (rot != 0){
+      targetHeading = super.getHeading();
       drive(x, y, rot, fieldRelative);
     } else {
       keepHeading(x, y, rot, fieldRelative);
