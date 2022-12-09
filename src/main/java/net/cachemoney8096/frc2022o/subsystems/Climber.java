@@ -22,7 +22,7 @@ public class Climber extends SubsystemBase {
     climbMotor.setInverted(
         INVERSION_PLACEHOLDER); // TODO see which way motors are facing and invert such that
     // positive = in
-    
+
     climbMotor.setSoftLimit(SoftLimitDirection.kForward, -110.0f);
     climbMotor.setSoftLimit(SoftLimitDirection.kReverse, -110.0f);
     climbMotor.enableSoftLimit(SoftLimitDirection.kReverse, true);
@@ -38,7 +38,7 @@ public class Climber extends SubsystemBase {
     climbMotor.set(-0.5);
   }
 
-  public void holdClimb(){
+  public void holdClimb() {
     climbMotor.set(0);
   }
 
@@ -51,8 +51,11 @@ public class Climber extends SubsystemBase {
           return climbMotor.get();
         },
         null);
-    builder.addDoubleProperty("Climber Position", () -> {
-      return climbMotorEncoder.getPosition();
-    }, null);
+    builder.addDoubleProperty(
+        "Climber Position",
+        () -> {
+          return climbMotorEncoder.getPosition();
+        },
+        null);
   }
 }

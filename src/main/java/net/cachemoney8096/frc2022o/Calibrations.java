@@ -14,7 +14,7 @@ public class Calibrations {
   public static final class Drivetrain {
     /** For output value in volts, input m/s */
     public static final SimpleMotorFeedforward DRIVE_FEEDFORWARD =
-        new SimpleMotorFeedforward(0.0467, 2.4, 0.0); //0.0467
+        new SimpleMotorFeedforward(0.0467, 2.4, 0.0); // 0.0467
 
     /** For output value in volts, input rad/s */
     public static final SimpleMotorFeedforward STEER_FEEDFORWARD =
@@ -22,7 +22,7 @@ public class Calibrations {
 
     /** For output value in [0,1], input rad/s */
     public static final PIDGains STEER_PID_GAINS = new PIDGains(4, 0.00, 0.05);
-    
+
     /** For output value in [0,1], input m/s */
     public static final PIDGains DRIVE_PID_GAINS = new PIDGains(0.04, 0.0, 0.0);
 
@@ -39,7 +39,9 @@ public class Calibrations {
             9.0, 0.0, 0.80, new TrapezoidProfile.Constraints(1000.0, 100000.0));
 
     /** Controller on module speed for rotating to target Input degrees, output [0,1] */
-    public static final PIDController ROTATE_TO_TARGET_PID_CONTROLLER = new PIDController(0.030, 0, 0.000);
+    public static final PIDController ROTATE_TO_TARGET_PID_CONTROLLER =
+        new PIDController(0.030, 0, 0.000);
+
     public static final double ROTATE_TO_SHOOT_FF = 0.1;
   }
 
@@ -91,9 +93,9 @@ public class Calibrations {
    */
   public static final LinearInterpolatedTable2d HOOD_TABLE =
       new LinearInterpolatedTable2d()
-      .withPair(1.85, 22.0)
-      .withPair(2.85, 29.0)
-      .withPair(5.41, 36.0);
+          .withPair(1.85, 22.0)
+          .withPair(2.85, 29.0)
+          .withPair(5.41, 36.0);
 
   /**
    * Shooter speed setpoint table for shooter. X = target linear distance from limelight Y = Shooter
@@ -101,9 +103,9 @@ public class Calibrations {
    */
   public static final LinearInterpolatedTable2d SHOOTER_TABLE =
       new LinearInterpolatedTable2d()
-        .withPair(1.85, 2500)
-        .withPair(2.85, 2700)
-        .withPair(5.41, 3250);
+          .withPair(1.85, 2500)
+          .withPair(2.85, 2700)
+          .withPair(5.41, 3250);
 
   /** Tolerance for angle to goal for shooting (in degrees) */
   public static final double SHOOTER_TARGET_ALIGNMENT_TOLERANCE_DEG = 5.0;

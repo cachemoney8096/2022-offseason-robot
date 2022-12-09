@@ -10,7 +10,6 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import net.cachemoney8096.frc2022o.Calibrations;
 import net.cachemoney8096.frc2022o.RobotMap;
-import net.cachemoney8096.frc2022o.libs.CargoStateManager.IntakeState;
 import edu.wpi.first.wpilibj.Timer;
 
 public class Indexer extends SubsystemBase {

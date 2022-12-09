@@ -86,7 +86,8 @@ public class DriveSubsystem extends SwerveDrive {
     addChild("X Controller", Calibrations.Drivetrain.PATH_X_CONTROLLER);
     addChild("Y Controller", Calibrations.Drivetrain.PATH_Y_CONTROLLER);
     addChild("Theta Controller", Calibrations.Drivetrain.PATH_THETA_CONTROLLER);
-    addChild("Rotate to target controller", Calibrations.Drivetrain.ROTATE_TO_TARGET_PID_CONTROLLER);
+    addChild(
+        "Rotate to target controller", Calibrations.Drivetrain.ROTATE_TO_TARGET_PID_CONTROLLER);
     builder.addBooleanProperty("Aligned to Target", this::alignedToTarget, null);
   }
 
@@ -106,8 +107,9 @@ public class DriveSubsystem extends SwerveDrive {
       // Get desired rotation (in [0,1])
       double desiredRotation =
           Calibrations.Drivetrain.ROTATE_TO_TARGET_PID_CONTROLLER.calculate(
-              targetRelativeAngleDegrees, 0.0) +
-              Math.signum(targetRelativeAngleDegrees) * Calibrations.Drivetrain.ROTATE_TO_SHOOT_FF;
+                  targetRelativeAngleDegrees, 0.0)
+              + Math.signum(targetRelativeAngleDegrees)
+                  * Calibrations.Drivetrain.ROTATE_TO_SHOOT_FF;
 
       drive(xSpeed, ySpeed, desiredRotation, fieldRelative);
     } else {
@@ -115,17 +117,19 @@ public class DriveSubsystem extends SwerveDrive {
     }
   }
 
-  public void keepHeading(double x, double y, double rot, boolean fieldRelative){
+  public void keepHeading(double x, double y, double rot, boolean fieldRelative) {
     double currentHeading = super.getHeading();
     double offsetHeading = MathUtil.inputModulus(currentHeading - targetHeading, -180, 180);
 
-    double desiredRotation = Calibrations.Drivetrain.ROTATE_TO_TARGET_PID_CONTROLLER.calculate(offsetHeading, 0.0) + Math.signum(offsetHeading) * Calibrations.Drivetrain.ROTATE_TO_SHOOT_FF;
+    double desiredRotation =
+        Calibrations.Drivetrain.ROTATE_TO_TARGET_PID_CONTROLLER.calculate(offsetHeading, 0.0)
+            + Math.signum(offsetHeading) * Calibrations.Drivetrain.ROTATE_TO_SHOOT_FF;
 
     drive(x, y, desiredRotation, fieldRelative);
   }
 
-  public void choose(double x, double y, double rot, boolean fieldRelative){
-    if (rot != 0){
+  public void choose(double x, double y, double rot, boolean fieldRelative) {
+    if (rot != 0) {
       targetHeading = super.getHeading();
       drive(x, y, rot, fieldRelative);
     } else {
@@ -133,12 +137,9 @@ public class DriveSubsystem extends SwerveDrive {
     }
   }
 
-
-
   public boolean alignedToTarget() {
     double targetRelativeAngleDegrees = -limelight.getOffSetX(); // flipping so left is positive
     return Math.abs(targetRelativeAngleDegrees)
         < Calibrations.SHOOTER_TARGET_ALIGNMENT_TOLERANCE_DEG;
   }
-
 }

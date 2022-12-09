@@ -17,7 +17,6 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 import net.cachemoney8096.frc2022o.libs.CargoStateManager;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.Solenoid;
@@ -30,7 +29,6 @@ public class Intake extends SubsystemBase {
   private final CANSparkMax intakeMotorThree;
   private final Compressor compressor;
 
-  
   private final Solenoid intakeSolenoidForward;
   private final Solenoid intakeSolenoidReverse;
 
@@ -46,8 +44,10 @@ public class Intake extends SubsystemBase {
   private Indexer indexer;
 
   private CargoStateManager cargoStateManager = new CargoStateManager();
-  private CargoStateManager.IntakeState prevIntakeState = CargoStateManager.IntakeState.NOT_ACTUATING;
-  private CargoStateManager.IntakeState nextIntakeState = CargoStateManager.IntakeState.NOT_ACTUATING;
+  private CargoStateManager.IntakeState prevIntakeState =
+      CargoStateManager.IntakeState.NOT_ACTUATING;
+  private CargoStateManager.IntakeState nextIntakeState =
+      CargoStateManager.IntakeState.NOT_ACTUATING;
   private boolean ejectionShouldBePartial = false;
   PicoColorSensor.RawColor lastSensorColor = new PicoColorSensor.RawColor();
   int lastColorSensorProximity = 0;
@@ -72,10 +72,10 @@ public class Intake extends SubsystemBase {
     intakeMotorThree.setInverted(true);
 
     compressor = new Compressor(RobotMap.COMPRESSOR_MODULE_ID, PneumaticsModuleType.CTREPCM);
-    intakeSolenoidForward = new Solenoid(PneumaticsModuleType.CTREPCM,
-    RobotMap.LEFT_INTAKE_SOLENOID_CHANNEL_FORWARD);
-    intakeSolenoidReverse = new Solenoid(PneumaticsModuleType.CTREPCM,
-    RobotMap.LEFT_INTAKE_SOLENOID_CHANNEL_REVERSE);
+    intakeSolenoidForward =
+        new Solenoid(PneumaticsModuleType.CTREPCM, RobotMap.LEFT_INTAKE_SOLENOID_CHANNEL_FORWARD);
+    intakeSolenoidReverse =
+        new Solenoid(PneumaticsModuleType.CTREPCM, RobotMap.LEFT_INTAKE_SOLENOID_CHANNEL_REVERSE);
 
     cargoSensor = new DigitalInput(RobotMap.INTAKE_CARGO_DIO);
     colorSensor = new PicoColorSensor();
@@ -88,7 +88,10 @@ public class Intake extends SubsystemBase {
     // https://www.chiefdelphi.com/t/rev-color-sensor-stops-outputting/405153/3
     PicoColorSensor.RawColor sensorColor = colorSensor.getRawColor0();
     lastSensorColor = sensorColor;
-    if (colorSensor.isSensor0Connected() && sensorColor.red == 0 && sensorColor.green == 0 && sensorColor.blue == 0) {
+    if (colorSensor.isSensor0Connected()
+        && sensorColor.red == 0
+        && sensorColor.green == 0
+        && sensorColor.blue == 0) {
       if (RobotBase.isReal()) {
         colorSensor = new PicoColorSensor();
       }
@@ -107,19 +110,21 @@ public class Intake extends SubsystemBase {
     boolean intakeSeeCargo = seeCargo();
 
     // Update cargo states
-    CargoStateManager.InputState inputState = new CargoStateManager.InputState(
-        lastColorSeen, intakeSeeCargo, indexerSeeCargo, prevIntakeState);
-    CargoStateManager.RobotCargoState robotCargoState = cargoStateManager.updateCargoState(inputState);
+    CargoStateManager.InputState inputState =
+        new CargoStateManager.InputState(
+            lastColorSeen, intakeSeeCargo, indexerSeeCargo, prevIntakeState);
+    CargoStateManager.RobotCargoState robotCargoState =
+        cargoStateManager.updateCargoState(inputState);
 
     // Determine what the intake should do
     nextIntakeState = whatShouldIntakeDo(lastColorSeen, robotCargoState);
-    
+
     // If we need to eject, reset the timer
     if (nextIntakeState == IntakeState.EJECTING) {
       ejectTimer = Optional.of(new Timer());
       ejectTimer.get().start();
     }
-    
+
     // If we're set on cargo (already have two of ours), then any ejection should be partial
     // meaning we should keep the cargo in the intake
     ejectionShouldBePartial = nextIntakeState == IntakeState.NOT_ACTUATING;
@@ -150,15 +155,17 @@ public class Intake extends SubsystemBase {
   }
 
   /**
-   * Decide what the intake should try to do based on the cargo
-   * This assumes that intaking is being requested.
+   * Decide what the intake should try to do based on the cargo This assumes that intaking is being
+   * requested.
    */
-  private IntakeState whatShouldIntakeDo(CargoColor lastColorSeen, CargoStateManager.RobotCargoState robotCargoState) {
-    if ((lastColorSeen == CargoColor.THEIRS) || (robotCargoState.intakeCurrentCargo.isPresent()
-        && robotCargoState.intakeCurrentCargo.get() == CargoColor.THEIRS)) {
+  private IntakeState whatShouldIntakeDo(
+      CargoColor lastColorSeen, CargoStateManager.RobotCargoState robotCargoState) {
+    if ((lastColorSeen == CargoColor.THEIRS)
+        || (robotCargoState.intakeCurrentCargo.isPresent()
+            && robotCargoState.intakeCurrentCargo.get() == CargoColor.THEIRS)) {
       // We are seeing or holding a wrong-colored cargo
       if ((robotCargoState.indexerCurrentCargo.isPresent()
-          && robotCargoState.indexerCurrentCargo.get() != CargoColor.THEIRS)
+              && robotCargoState.indexerCurrentCargo.get() != CargoColor.THEIRS)
           || (robotCargoState.intakeCargoPassedToIndexer.isPresent()
               && robotCargoState.intakeCargoPassedToIndexer.get() != CargoColor.THEIRS)
           || (robotCargoState.intakeCurrentCargo.isPresent()
@@ -171,8 +178,8 @@ public class Intake extends SubsystemBase {
         return IntakeState.INTAKING;
       }
     } else if ((robotCargoState.intakeCurrentCargo.isPresent()
-        && robotCargoState.intakeCurrentCargo.get() != CargoColor.THEIRS) &&
-        (robotCargoState.indexerCurrentCargo.isPresent()
+            && robotCargoState.intakeCurrentCargo.get() != CargoColor.THEIRS)
+        && (robotCargoState.indexerCurrentCargo.isPresent()
             && robotCargoState.indexerCurrentCargo.get() != CargoColor.THEIRS)) {
       // Already holding two balls, quit intaking
       return IntakeState.NOT_ACTUATING;
@@ -193,8 +200,8 @@ public class Intake extends SubsystemBase {
   }
 
   /**
-   * Function to call in the event of not trying to intake. Either this or
-   * intakeCargo must be called!
+   * Function to call in the event of not trying to intake. Either this or intakeCargo must be
+   * called!
    */
   public void dontIntakeCargo() {
     // Stop running and bring the intake in
@@ -206,8 +213,8 @@ public class Intake extends SubsystemBase {
   }
 
   /**
-   * Function to call in the event of trying to intake. Either this or
-   * DontIntakeCargo must be called!
+   * Function to call in the event of trying to intake. Either this or DontIntakeCargo must be
+   * called!
    */
   public void intakeCargo() {
     extendIntake();
@@ -222,8 +229,7 @@ public class Intake extends SubsystemBase {
         intakeMotorTwo.set(Calibrations.INTAKE_EJECT_POWER);
         if (ejectionShouldBePartial) {
           intakeMotorThree.set(0.0);
-        }
-        else {
+        } else {
           intakeMotorThree.set(Calibrations.INTAKE_EJECT_POWER);
         }
         prevIntakeState = CargoStateManager.IntakeState.EJECTING;
@@ -238,8 +244,7 @@ public class Intake extends SubsystemBase {
         intakeMotorTwo.set(Calibrations.INTAKE_EJECT_POWER);
         if (ejectionShouldBePartial) {
           intakeMotorThree.set(0.0);
-        }
-        else {
+        } else {
           intakeMotorThree.set(Calibrations.INTAKE_EJECT_POWER);
         }
         break;

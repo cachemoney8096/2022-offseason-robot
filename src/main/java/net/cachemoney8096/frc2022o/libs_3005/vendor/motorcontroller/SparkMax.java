@@ -455,7 +455,8 @@ public class SparkMax extends CANSparkMax {
         reference = reference + processVariable - angleMod;
       }
 
-      m_sparkMaxController.setReference(reference, m_controlType, m_slot, feedforward, ArbFFUnits.kVoltage);
+      m_sparkMaxController.setReference(
+          reference, m_controlType, m_slot, feedforward, ArbFFUnits.kVoltage);
     }
 
     @Override

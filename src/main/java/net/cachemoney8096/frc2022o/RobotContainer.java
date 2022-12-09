@@ -74,7 +74,6 @@ public class RobotContainer {
     shooter = new Shooter(limelight);
     drivetrain = new DriveSubsystem(pigeon, limelight);
     climber = new Climber();
-    
 
     Shuffleboard.getTab("Subsystems").add(drivetrain.getName(), drivetrain);
     Shuffleboard.getTab("Subsystems").add(intake.getName(), intake);
@@ -90,10 +89,12 @@ public class RobotContainer {
   public void initialize() {
     pigeon.configMountPose(AxisDirection.PositiveY, AxisDirection.PositiveX);
     shooter.initialize();
-    //autons
-    new SimpleDriveBackAndShoot(drivetrain, shooter, indexer, intake, climber, Location.LeftStart());
+    // autons
+    new SimpleDriveBackAndShoot(
+        drivetrain, shooter, indexer, intake, climber, Location.LeftStart());
     AutonChooser.setDefaultAuton(
-        new SimpleDriveBackAndShoot(drivetrain, shooter, indexer, intake, climber, Location.LeftStart()));
+        new SimpleDriveBackAndShoot(
+            drivetrain, shooter, indexer, intake, climber, Location.LeftStart()));
   }
 
   /**
@@ -126,7 +127,13 @@ public class RobotContainer {
     driverController
         .TriggerLeft()
         .whenInactive(
-            new InstantCommand(() -> {intake.retractIntake(); intake.dontIntakeCargo();}, intake).withName("Stopping intake and retracting"));
+            new InstantCommand(
+                    () -> {
+                      intake.retractIntake();
+                      intake.dontIntakeCargo();
+                    },
+                    intake)
+                .withName("Stopping intake and retracting"));
 
     // Set up shooter controls for the indexer and for the shooter
     indexer.setDefaultCommand(
@@ -161,7 +168,8 @@ public class RobotContainer {
     driverController
         .A()
         .whenPressed(
-            new InstantCommand(shooter::setHoodFromLimelight, shooter).withName("Setting hood from limelight"));
+            new InstantCommand(shooter::setHoodFromLimelight, shooter)
+                .withName("Setting hood from limelight"));
 
     // Set up climber controls
     operatorController
@@ -207,12 +215,15 @@ public class RobotContainer {
     final boolean NOT_INTERRUPTIBLE = false;
     operatorController
         .TriggerLeft()
-        .whenActive(new InstantCommand(intake::extendIntake, intake).withName("Extending Intake"), NOT_INTERRUPTIBLE);
+        .whenActive(
+            new InstantCommand(intake::extendIntake, intake).withName("Extending Intake"),
+            NOT_INTERRUPTIBLE);
 
     operatorController
         .Start()
         .whenActive(
-            new InstantCommand(intake::retractIntake, intake).withName("Retracting Intake"), NOT_INTERRUPTIBLE);
+            new InstantCommand(intake::retractIntake, intake).withName("Retracting Intake"),
+            NOT_INTERRUPTIBLE);
   }
 
   private void configureAuton() {

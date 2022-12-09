@@ -60,7 +60,7 @@ public class Shooter extends SubsystemBase {
 
     hoodMotor = new CANSparkMax(RobotMap.HOOD_MOTOR_ID, MotorType.kBrushless);
     hoodMotor.restoreFactoryDefaults();
-    final int HOOD_MOTOR_CURRENT_LIMIT = 15; //20
+    final int HOOD_MOTOR_CURRENT_LIMIT = 15; // 20
     hoodMotor.setSmartCurrentLimit(HOOD_MOTOR_CURRENT_LIMIT);
     hoodMotor.setInverted(true);
     hoodMotor.setSoftLimit(SoftLimitDirection.kReverse, 11.0f);
@@ -91,8 +91,7 @@ public class Shooter extends SubsystemBase {
     // This allows for the hood to not be fully retracted when we turn on the robot
     // The absolute encoder minus offset gets us the real current position
     // From then on we can use the hoodMotorEncoder position, which is relative to start position
-    hoodMotorEncoder.setPosition(
-        hoodAbsoluteEncoder.getPosition());
+    hoodMotorEncoder.setPosition(hoodAbsoluteEncoder.getPosition());
     setHoodPosition(Calibrations.HOOD_INIT_VALUE_DEG);
   }
 
@@ -101,7 +100,7 @@ public class Shooter extends SubsystemBase {
     return hoodMotorEncoder.getPosition();
   }
 
-  public double getHoodAbsolutePosition(){
+  public double getHoodAbsolutePosition() {
     return hoodAbsoluteEncoder.getPosition();
   }
 
@@ -148,7 +147,7 @@ public class Shooter extends SubsystemBase {
     setShooterVelocity(0.0);
     hoodController.setReference(0.0, ControlType.kVoltage);
   }
-  
+
   /** Used to specify shot in auton without tuning the rest of our limelight lookup tables. */
   public void shootFixed(double speed, double angle) {
     setShooterVelocity(speed);
@@ -171,7 +170,7 @@ public class Shooter extends SubsystemBase {
     }
   }
 
-  public void setHoodFromLimelight(){
+  public void setHoodFromLimelight() {
     double distanceFromTargetMeters = limelight.getDistanceFromTargetMeters();
     setHoodPosition(Calibrations.HOOD_TABLE.get(distanceFromTargetMeters));
   }
@@ -205,7 +204,8 @@ public class Shooter extends SubsystemBase {
     builder.addDoubleProperty("Shooter kI", shooterController::getI, shooterController::setI);
     builder.addDoubleProperty("Shooter kD", shooterController::getD, shooterController::setD);
     builder.addDoubleProperty("Shooter kFF", shooterController::getFF, shooterController::setFF);
-    builder.addDoubleProperty("Shooter I-Zone", shooterController::getIZone, shooterController::setIZone);
+    builder.addDoubleProperty(
+        "Shooter I-Zone", shooterController::getIZone, shooterController::setIZone);
     addChild("Hood Absolute Encoder", hoodAbsoluteEncoder);
   }
 }

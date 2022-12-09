@@ -54,8 +54,14 @@ public class Constants {
 
     /** What percentage of theoretical free speed we believe the robot can achieve */
     public static final double MAX_VELOCITY_FUDGE_FACTOR = 0.8;
+
     public static final double MAX_VELOCITY_METERS_PER_SECOND =
-        6380.0 / 60.0 * WHEEL_DIAMETER_METERS * Math.PI * MAX_VELOCITY_FUDGE_FACTOR / DRIVE_REDUCTION;
+        6380.0
+            / 60.0
+            * WHEEL_DIAMETER_METERS
+            * Math.PI
+            * MAX_VELOCITY_FUDGE_FACTOR
+            / DRIVE_REDUCTION;
     public static final double MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND = 3 * Math.PI;
 
     public static final int DRIVE_CURRENT_LIMIT_AMPS = 40;
@@ -73,7 +79,7 @@ public class Constants {
 
   /** Scalar for hood motor encoder from rotations to real degrees */
   public static final double HOOD_MOTOR_ENCODER_SCALAR =
-    360 / (HOOD_GEARBOX_RATIO * HOOD_EXTERNAL_ENCODER_RATIO);
+      360 / (HOOD_GEARBOX_RATIO * HOOD_EXTERNAL_ENCODER_RATIO);
 
   /** Scalar for hood motor encoder from RPM to real degrees per seconds */
   public static final double HOOD_MOTOR_ENCODER_VELOCITY_SCALAR = HOOD_MOTOR_ENCODER_SCALAR / 60;
