@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import net.cachemoney8096.frc2022o.Calibrations;
 import net.cachemoney8096.frc2022o.RobotMap;
+import net.cachemoney8096.frc2022o.libs.CargoStateManager.IntakeState;
 import edu.wpi.first.wpilibj.Timer;
 
 public class Indexer extends SubsystemBase {
@@ -35,7 +36,7 @@ public class Indexer extends SubsystemBase {
   public Indexer() {
     indexerMotorOne = new CANSparkMax(RobotMap.INDEXER_MOTOR_ONE_ID, MotorType.kBrushless);
     indexerMotorOne.restoreFactoryDefaults();
-    indexerMotorOne.setIdleMode(CANSparkMax.IdleMode.kCoast);
+    indexerMotorOne.setIdleMode(CANSparkMax.IdleMode.kBrake);
     indexerMotorOne.setInverted(false);
     // indexerMotorOne.setSmartCurrentLimit(25);
     // following line used to reduce CAN utilization?
@@ -43,7 +44,7 @@ public class Indexer extends SubsystemBase {
 
     indexerMotorTwo = new CANSparkMax(RobotMap.INDEXER_MOTOR_TWO_ID, MotorType.kBrushless);
     indexerMotorTwo.restoreFactoryDefaults();
-    indexerMotorTwo.setIdleMode(CANSparkMax.IdleMode.kCoast);
+    indexerMotorTwo.setIdleMode(CANSparkMax.IdleMode.kBrake);
     indexerMotorTwo.follow(indexerMotorOne, false);
 
     indexerMotorThree = new CANSparkMax(RobotMap.INDEXER_MOTOR_THREE_ID, MotorType.kBrushless);
@@ -94,6 +95,7 @@ public class Indexer extends SubsystemBase {
       case EJECT:
         // Should eject => set new ejection timer and start ejecting!
         ejectTimer = Optional.of(new Timer());
+        ejectTimer.get().start();
         indexerMotorOne.set(Calibrations.INDEXER_ONE_POWER); // 2 follows 1
         indexerMotorThree.set(Calibrations.INDEXER_EJECT_POWER);
         break;
@@ -130,6 +132,7 @@ public class Indexer extends SubsystemBase {
       case EJECT:
         // Should eject => set new ejection timer and start ejecting!
         ejectTimer = Optional.of(new Timer());
+        ejectTimer.get().start();
         indexerMotorOne.set(Calibrations.INDEXER_ONE_POWER); // 2 follows 1
         indexerMotorThree.set(Calibrations.INDEXER_EJECT_POWER);
         break;

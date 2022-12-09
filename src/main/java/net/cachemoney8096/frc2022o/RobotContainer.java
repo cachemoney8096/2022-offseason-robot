@@ -15,6 +15,8 @@ import net.cachemoney8096.frc2022o.libs.XboxController;
 import net.cachemoney8096.frc2022o.libs_3005.util.JoystickUtil;
 import net.cachemoney8096.frc2022o.libs_3005.vendor.sensor.Limelight;
 
+import com.ctre.phoenix.sensors.Pigeon2.AxisDirection;
+
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -22,6 +24,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+
+import net.cachemoney8096.frc2022o.auton.AutonChooser;
+import net.cachemoney8096.frc2022o.auton.SimpleDriveBackAndShoot;
+import net.cachemoney8096.frc2022o.auton.locations.Location;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -68,6 +74,7 @@ public class RobotContainer {
     shooter = new Shooter(limelight);
     drivetrain = new DriveSubsystem(pigeon, limelight);
     climber = new Climber();
+    
 
     Shuffleboard.getTab("Subsystems").add(drivetrain.getName(), drivetrain);
     Shuffleboard.getTab("Subsystems").add(intake.getName(), intake);
@@ -81,7 +88,12 @@ public class RobotContainer {
 
   /** Call for initialization at least a couple seconds after construction */
   public void initialize() {
+    pigeon.configMountPose(AxisDirection.PositiveY, AxisDirection.PositiveX);
     shooter.initialize();
+    //autons
+    new SimpleDriveBackAndShoot(drivetrain, shooter, indexer, intake, climber, Location.LeftStart());
+    AutonChooser.setDefaultAuton(
+        new SimpleDriveBackAndShoot(drivetrain, shooter, indexer, intake, climber, Location.LeftStart()));
   }
 
   /**
@@ -95,12 +107,12 @@ public class RobotContainer {
     drivetrain.setDefaultCommand(
         new RunCommand(
                 () ->
-                    drivetrain.drive(
+                    drivetrain.choose(
                         MathUtil.applyDeadband(-driverController.getLeftY(), 0.1),
                         MathUtil.applyDeadband(-driverController.getLeftX(), 0.1),
                         JoystickUtil.squareAxis(
                             MathUtil.applyDeadband(-driverController.getRightX(), 0.1)),
-                        driverController.getLeftBumper()), // default to robot-relative for now
+                        !driverController.getLeftBumper()),
                 drivetrain)
             .withName("Manual Drive"));
 
@@ -111,6 +123,10 @@ public class RobotContainer {
         .TriggerLeft()
         .whileActiveContinuous(
             new InstantCommand(intake::intakeCargo, intake).withName("Intaking"));
+    driverController
+        .TriggerLeft()
+        .whenInactive(
+            new InstantCommand(() -> {intake.retractIntake(); intake.dontIntakeCargo();}, intake).withName("Stopping intake and retracting"));
 
     // Set up shooter controls for the indexer and for the shooter
     indexer.setDefaultCommand(
@@ -142,22 +158,21 @@ public class RobotContainer {
         .BumperRight()
         .whenInactive(
             new InstantCommand(shooter::dontShoot, shooter).withName("Stopping shooter (bumper)"));
+    driverController
+        .A()
+        .whenPressed(
+            new InstantCommand(shooter::setHoodFromLimelight, shooter).withName("Setting hood from limelight"));
 
     // Set up climber controls
     operatorController
-        .A()
-        .whileHeld(
-            new InstantCommand(climber::rightMotorDown, climber).withName("Right Climber Down"));
-    operatorController
-        .B()
-        .whileHeld(new InstantCommand(climber::rightMotorUp, climber).withName("Right Climber Up"));
-    operatorController
         .X()
         .whileHeld(
-            new InstantCommand(climber::leftMotorDown, climber).withName("Left Climber Down"));
+            new InstantCommand(climber::climbMotorDown, climber).withName("Left Climber Down"));
     operatorController
         .Y()
-        .whileHeld(new InstantCommand(climber::leftMotorUp, climber).withName("Left Climber Up"));
+        .whileHeld(new InstantCommand(climber::climbMotorUp, climber).withName("Left Climber Up"));
+    climber.setDefaultCommand(
+        new RunCommand(climber::holdClimb, climber).withName("Holding Climb"));
 
     operatorController
         .BumperLeft()
@@ -189,14 +204,15 @@ public class RobotContainer {
             new InstantCommand(indexer::runAllIndexerForwardsOverride, indexer)
                 .withName("Run All Indexer Forwards"));
 
+    final boolean NOT_INTERRUPTIBLE = false;
     operatorController
         .TriggerLeft()
-        .whenActive(new InstantCommand(intake::extendIntake, intake).withName("Extending Intake"));
+        .whenActive(new InstantCommand(intake::extendIntake, intake).withName("Extending Intake"), NOT_INTERRUPTIBLE);
 
     operatorController
-        .TriggerLeft()
-        .whenInactive(
-            new InstantCommand(intake::retractIntake, intake).withName("Retracting Intake"));
+        .Start()
+        .whenActive(
+            new InstantCommand(intake::retractIntake, intake).withName("Retracting Intake"), NOT_INTERRUPTIBLE);
   }
 
   private void configureAuton() {

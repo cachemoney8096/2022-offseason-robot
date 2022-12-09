@@ -91,7 +91,7 @@ public class NickSwerveModule implements SwerveModule {
     errors += SparkMaxUtils.check(sparkMax.getPIDController().setOutputRange(-1, 1));
     errors += SparkMaxUtils.check(sparkMax.setIdleMode(IdleMode.kBrake));
     // errors += SparkMaxUtils.check(SparkMaxUtils.setDefaultsForNeo500(sparkMax));
-    // sparkMax.setSmartCurrentLimit(Constants.Drivetrain.kTurningMotorCurrentLimit);
+    sparkMax.setSmartCurrentLimit(Constants.Drivetrain.STEER_MOTOR_CURRENT_LIMIT_AMPS);
     // sparkMax.getEncoder().setPosition(0.0);
 
     sparkMax.setPeriodicFramePeriod(PeriodicFrame.kStatus0, 100);
@@ -193,11 +193,13 @@ public class NickSwerveModule implements SwerveModule {
 
   @Override
   public void periodic() {
-    // Calculate the turning motor output from the turning PID controller.
     m_driveController.setReference(
-        m_desiredState.speedMetersPerSecond,
-        m_driveEncoder.getVelocity(),
-        m_driveFeedforward.calculate(m_desiredState.speedMetersPerSecond));
+      m_desiredState.speedMetersPerSecond,
+      m_driveEncoder.getVelocity(),
+      m_driveFeedforward.calculate(m_desiredState.speedMetersPerSecond));
+      
+      
+    // Calculate the turning motor output from the turning PID controller.
     m_turningController.setGoal(m_desiredState.angle.getRadians());
     double demand = m_turningController.calculate(m_turningAbsoluteEncoder.getPosition());
     demand += m_turningFeedforward.calculate(m_turningController.getSetpoint().velocity);

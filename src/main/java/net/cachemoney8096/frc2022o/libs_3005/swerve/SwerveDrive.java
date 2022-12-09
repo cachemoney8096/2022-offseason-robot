@@ -65,6 +65,8 @@ public abstract class SwerveDrive extends SubsystemBase {
   private double[] m_lastDistances;
   private double m_lastLoopTime;
 
+  private double heading;
+
   /**
    * Create a Swerve Drive module
    *

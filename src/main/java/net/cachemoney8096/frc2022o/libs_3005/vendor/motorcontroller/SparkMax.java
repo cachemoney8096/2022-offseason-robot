@@ -3,6 +3,8 @@ package net.cachemoney8096.frc2022o.libs_3005.vendor.motorcontroller;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.REVLibError;
 import com.revrobotics.SparkMaxPIDController;
+import com.revrobotics.SparkMaxPIDController.ArbFFUnits;
+
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.Timer;
@@ -453,7 +455,7 @@ public class SparkMax extends CANSparkMax {
         reference = reference + processVariable - angleMod;
       }
 
-      m_sparkMaxController.setReference(reference, m_controlType, m_slot, feedforward);
+      m_sparkMaxController.setReference(reference, m_controlType, m_slot, feedforward, ArbFFUnits.kVoltage);
     }
 
     @Override

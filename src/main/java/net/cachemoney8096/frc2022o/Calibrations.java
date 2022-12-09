@@ -12,12 +12,18 @@ import net.cachemoney8096.frc2022o.libs_3005.util.LinearInterpolatedTable2d;
  */
 public class Calibrations {
   public static final class Drivetrain {
+    /** For output value in volts, input m/s */
     public static final SimpleMotorFeedforward DRIVE_FEEDFORWARD =
-        new SimpleMotorFeedforward(0.0467, 3.3076, 0.01897);
-    public static final SimpleMotorFeedforward STEER_FEEDFORWARD =
-        new SimpleMotorFeedforward(0.35233, 0.39185, 0.0058658);
+        new SimpleMotorFeedforward(0.0467, 2.4, 0.0); //0.0467
 
-    public static final PIDGains STEER_PID_GAINS = new PIDGains(8.0, 0.00, 0.3);
+    /** For output value in volts, input rad/s */
+    public static final SimpleMotorFeedforward STEER_FEEDFORWARD =
+        new SimpleMotorFeedforward(0.18233, 0.19, 0.0);
+
+    /** For output value in [0,1], input rad/s */
+    public static final PIDGains STEER_PID_GAINS = new PIDGains(4, 0.00, 0.05);
+    
+    /** For output value in [0,1], input m/s */
     public static final PIDGains DRIVE_PID_GAINS = new PIDGains(0.04, 0.0, 0.0);
 
     public static final TrapezoidProfile.Constraints STEER_TRAPEZOID_CONSTRAINTS =
@@ -33,11 +39,8 @@ public class Calibrations {
             9.0, 0.0, 0.80, new TrapezoidProfile.Constraints(1000.0, 100000.0));
 
     /** Controller on module speed for rotating to target Input degrees, output [0,1] */
-    public static final PIDController ROTATE_TO_TARGET_PID_CONTROLLER =
-        new PIDController(
-            Constants.PLACEHOLDER_DOUBLE,
-            Constants.PLACEHOLDER_DOUBLE,
-            Constants.PLACEHOLDER_DOUBLE);
+    public static final PIDController ROTATE_TO_TARGET_PID_CONTROLLER = new PIDController(0.030, 0, 0.000);
+    public static final double ROTATE_TO_SHOOT_FF = 0.1;
   }
 
   /** For translation commands above this threshold (in [0,1]), heading lock will not apply */
@@ -56,7 +59,7 @@ public class Calibrations {
 
   /** Power for intake/indexer motors in [-1.0, 1.0] */
   public static final double INTAKE_ONE_POWER = 1.0,
-      INTAKE_TWO_POWER = 0.5,
+      INTAKE_TWO_POWER = 0.75,
       INTAKE_EJECT_POWER = -1.0,
       INDEXER_ONE_POWER = 0.5,
       INDEXER_THREE_POWER = 0.5,
@@ -67,18 +70,20 @@ public class Calibrations {
       INDEXER_FORWARDS_POWER = 1.0;
 
   /** Shooter PID */
-  public static final double SHOOTER_kP = Constants.PLACEHOLDER_DOUBLE,
-      SHOOTER_kI = Constants.PLACEHOLDER_DOUBLE,
-      SHOOTER_kD = Constants.PLACEHOLDER_DOUBLE,
-      SHOOTER_kF = Constants.PLACEHOLDER_DOUBLE,
-      SHOOTER_RANGE_RPM = Constants.PLACEHOLDER_DOUBLE;
+  public static final double SHOOTER_kP = 0.00015,
+      SHOOTER_kI = 0.000001,
+      SHOOTER_kD = 0,
+      SHOOTER_kF = 0.000197,
+      SHOOTER_RANGE_RPM = 50.0,
+      SHOOTER_I_ZONE = 200;
 
   /** Hood PID */
-  public static final double HOOD_kP = Constants.PLACEHOLDER_DOUBLE,
-      HOOD_kI = Constants.PLACEHOLDER_DOUBLE,
-      HOOD_kD = Constants.PLACEHOLDER_DOUBLE,
-      HOOD_kF = Constants.PLACEHOLDER_DOUBLE,
-      HOOD_POSITION_TOLERANCE_DEG = Constants.PLACEHOLDER_DOUBLE;
+  public static final double HOOD_kP = 0.2,
+      HOOD_kI = 0.001,
+      HOOD_kD = 0,
+      HOOD_kF = 0,
+      HOOD_IZone = 0.4,
+      HOOD_POSITION_TOLERANCE_DEG = 0.3;
 
   /**
    * Hood setpoint table for shooter. X = target linear distance from limelight Y = Hood setpoint in
@@ -86,10 +91,9 @@ public class Calibrations {
    */
   public static final LinearInterpolatedTable2d HOOD_TABLE =
       new LinearInterpolatedTable2d()
-          .withPair(0.0, 1.0)
-          .withPair(1.0, 3.0)
-          .withPair(0.5, 2.0)
-          .withPair(2.0, 5.0);
+      .withPair(1.85, 22.0)
+      .withPair(2.85, 29.0)
+      .withPair(5.41, 36.0);
 
   /**
    * Shooter speed setpoint table for shooter. X = target linear distance from limelight Y = Shooter
@@ -97,11 +101,13 @@ public class Calibrations {
    */
   public static final LinearInterpolatedTable2d SHOOTER_TABLE =
       new LinearInterpolatedTable2d()
-          .withPair(0.0, 1.0)
-          .withPair(1.0, 3.0)
-          .withPair(0.5, 2.0)
-          .withPair(2.0, 5.0);
+        .withPair(1.85, 2500)
+        .withPair(2.85, 2700)
+        .withPair(5.41, 3250);
 
   /** Tolerance for angle to goal for shooting (in degrees) */
   public static final double SHOOTER_TARGET_ALIGNMENT_TOLERANCE_DEG = 5.0;
+
+  /** Initalization value for hood angle */
+  public static final double HOOD_INIT_VALUE_DEG = 20;
 }
