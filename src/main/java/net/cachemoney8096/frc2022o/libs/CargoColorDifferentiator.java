@@ -26,11 +26,14 @@ public class CargoColorDifferentiator {
    */
   private final int THEIR_COLOR_OFFSET = 1;
 
+
   // If ratio is above this, consider the ball known
   private final double COLOR_RATIO_THRESHOLD = 1.3;
 
   // Added to the red value, since the sensor is less sensitive to red
   private final int RED_OFFSET = 100;
+
+  private final int DIFFERENCE_VALUE = 20;
 
   // Updates the alliance color if available.
   // This should only be run in disabled periodic.
@@ -38,7 +41,7 @@ public class CargoColorDifferentiator {
     ourAllianceColor = getAllianceColor();
   }
 
-  public CargoColor whatColor(PicoColorSensor.RawColor inputColor) {
+  public CargoColor whatColorTwo(PicoColorSensor.RawColor inputColor) {
     if (ourAllianceColor.isEmpty()) {
       // If we're not sure what color we are, just use all colors.
       return CargoColor.OURS;
@@ -58,6 +61,21 @@ public class CargoColorDifferentiator {
     if (ourColor / theirColor > COLOR_RATIO_THRESHOLD) return CargoColor.OURS;
     else if (theirColor / ourColor > COLOR_RATIO_THRESHOLD) return CargoColor.THEIRS;
     else return CargoColor.UNKNOWN;
+  }
+
+  public CargoColor whatColor(PicoColorSensor.RawColor inputColor) {
+    if (ourAllianceColor.isEmpty()) {
+      // If we're not sure what color we are, just use all colors.
+      return CargoColor.OURS;
+    }
+
+    if (inputColor.red + RED_OFFSET > inputColor.blue + DIFFERENCE_VALUE){
+      return ourAllianceColor.get() == Color.RED ? CargoColor.OURS : CargoColor.THEIRS;
+    } else if (inputColor.blue > inputColor.red + RED_OFFSET + DIFFERENCE_VALUE){
+      return ourAllianceColor.get() == Color.BLUE ? CargoColor.OURS : CargoColor.THEIRS;
+    } else {
+      return CargoColor.UNKNOWN;
+    }
   }
 
   // Gets the alliance color if available.
